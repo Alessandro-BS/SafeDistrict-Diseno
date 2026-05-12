@@ -1,6 +1,8 @@
-import { LayoutDashboard, MessageSquare, Smartphone, Shield, Activity, Settings, Bell } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Smartphone, Shield, Activity, Settings, Bell, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Sidebar({ currentView, setCurrentView, lastClassification }) {
+  const { theme, toggle } = useTheme();
 
   const navItems = [
     { id: 'dashboard', label: 'Panel de Comando', icon: LayoutDashboard },
@@ -49,6 +51,12 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
         <div className="sidebar-status">
           <span className="status-dot" />
           Sistema activo
+        </div>
+        <div className="sidebar-theme">
+          <button className="theme-toggle" onClick={toggle} title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}>
+            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            <span>{theme === 'dark' ? 'Claro' : 'Oscuro'}</span>
+          </button>
         </div>
         <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
           v2.0 · Comas, Lima
