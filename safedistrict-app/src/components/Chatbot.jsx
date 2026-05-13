@@ -189,39 +189,70 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     setTimeout(() => sendBotMessage(`Has seleccionado **${typeLabel}**. Describe brevemente lo que está sucediendo (incluye ubicación si es posible):`), 400);
   };
 
-  const handleReportSubmit = () => {
+  const handleReportSubmit = async () => {
     if (!input.trim()) return;
 
     const userText = input;
+    // 1. Mostramos el mensaje del usuario en el chat
     setMessages(prev => [...prev, {
       id: Date.now(), sender: 'user', text: userText,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }]);
     setInput('');
 
-    const classification = classifyText(userText);
-    const incidentId = generateIncidentId();
+    // 2. Activamos el indicador de que el bot está "pensando"
+    setIsTyping(true);
 
-    const newIncident = {
-      id: incidentId,
-      description: userText.length > 40 ? userText.substring(0, 40) + '...' : userText,
-      location: getRandomLocation(),
-      priority: classification.priority === 'Critico' ? 'Crítico' : classification.priority,
-      timeElapsed: '0 min', status: 'Pendiente',
-      reporter: 'Ciudadano', type: classification.type,
-      confidence: classification.confidence,
-    };
+    try {
+      // 3. Hacemos la petición real al backend en Spring Boot
+      const response = await fetch('http://localhost:8080/api/incidents/report', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: userText,
+          location: getRandomLocation() // Mantenemos tu función mock para la ubicación por ahora
+        })
+      });
 
-    setTimeout(() => {
-      addIncident(newIncident);
-      setLastClassification({ ...classification, description: newIncident.description, incidentId });
+      if (!response.ok) {
+        throw new Error(`Error del servidor: ${response.status}`);
+      }
 
+      // 4. Recibimos la respuesta estructurada desde Java
+      const data = await response.json();
+      const classification = data.classification;
+
+      setIsTyping(false);
+
+      // 5. Actualizamos el estado global (Dashboard) y el Chatbot
+      setTimeout(() => {
+        // Agregamos el incidente real. Le sumamos 'timeElapsed' para no romper tu UI actual.
+        addIncident({
+          ...data,
+          timeElapsed: '0 min'
+        });
+
+        setLastClassification({ ...classification, description: data.description, incidentId: data.id });
+
+        // Enviamos el mensaje final del bot con la data real de la BD y la IA
+        sendBotMessage(
+            `**Reporte registrado exitosamente**\n\n**ID:** ${data.id}\n**Tipo:** ${classification.typeLabel}\n**Prioridad:** ${classification.priorityLabel}\n**Confianza:** ${Math.round(classification.confidence * 100)}%\n\n${classification.summary}\n\nLos operadores han sido notificados.`,
+            { classification, incidentId: data.id, options: ['Ver mis reportes', 'Reportar otra emergencia', 'Finalizar'] }
+        );
+        setStep(steps.REPORT_RESULT);
+      }, 500);
+
+    } catch (error) {
+      console.error("Error al enviar el reporte:", error);
+      setIsTyping(false);
       sendBotMessage(
-        `**Reporte registrado exitosamente**\n\n**ID:** ${incidentId}\n**Tipo:** ${classification.typeLabel}\n**Prioridad:** ${classification.priorityLabel}\n**Confianza:** ${Math.round(classification.confidence * 100)}%\n\n${classification.summary}\n\nLos operadores han sido notificados.`,
-        { classification, incidentId, options: ['Ver mis reportes', 'Reportar otra emergencia', 'Finalizar'] }
+          'Hubo un problema de conexión al procesar tu emergencia. Por favor, intenta nuevamente o llama directamente al 105.',
+          { options: ['Reportar emergencia'] }
       );
-      setStep(steps.REPORT_RESULT);
-    }, 1500);
+      setStep(steps.WELCOME);
+    }
   };
 
   const handleInputSubmit = () => {
