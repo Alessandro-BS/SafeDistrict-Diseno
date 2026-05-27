@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Chatbot from './components/Chatbot';
 import MobileApp from './components/MobileApp';
 import PillNav from './components/PillNav';
 import { incidentsData as initialIncidents } from './data/mockData';
+
+const API_BASE = 'http://localhost:8080/api';
 
 function Clock() {
   const [time, setTime] = useState(new Date());
@@ -21,8 +23,31 @@ function Clock() {
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
-  const [incidents, setIncidents] = useState(initialIncidents);
+  const [incidents, setIncidents] = useState([]);
   const [lastClassification, setLastClassification] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchIncidents = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}/incidents`);
+      if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
+      const data = await res.json();
+      setIncidents(data);
+    } catch (err) {
+      console.error('Error al conectar con el servidor, usando datos de prueba:', err);
+      setError(err.message);
+      setIncidents(initialIncidents);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchIncidents();
+  }, [fetchIncidents]);
 
   const addIncident = (incident) => {
     setIncidents(prev => [incident, ...prev]);
@@ -67,7 +92,13 @@ function App() {
           )}
 
           {currentView === 'dashboard' && (
-            <Dashboard incidents={incidents} lastClassification={lastClassification} />
+            <Dashboard
+              incidents={incidents}
+              lastClassification={lastClassification}
+              loading={loading}
+              error={error}
+              onRetry={fetchIncidents}
+            />
           )}
           {currentView === 'chat' && (
             <Chatbot
