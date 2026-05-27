@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Bot, Camera, MapPin, ArrowUp } from 'lucide-react';
-import { classifyText, generateIncidentId, emergencyTypeOptions, safetyInfoTips } from '../data/classificationEngine';
+import { classifyText, generateIncidentId, emergencyTypeOptions, safetyInfoTips, normalizePriority } from '../data/classificationEngine';
 
 const steps = {
   WELCOME: 'welcome',
@@ -42,7 +42,7 @@ function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
             <div className="classif-header">CLASIFICACIÓN IA</div>
             <div className="classif-row">
               <span className="classif-type">{msg.classification.typeLabel}</span>
-              <span className={`badge priority-${msg.classification.priority === 'Critico' ? 'Crítico' : msg.classification.priority}`}>
+              <span className={`badge priority-${normalizePriority(msg.classification.priority)}`}>
                 {msg.classification.priorityLabel}
               </span>
             </div>
@@ -87,7 +87,7 @@ function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
             <div className="classif-header">ESTADO DEL REPORTE</div>
             <div className="classif-row">
               <span className="classif-type">{msg.incidentStatus.id}</span>
-              <span className={`badge priority-${msg.incidentStatus.priority === 'Critico' ? 'Crítico' : msg.incidentStatus.priority}`}>
+              <span className={`badge priority-${normalizePriority(msg.incidentStatus.priority)}`}>
                 {msg.incidentStatus.priorityLabel}
               </span>
             </div>
