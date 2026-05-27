@@ -3,7 +3,7 @@ import { ShieldAlert, Bell, Activity, Clock, TrendingUp, AlertTriangle } from 'l
 import IncidentMap from './IncidentMap';
 import RightIncidentPanel from './RightIncidentPanel';
 
-export default function Dashboard({ incidents, lastClassification }) {
+export default function Dashboard({ incidents, lastClassification, loading, error, onRetry }) {
   const [activeTab, setActiveTab] = useState('mapa');
   const [focusedIncident, setFocusedIncident] = useState(null);
 
@@ -18,6 +18,13 @@ export default function Dashboard({ incidents, lastClassification }) {
 
   return (
     <div className="command-center">
+      {error && (
+        <div className="error-banner">
+          <AlertTriangle size={16} />
+          <span className="error-banner-text">Usando datos de demostración — No se pudo conectar con el servidor</span>
+          <button className="retry-btn" onClick={onRetry}>Reintentar</button>
+        </div>
+      )}
       <div className="command-header">
         <div className="command-tabs">
           {tabs.map(tab => (
@@ -88,6 +95,12 @@ export default function Dashboard({ incidents, lastClassification }) {
         </div>
       )}
 
+      {loading ? (
+        <div className="loading-overlay">
+          <div className="loading-spinner" />
+          <p>Cargando incidentes...</p>
+        </div>
+      ) : (
       <div className="command-main">
         <div className="command-map-area">
           {activeTab === 'mapa' && (
@@ -120,6 +133,7 @@ export default function Dashboard({ incidents, lastClassification }) {
           }}
         />
       </div>
+      )}
     </div>
   );
 }
