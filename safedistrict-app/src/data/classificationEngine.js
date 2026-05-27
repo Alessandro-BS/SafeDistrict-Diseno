@@ -112,6 +112,49 @@ export function generateIncidentId() {
   return `INC-${year}-${random}`;
 }
 
+export function normalizePriority(p) {
+  if (!p) return 'Medio';
+  const map = {
+    Critico: 'Crítico',
+    'Crítico': 'Crítico',
+    critico: 'Crítico',
+    Alto: 'Alto',
+    alto: 'Alto',
+    Medio: 'Medio',
+    medio: 'Medio',
+    Bajo: 'Bajo',
+    bajo: 'Bajo',
+  };
+  return map[p] || p;
+}
+
+export function getTimeElapsed(createdAt) {
+  if (!createdAt) return null;
+
+  let created;
+  if (typeof createdAt === 'string') {
+    const cleaned = createdAt.includes('T') ? createdAt : createdAt.replace(' ', 'T');
+    created = new Date(cleaned);
+  } else {
+    created = new Date(createdAt);
+  }
+
+  if (isNaN(created.getTime())) return null;
+
+  const diffMs = Date.now() - created.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+
+  if (diffMin < 1) return '0 min';
+  if (diffMin < 60) return `${diffMin} min`;
+
+  const diffH = Math.floor(diffMin / 60);
+  const remMin = diffMin % 60;
+  if (diffH < 24) return `${diffH}h ${remMin}min`;
+
+  const diffD = Math.floor(diffH / 24);
+  return `${diffD}d ${diffH % 24}h`;
+}
+
 export const emergencyTypeOptions = [
   { value: 'robo', label: 'Robo', icon: 'shield-off' },
   { value: 'accidente', label: 'Accidente', icon: 'car-front' },

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, Flame, HeartPulse, CarFront, ShieldOff, Crosshair, Maximize2, Minimize2 } from 'lucide-react';
+import { normalizePriority, getTimeElapsed } from '../data/classificationEngine';
 
 const typeIcons = {
   robo: ShieldOff, accidente: CarFront, incendio: Flame, emergencia_medica: HeartPulse,
@@ -85,7 +86,8 @@ export default function IncidentMap({ incidents, focusedIncident }) {
 
         {activeIncidents.map((incident) => {
           const pos = getMarkerPosition(incident.id);
-          const cfg = priorityConfig[incident.priority] || priorityConfig.Medio;
+          const displayPriority = normalizePriority(incident.priority);
+          const cfg = priorityConfig[displayPriority] || priorityConfig.Medio;
           const IconComponent = typeIcons[incident.type] || AlertTriangle;
           const isFocused = focusedIncident?.id === incident.id;
 
@@ -109,12 +111,12 @@ export default function IncidentMap({ incidents, focusedIncident }) {
               <div className="node-tooltip">
                 <div className="node-tooltip-header">
                   <strong>{incident.id}</strong>
-                  <span className="node-tooltip-badge" style={{ background: cfg.color }}>{incident.priority}</span>
+                  <span className="node-tooltip-badge" style={{ background: cfg.color }}>{displayPriority}</span>
                 </div>
                 <div className="node-tooltip-desc">{incident.description}</div>
                 <div className="node-tooltip-loc">{incident.location}</div>
                 <div className="node-tooltip-meta">
-                  <span className="node-tooltip-time">{incident.timeElapsed}</span>
+                  <span className="node-tooltip-time">{getTimeElapsed(incident.createdAt) || incident.timeElapsed || '0 min'}</span>
                   <span className="node-tooltip-status">{incident.status}</span>
                 </div>
               </div>
@@ -137,10 +139,10 @@ export default function IncidentMap({ incidents, focusedIncident }) {
             ACTIVOS: <strong>{activeIncidents.length}</strong>
           </span>
           <span className="map-stat" style={{ color: '#ef4444' }}>
-            CRÍTICOS: <strong>{activeIncidents.filter(i => i.priority === 'Crítico').length}</strong>
+            CRÍTICOS: <strong>{activeIncidents.filter(i => normalizePriority(i.priority) === 'Crítico').length}</strong>
           </span>
           <span className="map-stat" style={{ color: '#f97316' }}>
-            ALTOS: <strong>{activeIncidents.filter(i => i.priority === 'Alto').length}</strong>
+            ALTOS: <strong>{activeIncidents.filter(i => normalizePriority(i.priority) === 'Alto').length}</strong>
           </span>
         </div>
         <div className="bottom-right">
