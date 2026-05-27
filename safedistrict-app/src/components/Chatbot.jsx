@@ -11,6 +11,8 @@ const steps = {
   SAFETY_INFO: 'safety_info',
 };
 
+const API_BASE = 'http://localhost:8080/api';
+
 const locations = [
   'Av. Túpac Amaru 1500, Comas', 'Av. Universitaria 2200, Comas',
   'Jr. Los Olivos 345, Comas', 'Av. San Felipe 780, Comas',
@@ -205,7 +207,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
 
     try {
       // 3. Hacemos la petición real al backend en Spring Boot
-      const response = await fetch('http://localhost:8080/api/incidents/report', {
+      const response = await fetch(`${API_BASE}/incidents/report`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -259,17 +261,61 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     if (step === steps.REPORT_DESCRIPTION) {
       handleReportSubmit();
     } else if (step === steps.CHECK_STATUS) {
-      const userText = input;
-      setMessages(prev => [...prev, {
-        id: Date.now(), sender: 'user', text: userText,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }]);
-      setInput('');
-      setTimeout(() => {
-        sendBotMessage(`No se encontró un reporte con el código **${userText}**. Verifica el código e inténtalo de nuevo.`,
+      handleStatusCheck();
+    }
+  };
+
+  const handleStatusCheck = async () => {
+    if (!input.trim()) return;
+
+    const incidentId = input.trim().toUpperCase();
+    setMessages(prev => [...prev, {
+      id: Date.now(), sender: 'user', text: incidentId,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }]);
+    setInput('');
+    setIsTyping(true);
+
+    try {
+      const res = await fetch(`${API_BASE}/incidents/${incidentId}`);
+
+      if (res.status === 400 || res.status === 404) {
+        setIsTyping(false);
+        sendBotMessage(`No se encontró un reporte con el código **${incidentId}**. Verifica el código e inténtalo de nuevo.`,
           { options: ['Reportar emergencia', 'Intentar de nuevo', 'Información de seguridad'] });
         setStep(steps.WELCOME);
-      }, 1000);
+        return;
+      }
+
+      if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
+
+      const data = await res.json();
+      const cls = data.classification;
+
+      setIsTyping(false);
+      sendBotMessage(
+        `**Estado del reporte ${data.id}**\n\n**Tipo:** ${cls?.typeLabel || data.type}\n**Prioridad:** ${cls?.priorityLabel || data.priority}\n**Ubicación:** ${data.location}\n**Estado:** ${data.status}`,
+        {
+          incidentStatus: {
+            id: data.id,
+            priority: cls?.priority || data.priority,
+            priorityLabel: cls?.priorityLabel || data.priority,
+            description: data.description,
+            status: data.status,
+          },
+          options: ['Reportar emergencia', 'Consultar otro reporte', 'Información de seguridad', 'Finalizar']
+        }
+      );
+      setStep(steps.REPORT_RESULT);
+
+    } catch (error) {
+      console.error('Error al consultar estado:', error);
+      setIsTyping(false);
+      sendBotMessage(
+        'Hubo un problema de conexión al consultar el estado. Por favor, intenta nuevamente.',
+        { options: ['Intentar de nuevo', 'Reportar emergencia'] }
+      );
+      setStep(steps.WELCOME);
     }
   };
 
@@ -288,7 +334,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }]);
       setTimeout(() => sendBotMessage('Gracias por contactarte con SafeDistrict. ¡Cuídate!'), 400);
-    } else if (option === 'Intentar de nuevo') {
+    } else if (option === 'Intentar de nuevo' || option === 'Consultar otro reporte') {
       setStep(steps.CHECK_STATUS);
       setTimeout(() => sendBotMessage('Ingresa el código de tu reporte (ej: INC-2026-XXXX):'), 400);
     } else {
