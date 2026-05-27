@@ -109,6 +109,33 @@ public class IncidentService {
     }
 
     /**
+     * Actualiza manualmente la clasificación de un incidente.
+     *
+     * @param id ID del incidente
+     * @param type Nuevo tipo
+     * @param typeLabel Nueva etiqueta de tipo
+     * @param priority Nueva prioridad
+     * @return IncidentResponse actualizado
+     */
+    @Transactional
+    public IncidentResponse updateIncidentClassification(String id, String type, String typeLabel, String priority) {
+        Incident incident = incidentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No se encontró un incidente con el ID: " + id));
+
+        incident.setType(type);
+        incident.setTypeLabel(typeLabel);
+        incident.setPriority(priority);
+        incident.setPriorityLabel(priority); // Asumimos que priorityLabel = priority para simplicidad
+
+        Incident saved = incidentRepository.save(incident);
+        log.info("Clasificación del incidente actualizada: id={}, nuevo tipo={}, nueva prioridad={}",
+                saved.getId(), saved.getType(), saved.getPriority());
+
+        return mapToResponse(saved);
+    }
+
+    /**
      * Genera un ID de incidente con formato INC-YYYY-XXXX,
      * donde XXXX es secuencial basado en los incidentes del año actual.
      */

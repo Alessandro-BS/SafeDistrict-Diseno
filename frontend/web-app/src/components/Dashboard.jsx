@@ -3,10 +3,12 @@ import { ShieldAlert, Bell, Activity, Clock, TrendingUp, AlertTriangle } from 'l
 import { normalizePriority } from '../data/classificationEngine';
 import IncidentMap from './IncidentMap';
 import RightIncidentPanel from './RightIncidentPanel';
+import ReclassifyModal from './ReclassifyModal';
 
 export default function Dashboard({ incidents, lastClassification, loading, error, onRetry }) {
   const [activeTab, setActiveTab] = useState('mapa');
   const [focusedIncident, setFocusedIncident] = useState(null);
+  const [incidentToClassify, setIncidentToClassify] = useState(null);
 
   const criticos = incidents.filter(i => normalizePriority(i.priority) === 'Crítico').length;
   const total = incidents.length;
@@ -132,8 +134,19 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
             setFocusedIncident(inc);
             setActiveTab('mapa');
           }}
+          onClassify={(inc) => setIncidentToClassify(inc)}
         />
       </div>
+      )}
+
+      {incidentToClassify && (
+        <ReclassifyModal 
+          incident={incidentToClassify}
+          onClose={() => setIncidentToClassify(null)}
+          onUpdated={() => {
+            if (onRetry) onRetry(); // Fetch updated incidents
+          }}
+        />
       )}
     </div>
   );

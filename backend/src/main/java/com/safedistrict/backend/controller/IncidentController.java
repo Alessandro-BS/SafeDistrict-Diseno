@@ -2,6 +2,7 @@ package com.safedistrict.backend.controller;
 
 import com.safedistrict.backend.dto.IncidentResponse;
 import com.safedistrict.backend.dto.ReportRequest;
+import com.safedistrict.backend.dto.UpdateClassificationRequest;
 import com.safedistrict.backend.service.IncidentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -132,5 +133,32 @@ public class IncidentController {
         log.info("GET /api/incidents/{} - Consultando incidente", id);
         IncidentResponse incident = incidentService.getIncidentById(id);
         return ResponseEntity.ok(incident);
+    }
+
+    /**
+     * Actualiza manualmente la clasificación de un incidente.
+     */
+    @PutMapping("/{id}/classify")
+    @Operation(
+            summary = "Reclasificar un incidente",
+            description = "Actualiza manualmente el tipo y la prioridad de un incidente."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Incidente reclasificado exitosamente",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = IncidentResponse.class)
+                    )
+            )
+    })
+    public ResponseEntity<IncidentResponse> updateIncidentClassification(
+            @PathVariable String id,
+            @Valid @RequestBody UpdateClassificationRequest request) {
+        log.info("PUT /api/incidents/{}/classify - Actualizando clasificación", id);
+        IncidentResponse updated = incidentService.updateIncidentClassification(
+                id, request.getType(), request.getTypeLabel(), request.getPriority());
+        return ResponseEntity.ok(updated);
     }
 }

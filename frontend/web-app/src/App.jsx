@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Chatbot from './components/Chatbot';
 import MobileApp from './components/MobileApp';
+import Reports from './components/Reports';
 import PillNav from './components/PillNav';
 import { incidentsData as initialIncidents } from './data/mockData';
 
@@ -53,7 +54,7 @@ function App() {
     setIncidents(prev => [incident, ...prev]);
   };
 
-  const showPills = currentView === 'mobile' || currentView === 'chat' || currentView === 'dashboard';
+  const showPills = currentView === 'mobile' || currentView === 'chat' || currentView === 'dashboard' || currentView === 'reports';
 
   return (
     <div className="app-container">
@@ -70,6 +71,8 @@ function App() {
               <span>Panel de Administración</span>
             ) : currentView === 'chat' ? (
               <span>Simulador de Reportes Ciudadanos</span>
+            ) : currentView === 'reports' ? (
+              <span>Reportes del Cuidador</span>
             ) : (
               <span>App Móvil SafeDistrict</span>
             )}
@@ -108,6 +111,13 @@ function App() {
           )}
           {currentView === 'mobile' && (
             <MobileApp
+              addIncident={addIncident}
+              setLastClassification={setLastClassification}
+              setCurrentView={setCurrentView}
+            />
+          )}
+          {currentView === 'reports' && (
+            <Reports
               addIncident={addIncident}
               setLastClassification={setLastClassification}
             />

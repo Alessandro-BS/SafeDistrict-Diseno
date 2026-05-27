@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, TriangleAlert, Flame, Car, Heart, ShieldCheck, Phone, Clock, ArrowLeft } from 'lucide-react';
+import { MapPin, TriangleAlert, Flame, Car, Heart, ShieldCheck, Phone, Clock, ArrowLeft, MessageSquare } from 'lucide-react';
 
 const API_BASE = 'http://localhost:8080/api';
 
@@ -23,7 +23,7 @@ function getRandomLocation() {
   return locations[Math.floor(Math.random() * locations.length)];
 }
 
-export default function MobileApp({ addIncident, setLastClassification }) {
+export default function MobileApp({ addIncident, setLastClassification, setCurrentView }) {
   const [screen, setScreen] = useState('home');
   const [selectedEmergency, setSelectedEmergency] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -111,6 +111,7 @@ export default function MobileApp({ addIncident, setLastClassification }) {
             <HomeScreen
               onTypeClick={handleEmergencyClick}
               onBigEmergency={handleBigEmergency}
+              onChatbot={() => setCurrentView('chat')}
             />
           ) : (
             <StatusScreen
@@ -130,7 +131,7 @@ export default function MobileApp({ addIncident, setLastClassification }) {
   );
 }
 
-function HomeScreen({ onTypeClick, onBigEmergency }) {
+function HomeScreen({ onTypeClick, onBigEmergency, onChatbot }) {
   return (
     <div className="mobile-home">
       <div className="mobile-header">
@@ -171,6 +172,16 @@ function HomeScreen({ onTypeClick, onBigEmergency }) {
             );
           })}
         </div>
+      </div>
+
+      <div className="mobile-chatbot-bar" style={{ marginTop: '20px' }}>
+        <button className="mobile-chatbot-btn premium-btn" onClick={onChatbot}>
+          <div className="btn-glow"></div>
+          <div className="btn-content">
+            <MessageSquare size={18} color="white" className="btn-icon-pulse" />
+            <span style={{ marginLeft: '8px' }}>Hablar con asistente virtual</span>
+          </div>
+        </button>
       </div>
 
       <div className="mobile-bottom-info">

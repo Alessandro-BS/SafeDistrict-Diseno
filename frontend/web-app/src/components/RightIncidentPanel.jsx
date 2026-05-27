@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { AlertTriangle, Clock, MapPin, Search, Eye } from 'lucide-react';
+import { AlertTriangle, Clock, MapPin, Search, Eye, Edit2 } from 'lucide-react';
 import { normalizePriority, getTimeElapsed } from '../data/classificationEngine';
 
 const priorityConfig = {
@@ -9,7 +9,7 @@ const priorityConfig = {
   'Bajo': { color: '#22c55e', bg: 'rgba(34,197,94,0.12)', border: 'rgba(34,197,94,0.25)' },
 };
 
-export default function RightIncidentPanel({ incidents, onViewRoute }) {
+export default function RightIncidentPanel({ incidents, onViewRoute, onClassify }) {
   const [filter, setFilter] = useState('Todas');
   const [search, setSearch] = useState('');
 
@@ -60,9 +60,14 @@ export default function RightIncidentPanel({ incidents, onViewRoute }) {
             <div key={inc.id} className="incident-card" style={{ borderColor: cfg.border }}>
               <div className="incident-card-top">
                 <span className="incident-id">{inc.id}</span>
-                <span className="incident-badge" style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}>
-                  {displayPriority}
-                </span>
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  <span className="incident-badge" style={{ background: 'rgba(148, 163, 184, 0.15)', color: '#cbd5e1', border: `1px solid rgba(148, 163, 184, 0.3)` }}>
+                    {inc.typeLabel || 'Otro'}
+                  </span>
+                  <span className="incident-badge" style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}>
+                    {displayPriority}
+                  </span>
+                </div>
               </div>
               <div className="incident-card-desc">{inc.description}</div>
               <div className="incident-card-meta">
@@ -75,10 +80,16 @@ export default function RightIncidentPanel({ incidents, onViewRoute }) {
                 }}>
                   {inc.status}
                 </span>
-                <button className="route-btn" onClick={() => onViewRoute?.(inc)}>
-                  <Eye size={14} />
-                  Ver ruta
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button className="route-btn" onClick={() => onClassify?.(inc)} style={{ background: 'rgba(249, 115, 22, 0.1)', color: '#f97316', borderColor: 'rgba(249, 115, 22, 0.2)' }}>
+                    <Edit2 size={14} />
+                    Clasificar
+                  </button>
+                  <button className="route-btn" onClick={() => onViewRoute?.(inc)}>
+                    <Eye size={14} />
+                    Ver
+                  </button>
+                </div>
               </div>
             </div>
           );

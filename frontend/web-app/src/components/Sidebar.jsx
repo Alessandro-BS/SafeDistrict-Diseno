@@ -8,7 +8,7 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
     { id: 'dashboard', label: 'Panel de Comando', icon: LayoutDashboard },
     { id: 'chat', label: 'Simulador Chatbot', icon: MessageSquare },
     { id: 'mobile', label: 'App Móvil', icon: Smartphone },
-    { id: 'reports', label: 'Reportes (Próximamente)', icon: Activity, disabled: true },
+    { id: 'reports', label: 'Reportes del Cuidador', icon: Activity },
     { id: 'settings', label: 'Configuración', icon: Settings, disabled: true },
   ];
 

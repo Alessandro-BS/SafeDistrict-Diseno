@@ -98,6 +98,15 @@ function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
           </div>
         )}
 
+        {msg.jsonData && (
+          <div className="json-card slide-up-fade">
+            <div style={{ marginBottom: '8px', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Payload de Respuesta IA (JSON)</div>
+            <pre style={{ margin: 0 }}>
+              <code dangerouslySetInnerHTML={{ __html: msg.jsonData }}></code>
+            </pre>
+          </div>
+        )}
+
         <span className="bubble-time">{msg.time}</span>
       </div>
     </div>
@@ -238,10 +247,17 @@ export default function Chatbot({ addIncident, setLastClassification }) {
 
         setLastClassification({ ...classification, description: data.description, incidentId: data.id });
 
+        // Formateamos el JSON para mostrarlo en el frontend
+        const jsonFormatted = JSON.stringify(data, null, 2)
+          .replace(/"(.*?)":/g, '<span class="json-key">"$1"</span>:')
+          .replace(/: "(.*?)"/g, ': <span class="json-string">"$1"</span>')
+          .replace(/: (\d+(?:\.\d+)?)/g, ': <span class="json-number">$1</span>')
+          .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
+
         // Enviamos el mensaje final del bot con la data real de la BD y la IA
         sendBotMessage(
             `**Reporte registrado exitosamente**\n\n**ID:** ${data.id}\n**Tipo:** ${classification.typeLabel}\n**Prioridad:** ${classification.priorityLabel}\n**Confianza:** ${Math.round(classification.confidence * 100)}%\n\n${classification.summary}\n\nLos operadores han sido notificados.`,
-            { classification, incidentId: data.id, options: ['Ver mis reportes', 'Reportar otra emergencia', 'Finalizar'] }
+            { classification, incidentId: data.id, jsonData: jsonFormatted, options: ['Ver mis reportes', 'Reportar otra emergencia', 'Finalizar'] }
         );
         setStep(steps.REPORT_RESULT);
       }, 500);
