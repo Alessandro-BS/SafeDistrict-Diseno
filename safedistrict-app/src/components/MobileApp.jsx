@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { MapPin, TriangleAlert, Flame, Car, Heart, ShieldCheck, Phone, Clock, ArrowLeft } from 'lucide-react';
 
+const API_BASE = 'http://localhost:8080/api';
+
 const emergencyTypes = [
   { id: 'robo', label: 'Robo', icon: TriangleAlert, color: '#ef4444', bg: '#fef2f2' },
   { id: 'incendio', label: 'Incendio', icon: Flame, color: '#ef4444', bg: '#fef2f2' },
@@ -8,63 +10,95 @@ const emergencyTypes = [
   { id: 'emergencia_medica', label: 'Emerg. Médica', icon: Heart, color: '#f97316', bg: '#fff7ed' },
 ];
 
+const locations = [
+  'Comas, Lima - Vía Pública',
+  'Av. Túpac Amaru, Comas',
+  'Av. Universitaria, Comas',
+  'Jr. Los Olivos, Comas',
+  'Av. San Felipe, Comas',
+  'Av. Revolución, Comas',
+];
+
+function getRandomLocation() {
+  return locations[Math.floor(Math.random() * locations.length)];
+}
+
 export default function MobileApp({ addIncident, setLastClassification }) {
   const [screen, setScreen] = useState('home');
   const [selectedEmergency, setSelectedEmergency] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
-  const handleEmergencyClick = (type) => {
+  const handleEmergencyClick = async (type) => {
     setSelectedEmergency(type);
     setScreen('status');
+    setSubmitting(true);
+    setSubmitError(null);
 
-    if (addIncident) {
-      const newIncident = {
-        id: `INC-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9999)).padStart(4, '0')}`,
-        description: `Emergencia reportada: ${type.label}`,
-        location: 'Comas, Lima - Vía Pública',
-        priority: type.id === 'incendio' || type.id === 'emergencia_medica' ? 'Crítico' : 'Alto',
-        timeElapsed: '0 min',
-        status: 'Pendiente',
-        reporter: 'App Móvil',
-        type: type.id,
-      };
-      addIncident(newIncident);
-      if (setLastClassification) {
-        setLastClassification({
-          priority: newIncident.priority,
-          priorityLabel: newIncident.priority,
-          confidence: 0.95,
-          description: newIncident.description,
-          incidentId: newIncident.id,
-        });
-      }
+    try {
+      const res = await fetch(`${API_BASE}/incidents/report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: `Emergencia reportada desde app móvil: ${type.label}`,
+          location: getRandomLocation(),
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
+
+      const data = await res.json();
+
+      addIncident({ ...data, timeElapsed: '0 min' });
+      setLastClassification({
+        ...data.classification,
+        description: data.description,
+        incidentId: data.id,
+      });
+
+      setSelectedEmergency({ ...type, result: data });
+      setSubmitting(false);
+    } catch (err) {
+      console.error('Error al reportar emergencia:', err);
+      setSubmitError(err.message);
+      setSubmitting(false);
     }
   };
 
-  const handleBigEmergency = () => {
-    setSelectedEmergency({ id: 'emergencia_medica', label: 'Emergencia General' });
+  const handleBigEmergency = async () => {
+    const type = { id: 'emergencia_medica', label: 'Emergencia General' };
+    setSelectedEmergency(type);
     setScreen('status');
+    setSubmitting(true);
+    setSubmitError(null);
 
-    if (addIncident) {
-      const newIncident = {
-        id: `INC-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9999)).padStart(4, '0')}`,
-        description: 'Emergencia general - Botón de pánico',
-        location: 'Comas, Lima - Ubicación detectada',
-        priority: 'Crítico',
-        timeElapsed: '0 min',
-        status: 'Pendiente',
-        reporter: 'App Móvil (Botón EMERGENCIA)',
-        type: 'emergencia_medica',
-      };
-      addIncident(newIncident);
-      if (setLastClassification) {
-        setLastClassification({
-          priority: 'Crítico',
-          priorityLabel: 'Crítico',
-          confidence: 0.98,
-          description: newIncident.description,
-          incidentId: newIncident.id,
-        });
-      }
+    try {
+      const res = await fetch(`${API_BASE}/incidents/report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: 'Emergencia general - Botón de pánico desde app móvil',
+          location: getRandomLocation(),
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
+
+      const data = await res.json();
+
+      addIncident({ ...data, timeElapsed: '0 min' });
+      setLastClassification({
+        ...data.classification,
+        description: data.description,
+        incidentId: data.id,
+      });
+
+      setSelectedEmergency({ ...type, result: data });
+      setSubmitting(false);
+    } catch (err) {
+      console.error('Error al reportar emergencia:', err);
+      setSubmitError(err.message);
+      setSubmitting(false);
     }
   };
 
@@ -81,7 +115,12 @@ export default function MobileApp({ addIncident, setLastClassification }) {
           ) : (
             <StatusScreen
               emergency={selectedEmergency}
-              onBack={() => setScreen('home')}
+              submitting={submitting}
+              error={submitError}
+              onBack={() => {
+                setSubmitError(null);
+                setScreen('home');
+              }}
             />
           )}
         </div>
@@ -142,7 +181,64 @@ function HomeScreen({ onTypeClick, onBigEmergency }) {
   );
 }
 
-function StatusScreen({ emergency, onBack }) {
+function StatusScreen({ emergency, submitting, error, onBack }) {
+  const result = emergency?.result;
+
+  if (submitting) {
+    return (
+      <div className="mobile-status">
+        <div className="status-header">
+          <button className="status-back" onClick={onBack}>
+            <ArrowLeft size={20} />
+          </button>
+          <span>Enviando reporte</span>
+          <div style={{ width: 20 }} />
+        </div>
+        <div className="status-body">
+          <div className="status-check-circle">
+            <div className="check-circle-outer" style={{ background: 'var(--accent)' }}>
+              <Clock size={48} color="white" />
+            </div>
+          </div>
+          <h1 className="status-title">Enviando reporte...</h1>
+          <p className="status-subtitle">Conectando con la central de emergencias. Espera un momento.</p>
+          <div className="status-loading-spinner">
+            <div className="loading-spinner" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mobile-status">
+        <div className="status-header">
+          <button className="status-back" onClick={onBack}>
+            <ArrowLeft size={20} />
+          </button>
+          <span>Error</span>
+          <div style={{ width: 20 }} />
+        </div>
+        <div className="status-body">
+          <div className="status-check-circle">
+            <div className="check-circle-outer" style={{ background: '#ef4444' }}>
+              <TriangleAlert size={48} color="white" />
+            </div>
+          </div>
+          <h1 className="status-title">Error al enviar</h1>
+          <p className="status-subtitle">No se pudo conectar con el servidor de emergencias. Verifica tu conexión e intenta nuevamente.</p>
+          <div className="status-actions">
+            <button className="status-action-btn primary" onClick={onBack}>Volver a intentar</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const priorityColor = result?.classification?.priority === 'Crítico' || result?.classification?.priority === 'Critico' ? '#ef4444' :
+    result?.classification?.priority === 'Alto' ? '#f97316' : '#eab308';
+
   return (
     <div className="mobile-status">
       <div className="status-header">
@@ -167,25 +263,35 @@ function StatusScreen({ emergency, onBack }) {
 
         <div className="status-info-card">
           <div className="info-row">
-            <div className="info-icon" style={{ background: '#eff6ff' }}>
-              <MapPin size={18} color="#3b82f6" />
+            <div className="info-icon" style={{ background: '#f0fdf4' }}>
+              <ShieldCheck size={18} color="#22c55e" />
             </div>
             <div className="info-text">
-              <span className="info-label">Ubicación confirmada</span>
-              <span className="info-value">Comas, Lima - Vía Pública</span>
+              <span className="info-label">Código de reporte</span>
+              <span className="info-value" style={{ fontWeight: 700 }}>{result?.id || '—'}</span>
             </div>
           </div>
           <div className="info-divider" />
           <div className="info-row">
-            <div className="info-icon" style={{ background: emergency?.id === 'robo' || emergency?.id === 'incendio' ? '#fef2f2' : '#fff7ed' }}>
+            <div className="info-icon" style={{ background: result?.classification?.priority === 'Crítico' || result?.classification?.priority === 'Critico' ? '#fef2f2' : '#fff7ed' }}>
               {emergency?.id === 'robo' ? <TriangleAlert size={18} color="#ef4444" /> :
                emergency?.id === 'incendio' ? <Flame size={18} color="#ef4444" /> :
                emergency?.id === 'accidente' ? <Car size={18} color="#f97316" /> :
-               <Heart size={18} color="#f97316" />}
+               <Heart size={18} color={priorityColor} />}
             </div>
             <div className="info-text">
               <span className="info-label">Tipo de emergencia</span>
-              <span className="info-value">{emergency?.label || 'Emergencia General'}</span>
+              <span className="info-value">{result?.classification?.typeLabel || emergency?.label || 'Emergencia General'}</span>
+            </div>
+          </div>
+          <div className="info-divider" />
+          <div className="info-row">
+            <div className="info-icon" style={{ background: '#eff6ff' }}>
+              <MapPin size={18} color="#3b82f6" />
+            </div>
+            <div className="info-text">
+              <span className="info-label">Ubicación</span>
+              <span className="info-value">{result?.location || 'Comas, Lima - Vía Pública'}</span>
             </div>
           </div>
           <div className="info-divider" />
