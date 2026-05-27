@@ -2,72 +2,82 @@
 
 SafeDistrict es una solución tecnológica diseñada para optimizar la gestión de emergencias mediante Inteligencia Artificial. El sistema permite la recepción de reportes de ciudadanos, su clasificación automática y la visualización jerárquica de incidentes para los operadores de respuesta.
 
-Este repositorio contiene la **versión estática en React** (Prototipo UI/UX) del frontend de SafeDistrict.
+Este repositorio contiene la arquitectura completa (Full-Stack) de SafeDistrict, integrando un frontend en React, un backend en Spring Boot y procesamiento de Lenguaje Natural (NLP) a través de Google Gemini AI.
 
 ## Características Principales
 
-El prototipo actual incluye los siguientes módulos y funcionalidades:
-
-1. **Dashboard Táctico del Operador**:
+1. **Dashboard Táctico del Operador (Frontend)**:
    - Panel interactivo con estadísticas en tiempo real (incidentes activos, críticos, tiempos de respuesta).
-   - **Mapa Táctico (`IncidentMap`)**: Un mapa interactivo que posiciona los incidentes geográficamente de acuerdo a su tipo (incendio, accidente, emergencia médica, etc.) y muestra un resplandor ("halo") basado en la prioridad.
-   - Panel de detalles y despachos (`RightIncidentPanel`) para la gestión individual de cada emergencia.
+   - **Mapa Táctico (`IncidentMap`)**: Un mapa interactivo que posiciona los incidentes geográficamente de acuerdo a su tipo y muestra un resplandor ("halo") basado en la prioridad.
+   - Panel de detalles y despachos para la gestión individual de cada emergencia.
 
-2. **Simulador de Reporte Ciudadano (`MobileApp`)**:
-   - Una interfaz móvil simulada que permite a los ciudadanos enviar alertas.
-   - Integración con un simulador de Inteligencia Artificial (Procesamiento de Lenguaje Natural - NLP) que actúa como primer nivel de triaje (Chatbot) y evalúa el nivel de urgencia automáticamente.
+2. **Reporte Ciudadano e Inteligencia Artificial (Backend + Gemini API)**:
+   - Interfaz de triaje (Chatbot) que permite a los ciudadanos enviar alertas.
+   - **Clasificación por IA Real**: Integración con Google Gemini (Spring AI) para evaluar automáticamente el nivel de urgencia, clasificar el tipo de emergencia y asignar una prioridad (Crítico, Alto, Medio, Bajo) basándose en la descripción del usuario.
 
-3. **Arquitectura y Diseño**:
-   - Interfaz de usuario "Glassmorphism" con diseño oscuro, pensada para centros de monitoreo.
-   - Alertas visuales con código de colores según el nivel de urgencia: **Crítico** (Rojo), **Alto** (Naranja), **Medio** (Amarillo) y **Bajo** (Verde).
-   - Aplicación responsiva construida con Vite y React, sin dependencias de frameworks CSS externos, priorizando código limpio en CSS puro.
+## Estructura del Repositorio
 
-## Estructura del Proyecto
+El proyecto está organizado siguiendo las mejores prácticas de desarrollo:
 
 ```text
-/safedistrict-app
- ├── /src
- │   ├── /components
- │   │   ├── Chatbot.jsx            # Interfaz de triaje automático (NLP)
- │   │   ├── Dashboard.jsx          # Panel principal del operador
- │   │   ├── IncidentMap.jsx        # Mapa táctico con geolocalización simulada
- │   │   ├── MobileApp.jsx          # Vista móvil para el reporte ciudadano
- │   │   ├── PillNav.jsx            # Componente de navegación
- │   │   ├── RightIncidentPanel.jsx # Panel lateral de información de incidentes
- │   │   └── Sidebar.jsx            # Menú lateral del dashboard
- │   ├── /data
- │   │   └── mockData.js            # Datos simulados para pruebas
- │   ├── App.jsx                    # Componente principal integrador
- │   ├── index.css                  # Estilos globales y variables de diseño
- │   └── main.jsx                   # Punto de entrada de React
+/
+ ├── .github/workflows/       # Integración y despliegue continuo (CI/CD)
+ ├── backend/                 # API REST desarrollada en Java con Spring Boot 3
+ ├── database/                # Scripts SQL, procedimientos almacenados y backups
+ │   ├── backups/
+ │   ├── procedures/
+ │   └── scripts/
+ ├── docs/                    # Documentación técnica, manuales y diagramas
+ │   ├── arquitectura/
+ │   ├── diagramas/
+ │   └── historias-usuario/
+ ├── frontend/                # Aplicaciones cliente
+ │   └── web-app/             # Aplicación React (Vite) para operadores y reporte
+ └── tests/                   # Pruebas generales e2e / integración
 ```
 
-## Requisitos Previos
+## Tecnologías Utilizadas
 
-Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o superior) en tu computadora.
+- **Frontend**: React, Vite, Lucide React, CSS Vanilla (Variables, Dark Mode).
+- **Backend**: Java 21, Spring Boot 3, Spring AI, Spring Data JPA.
+- **Base de Datos**: PostgreSQL.
+- **Inteligencia Artificial**: Google GenAI API (Gemini 2.0 Flash).
 
-## Instalación y Uso
+## Instalación y Configuración
 
-Sigue estos pasos para correr la aplicación en tu entorno local:
-
-1. Ingresa a la carpeta de la aplicación React:
+### 1. Configuración de Base de Datos y Backend
+1. Asegúrate de tener instalado **PostgreSQL** y **Java 21**.
+2. Crea una base de datos en PostgreSQL llamada `safedistrict_db`.
+3. Ingresa a la carpeta del backend:
    ```bash
-   cd safedistrict-app
+   cd backend
+   ```
+4. Configura tus variables de entorno creando un archivo `.env` basado en `.env.example`:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=safedistrict_db
+   DB_USERNAME=postgres
+   DB_PASSWORD=tu_contraseña_postgresql
+   GEMINI_API_KEY=tu_api_key_de_gemini
+   ```
+5. Ejecuta el servidor de Spring Boot:
+   ```bash
+   ./mvnw spring-boot:run
    ```
 
-2. Instala las dependencias del proyecto:
+### 2. Configuración del Frontend
+1. Asegúrate de tener instalado **Node.js** (versión 18 o superior).
+2. En una nueva terminal, ingresa a la carpeta del frontend web:
+   ```bash
+   cd frontend/web-app
+   ```
+3. Instala las dependencias:
    ```bash
    npm install
    ```
-
-3. Inicia el servidor de desarrollo:
+4. Inicia el servidor de desarrollo:
    ```bash
    npm run dev
    ```
-
-4. Abre tu navegador y dirígete a la dirección local que Vite te indique (por defecto es `http://localhost:5173/`).
-
-## Decisiones Técnicas
-- **React + Vite**: Elegidos por su velocidad de compilación y excelente experiencia de desarrollo para prototipado rápido.
-- **Lucide React**: Librería de iconos vectoriales ligera que mantiene la consistencia visual moderna del proyecto.
-- **CSS Vanilla (Variables)**: Para mantener un control detallado de la estética "Dark Mode" y animaciones sin depender de librerías CSS pesadas.
+5. Abre tu navegador en la ruta indicada por Vite (usualmente `http://localhost:5173/`).
