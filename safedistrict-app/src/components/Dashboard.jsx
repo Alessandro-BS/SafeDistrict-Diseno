@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ShieldAlert, Bell, Activity, Clock, TrendingUp, AlertTriangle } from 'lucide-react';
+import { normalizePriority } from '../data/classificationEngine';
 import IncidentMap from './IncidentMap';
 import RightIncidentPanel from './RightIncidentPanel';
 
@@ -7,7 +8,7 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
   const [activeTab, setActiveTab] = useState('mapa');
   const [focusedIncident, setFocusedIncident] = useState(null);
 
-  const criticos = incidents.filter(i => i.priority === 'Crítico').length;
+  const criticos = incidents.filter(i => normalizePriority(i.priority) === 'Crítico').length;
   const total = incidents.length;
 
   const tabs = [
@@ -57,7 +58,7 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
           <div className="cmd-stat">
             <Activity size={16} />
             <span className="cmd-stat-label">En curso</span>
-            <span className="cmd-stat-value">{incidents.filter(i => i.status === 'En Curso').length}</span>
+            <span className="cmd-stat-value">{incidents.filter(i => i.status === 'En curso' || i.status === 'En Curso').length}</span>
           </div>
           <div className="cmd-stat">
             <TrendingUp size={16} />
@@ -84,8 +85,8 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
             </span>
           </div>
           <div className="banner-badge" style={{
-            background: lastClassification.priority === 'Crítico' ? '#ef4444' :
-                        lastClassification.priority === 'Alto' ? '#f97316' : '#eab308'
+            background: normalizePriority(lastClassification.priority) === 'Crítico' ? '#ef4444' :
+                        normalizePriority(lastClassification.priority) === 'Alto' ? '#f97316' : '#eab308'
           }}>
             {lastClassification.priorityLabel}
           </div>

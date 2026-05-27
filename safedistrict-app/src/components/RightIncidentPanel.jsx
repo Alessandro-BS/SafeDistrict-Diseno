@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, Clock, MapPin, Search, Eye } from 'lucide-react';
+import { normalizePriority, getTimeElapsed } from '../data/classificationEngine';
 
 const priorityConfig = {
   'Crítico': { color: '#ef4444', bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.25)' },
@@ -14,7 +15,7 @@ export default function RightIncidentPanel({ incidents, onViewRoute }) {
 
   const filtered = useMemo(() => {
     let result = [...incidents];
-    if (filter !== 'Todas') result = result.filter(i => i.priority === filter);
+    if (filter !== 'Todas') result = result.filter(i => normalizePriority(i.priority) === filter);
     if (search) {
       const q = search.toLowerCase();
       result = result.filter(i => i.id.toLowerCase().includes(q) || i.description.toLowerCase().includes(q));
@@ -47,24 +48,26 @@ export default function RightIncidentPanel({ incidents, onViewRoute }) {
           <option value="Crítico">Crítico</option>
           <option value="Alto">Alto</option>
           <option value="Medio">Medio</option>
+          <option value="Bajo">Bajo</option>
         </select>
       </div>
 
       <div className="right-panel-list">
         {filtered.map((inc) => {
-          const cfg = priorityConfig[inc.priority] || priorityConfig.Medio;
+          const displayPriority = normalizePriority(inc.priority);
+          const cfg = priorityConfig[displayPriority] || priorityConfig.Medio;
           return (
             <div key={inc.id} className="incident-card" style={{ borderColor: cfg.border }}>
               <div className="incident-card-top">
                 <span className="incident-id">{inc.id}</span>
                 <span className="incident-badge" style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}>
-                  {inc.priority}
+                  {displayPriority}
                 </span>
               </div>
               <div className="incident-card-desc">{inc.description}</div>
               <div className="incident-card-meta">
                 <span><MapPin size={12} /> {inc.location}</span>
-                <span><Clock size={12} /> {inc.timeElapsed}</span>
+                <span><Clock size={12} /> {getTimeElapsed(inc.createdAt) || inc.timeElapsed || '0 min'}</span>
               </div>
               <div className="incident-card-footer">
                 <span className="incident-status" style={{
