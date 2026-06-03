@@ -23,16 +23,31 @@ El proyecto está organizado siguiendo las mejores prácticas de desarrollo:
 /
  ├── .github/workflows/       # Integración y despliegue continuo (CI/CD)
  ├── backend/                 # API REST desarrollada en Java con Spring Boot 3
+ │   ├── src/main/java/.../   # Paquete principal (com.safedistrict.backend)
+ │   │   ├── config/          # Configuraciones (Seguridad, CORS, IA, etc.)
+ │   │   ├── controller/      # Controladores REST (Endpoints)
+ │   │   ├── dto/             # Objetos de Transferencia de Datos (Request/Response)
+ │   │   ├── entity/          # Entidades JPA (Modelos de BD)
+ │   │   ├── exception/       # Manejo de excepciones y errores
+ │   │   ├── repository/      # Interfaces de acceso a datos (Spring Data JPA)
+ │   │   └── service/         # Lógica de negocio y procesamiento
+ │   └── pom.xml              # Dependencias de Maven
  ├── database/                # Scripts SQL, procedimientos almacenados y backups
- │   ├── backups/
- │   ├── procedures/
- │   └── scripts/
+ │   ├── backups/             # Archivos de respaldo de base de datos
+ │   ├── procedures/          # Procedimientos almacenados de PostgreSQL
+ │   └── scripts/             # Scripts de migración y DDL
  ├── docs/                    # Documentación técnica, manuales y diagramas
- │   ├── arquitectura/
- │   ├── diagramas/
- │   └── historias-usuario/
+ │   ├── arquitectura/        # Documentos de arquitectura del sistema
+ │   ├── diagramas/           # Diagramas UML y de flujo
+ │   └── historias-usuario/   # Historias de usuario y requisitos
  ├── frontend/                # Aplicaciones cliente
  │   └── web-app/             # Aplicación React (Vite) para operadores y reporte
+ │       ├── public/          # Archivos estáticos y favicon
+ │       └── src/             # Código fuente de React
+ │           ├── assets/      # Imágenes y recursos locales
+ │           ├── components/  # Componentes de la interfaz de usuario
+ │           ├── context/     # Estados globales y contextos (Ej. Theme)
+ │           └── data/        # Lógica de clasificación y mocks
  └── tests/                   # Pruebas generales e2e / integración
 ```
 
