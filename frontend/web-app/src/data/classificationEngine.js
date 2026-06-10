@@ -114,18 +114,38 @@ export function generateIncidentId() {
 
 export function normalizePriority(p) {
   if (!p) return 'Medio';
+  const strP = String(p).toLowerCase().trim();
+
   const map = {
-    Critico: 'Crítico',
-    'Crítico': 'Crítico',
+    // Crítico
     critico: 'Crítico',
-    Alto: 'Alto',
+    crítico: 'Crítico',
+    critical: 'Crítico',
+    p1: 'Crítico',
+    '1': 'Crítico',
+    urgente: 'Crítico',
+
+    // Alto
     alto: 'Alto',
-    Medio: 'Medio',
+    high: 'Alto',
+    p2: 'Alto',
+    '2': 'Alto',
+
+    // Medio
     medio: 'Medio',
-    Bajo: 'Bajo',
+    medium: 'Medio',
+    normal: 'Medio',
+    p3: 'Medio',
+    '3': 'Medio',
+
+    // Bajo
     bajo: 'Bajo',
+    low: 'Bajo',
+    p4: 'Bajo',
+    '4': 'Bajo',
   };
-  return map[p] || p;
+
+  return map[strP] || 'Medio';
 }
 
 export function getTimeElapsed(createdAt) {
@@ -153,6 +173,34 @@ export function getTimeElapsed(createdAt) {
 
   const diffD = Math.floor(diffH / 24);
   return `${diffD}d ${diffH % 24}h`;
+}
+
+export function translateType(type) {
+  if (!type) return 'Desconocido';
+  const raw = type.toLowerCase().trim();
+  const map = {
+    fire: 'Incendio',
+    fire_emergency: 'Incendio',
+    theft: 'Robo',
+    robbery: 'Robo',
+    accident: 'Accidente',
+    traffic_accident: 'Accidente de Tránsito',
+    medical: 'Emergencia Médica',
+    medical_emergency: 'Emergencia Médica',
+    crime_armed: 'Robo Armado',
+    criminal_assault: 'Asalto',
+    crime: 'Delito',
+    emergency_general: 'Emergencia General',
+    security_incident: 'Incidente de Seguridad',
+    suspicious_activity: 'Actividad Sospechosa',
+    vandalism: 'Vandalismo',
+    domestic_violence: 'Violencia Doméstica'
+  };
+  
+  if (map[raw]) return map[raw];
+  
+  // Fallback: replace underscores with spaces and capitalize
+  return raw.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
 export const emergencyTypeOptions = [

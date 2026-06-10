@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Bot, Camera, MapPin, ArrowUp } from 'lucide-react';
 import { classifyText, generateIncidentId, emergencyTypeOptions, safetyInfoTips, normalizePriority } from '../data/classificationEngine';
 
 const steps = {
@@ -27,34 +26,74 @@ function getRandomLocation() {
 function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
   const isBot = msg.sender === 'bot';
 
-  return (
-    <div className={`chat-bubble ${isBot ? 'bot' : 'user'}`}>
-      {isBot && (
-        <div className="bubble-avatar">
-          <Bot size={16} color="#6366f1" />
+  if (!isBot) {
+    return (
+      <div className="flex flex-col items-end gap-1 ml-auto max-w-[85%] animate-in fade-in slide-in-from-right-4 duration-300">
+        <div className="bg-primary text-on-primary p-3 rounded-2xl rounded-tr-none shadow-md text-sm">
+          <p>{msg.text}</p>
+          <span className="text-[10px] opacity-70 mt-1 block text-right">{msg.time}</span>
         </div>
-      )}
-      <div className={`bubble-content ${isBot ? 'bot' : 'user'}`}>
-        <div className="bubble-text">{msg.text}</div>
+      </div>
+    );
+  }
 
-        {msg.classification && (
-          <div className="bubble-classification">
-            <div className="classif-header">CLASIFICACIÓN IA</div>
-            <div className="classif-row">
-              <span className="classif-type">{msg.classification.typeLabel}</span>
-              <span className={`badge priority-${normalizePriority(msg.classification.priority)}`}>
-                {msg.classification.priorityLabel}
-              </span>
+  return (
+    <div className="flex gap-2 max-w-[85%] animate-in fade-in slide-in-from-left-4 duration-300">
+      <div className="w-8 h-8 flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="material-symbols-outlined text-primary text-sm" style={{fontVariationSettings: '"FILL" 1'}}>robot_2</span>
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className="bg-white p-3 rounded-2xl rounded-tl-none border border-outline-variant shadow-sm text-sm">
+          {/* Support simple markdown-like bold */}
+          <p dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }}></p>
+
+          {msg.classification && (
+            <div className="mt-3 p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/30 flex flex-col gap-2">
+              <span className="text-[10px] font-bold text-primary tracking-wider">CLASIFICACIÓN IA</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold">{msg.classification.typeLabel}</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                    msg.classification.priority === 'Crítico' ? 'bg-red-100 text-red-700' :
+                    msg.classification.priority === 'Alto' ? 'bg-orange-100 text-orange-700' :
+                    'bg-green-100 text-green-700'
+                }`}>
+                  {msg.classification.priorityLabel}
+                </span>
+              </div>
+              <span className="text-xs text-outline">Confianza: {Math.round(msg.classification.confidence * 100)}%</span>
+              <span className="text-xs font-bold text-green-600">✓ Incidente registrado ID: {msg.incidentId}</span>
             </div>
-            <div className="classif-confidence">Confianza: {Math.round(msg.classification.confidence * 100)}%</div>
-            <div className="classif-id">✓ Incidente registrado con ID: {msg.incidentId}</div>
-          </div>
-        )}
+          )}
+
+          {msg.incidentStatus && (
+            <div className="mt-3 p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/30 flex flex-col gap-2">
+              <span className="text-[10px] font-bold text-primary tracking-wider">ESTADO DEL REPORTE</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold">{msg.incidentStatus.id}</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                    msg.incidentStatus.priority === 'Crítico' ? 'bg-red-100 text-red-700' :
+                    msg.incidentStatus.priority === 'Alto' ? 'bg-orange-100 text-orange-700' :
+                    'bg-green-100 text-green-700'
+                }`}>
+                  {msg.incidentStatus.priorityLabel}
+                </span>
+              </div>
+              <span className="text-xs text-on-surface-variant">{msg.incidentStatus.description}</span>
+              <span className="text-xs font-bold text-primary">Estado: {msg.incidentStatus.status}</span>
+            </div>
+          )}
+
+          <span className="text-[10px] text-outline mt-1 block text-right">{msg.time}</span>
+        </div>
 
         {msg.options && (
-          <div className="bubble-options">
+          <div className="flex flex-wrap gap-2">
             {msg.options.map((opt, i) => (
-              <button key={i} className="option-btn" onClick={() => onOptionClick(opt)}>
+              <button 
+                key={i} 
+                className="px-3 py-1.5 bg-white border border-outline-variant text-on-surface-variant rounded-full text-xs font-medium hover:bg-surface-container-high transition-colors active:scale-95"
+                onClick={() => onOptionClick(opt)}
+              >
                 {opt}
               </button>
             ))}
@@ -62,9 +101,17 @@ function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
         )}
 
         {msg.typeOptions && (
-          <div className="bubble-options type-options">
+          <div className="flex flex-wrap gap-2">
             {msg.typeOptions.map((opt, i) => (
-              <button key={i} className="option-btn type-btn" onClick={() => onTypeSelect(opt.value)}>
+              <button 
+                key={i} 
+                className="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-lg text-xs font-medium hover:border-primary transition-colors flex items-center gap-1 active:scale-95"
+                onClick={() => onTypeSelect(opt.value)}
+              >
+                {opt.label === 'Robo' && <span className="material-symbols-outlined text-sm">running_with_errors</span>}
+                {opt.label === 'Accidente' && <span className="material-symbols-outlined text-sm">car_crash</span>}
+                {opt.label === 'Incendio' && <span className="material-symbols-outlined text-sm">local_fire_department</span>}
+                {opt.label === 'Emergencia Médica' && <span className="material-symbols-outlined text-sm">medical_services</span>}
                 {opt.label}
               </button>
             ))}
@@ -72,35 +119,15 @@ function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
         )}
 
         {msg.safetyTips && (
-          <div className="bubble-tips">
+          <div className="flex flex-col gap-2">
             {msg.safetyTips.map((tip, i) => (
-              <details key={i} className="tip-card">
-                <summary className="tip-summary">{tip.title}</summary>
-                <p className="tip-content">{tip.content}</p>
+              <details key={i} className="bg-white border border-outline-variant rounded-xl p-3 text-sm shadow-sm">
+                <summary className="font-bold text-on-surface cursor-pointer focus:outline-none">{tip.title}</summary>
+                <p className="text-on-surface-variant mt-2 text-xs">{tip.content}</p>
               </details>
             ))}
           </div>
         )}
-
-        {msg.incidentStatus && (
-          <div className="bubble-classification">
-            <div className="classif-header">ESTADO DEL REPORTE</div>
-            <div className="classif-row">
-              <span className="classif-type">{msg.incidentStatus.id}</span>
-              <span className={`badge priority-${normalizePriority(msg.incidentStatus.priority)}`}>
-                {msg.incidentStatus.priorityLabel}
-              </span>
-            </div>
-            <div className="classif-desc">{msg.incidentStatus.description}</div>
-            <div className="classif-id">
-              Estado: <span style={{ color: 'var(--priority-medium)' }}>{msg.incidentStatus.status}</span>
-            </div>
-          </div>
-        )}
-
-
-
-        <span className="bubble-time">{msg.time}</span>
       </div>
     </div>
   );
@@ -108,26 +135,44 @@ function MessageBubble({ msg, onOptionClick, onTypeSelect }) {
 
 function TypingIndicator() {
   return (
-    <div className="chat-bubble bot">
-      <div className="bubble-avatar">
-        <Bot size={16} color="#6366f1" />
+    <div className="flex gap-2 max-w-[85%] animate-in fade-in duration-300">
+      <div className="w-8 h-8 flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="material-symbols-outlined text-primary text-sm" style={{fontVariationSettings: '"FILL" 1'}}>robot_2</span>
       </div>
-      <div className="bubble-content bot typing">
-        <div className="typing-dots">
-          <span>●</span><span>●</span><span>●</span>
+      <div className="flex flex-col gap-2">
+        <div className="bg-white p-3 rounded-2xl rounded-tl-none border border-outline-variant shadow-sm text-sm flex items-center gap-1 h-[44px]">
+            <div className="w-1.5 h-1.5 bg-outline-variant rounded-full animate-bounce"></div>
+            <div className="w-1.5 h-1.5 bg-outline-variant rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+            <div className="w-1.5 h-1.5 bg-outline-variant rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
         </div>
       </div>
     </div>
   );
 }
 
-export default function Chatbot({ addIncident, setLastClassification }) {
+export default function Chatbot({ addIncident, setLastClassification, setCurrentView }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [step, setStep] = useState('welcome');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const welcomeSentRef = useRef(false);
+
+  const [timeStr, setTimeStr] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTimeStr(now.toLocaleTimeString('es-ES', { 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          hour12: false 
+      }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -145,7 +190,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
         id: Date.now(),
         sender: 'bot',
         text,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false }),
         ...extras
       };
       setMessages(prev => [...prev, newMsg]);
@@ -165,7 +210,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
   const handleOptionClick = (option) => {
     setMessages(prev => [...prev, {
       id: Date.now(), sender: 'user', text: option,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false })
     }]);
 
     if (option === 'Reportar emergencia') {
@@ -188,7 +233,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     const typeLabel = emergencyTypeOptions.find(o => o.value === typeValue).label;
     setMessages(prev => [...prev, {
       id: Date.now(), sender: 'user', text: typeLabel,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false })
     }]);
     setTimeout(() => sendBotMessage(`Has seleccionado **${typeLabel}**. Describe brevemente lo que está sucediendo (incluye ubicación si es posible):`), 400);
   };
@@ -197,18 +242,14 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     if (!input.trim()) return;
 
     const userText = input;
-    // 1. Mostramos el mensaje del usuario en el chat
     setMessages(prev => [...prev, {
       id: Date.now(), sender: 'user', text: userText,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false })
     }]);
     setInput('');
-
-    // 2. Activamos el indicador de que el bot está "pensando"
     setIsTyping(true);
 
     try {
-      // 3. Hacemos la petición real al backend en Spring Boot
       const response = await fetch(`${API_BASE}/incidents/report`, {
         method: 'POST',
         headers: {
@@ -216,7 +257,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
         },
         body: JSON.stringify({
           text: userText,
-          location: getRandomLocation() // Mantenemos tu función mock para la ubicación por ahora
+          location: getRandomLocation()
         })
       });
 
@@ -224,15 +265,12 @@ export default function Chatbot({ addIncident, setLastClassification }) {
         throw new Error(`Error del servidor: ${response.status}`);
       }
 
-      // 4. Recibimos la respuesta estructurada desde Java
       const data = await response.json();
       const classification = data.classification;
 
       setIsTyping(false);
 
-      // 5. Actualizamos el estado global (Dashboard) y el Chatbot
       setTimeout(() => {
-        // Agregamos el incidente real. Le sumamos 'timeElapsed' para no romper tu UI actual.
         addIncident({
           ...data,
           timeElapsed: '0 min'
@@ -240,9 +278,8 @@ export default function Chatbot({ addIncident, setLastClassification }) {
 
         setLastClassification({ ...classification, description: data.description, incidentId: data.id });
 
-        // Enviamos el mensaje final del bot con la data real de la BD y la IA
         sendBotMessage(
-            `**Reporte registrado exitosamente**\n\n**ID:** ${data.id}\n**Tipo:** ${classification.typeLabel}\n**Prioridad:** ${classification.priorityLabel}\n**Confianza:** ${Math.round(classification.confidence * 100)}%\n\n${classification.summary}\n\nLos operadores han sido notificados.`,
+            `**Reporte registrado exitosamente**\n\nLos operadores han sido notificados.`,
             { classification, incidentId: data.id, options: ['Ver mis reportes', 'Reportar otra emergencia', 'Finalizar'] }
         );
         setStep(steps.REPORT_RESULT);
@@ -259,21 +296,13 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     }
   };
 
-  const handleInputSubmit = () => {
-    if (step === steps.REPORT_DESCRIPTION) {
-      handleReportSubmit();
-    } else if (step === steps.CHECK_STATUS) {
-      handleStatusCheck();
-    }
-  };
-
   const handleStatusCheck = async () => {
     if (!input.trim()) return;
 
     const incidentId = input.trim().toUpperCase();
     setMessages(prev => [...prev, {
       id: Date.now(), sender: 'user', text: incidentId,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false })
     }]);
     setInput('');
     setIsTyping(true);
@@ -296,7 +325,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
 
       setIsTyping(false);
       sendBotMessage(
-        `**Estado del reporte ${data.id}**\n\n**Tipo:** ${cls?.typeLabel || data.type}\n**Prioridad:** ${cls?.priorityLabel || data.priority}\n**Ubicación:** ${data.location}\n**Estado:** ${data.status}`,
+        `Aquí tienes el estado de tu reporte:`,
         {
           incidentStatus: {
             id: data.id,
@@ -321,11 +350,19 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     }
   };
 
+  const handleInputSubmit = () => {
+    if (step === steps.REPORT_DESCRIPTION) {
+      handleReportSubmit();
+    } else if (step === steps.CHECK_STATUS) {
+      handleStatusCheck();
+    }
+  };
+
   const handleOptionFlow = (option) => {
     if (option === 'Ver mis reportes') {
       setMessages(prev => [...prev, {
         id: Date.now(), sender: 'user', text: option,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false })
       }]);
       setTimeout(() => sendBotMessage('Funcionalidad próximamente. Consulta el Dashboard del operador para ver incidentes activos.'), 400);
     } else if (option === 'Reportar otra emergencia') {
@@ -333,7 +370,7 @@ export default function Chatbot({ addIncident, setLastClassification }) {
     } else if (option === 'Finalizar' || option === 'No, gracias') {
       setMessages(prev => [...prev, {
         id: Date.now(), sender: 'user', text: option,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false })
       }]);
       setTimeout(() => sendBotMessage('Gracias por contactarte con SafeDistrict. ¡Cuídate!'), 400);
     } else if (option === 'Intentar de nuevo' || option === 'Consultar otro reporte') {
@@ -347,63 +384,147 @@ export default function Chatbot({ addIncident, setLastClassification }) {
   const shouldShowInput = step === steps.REPORT_DESCRIPTION || step === steps.CHECK_STATUS;
 
   return (
-    <div className="chatbot-wrapper">
-      <div className="chatbot-card">
-        <div className="chatbot-header">
-          <div className="header-left">
-            <div className="header-avatar">
-              <Bot size={22} color="white" />
+    <section className="flex-1 bg-surface-container-low p-8 overflow-y-auto flex flex-col items-center">
+      {/* Secondary Navigation Tabs */}
+      <div className="flex bg-surface-container-high p-1.5 rounded-xl mb-8 self-center border border-outline-variant shadow-sm">
+        <button 
+          onClick={() => setCurrentView('mobile')}
+          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant hover:text-on-surface font-label-bold transition-colors"
+        >
+          <span className="material-symbols-outlined text-[18px]">smartphone</span>
+          App Móvil
+        </button>
+        <button 
+          className="flex items-center gap-2 px-6 py-2.5 bg-surface text-primary rounded-lg shadow-sm font-label-bold border border-outline-variant/30 transition-all"
+        >
+          <span className="material-symbols-outlined text-[18px]" style={{fontVariationSettings: '"FILL" 1'}}>forum</span>
+          Chatbot
+        </button>
+        <button 
+          disabled
+          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant font-label-bold transition-colors opacity-50 cursor-not-allowed"
+        >
+          <span className="material-symbols-outlined text-[18px]">analytics</span>
+          Reportes
+        </button>
+        <button 
+          onClick={() => setCurrentView('dashboard')}
+          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant hover:text-on-surface font-label-bold transition-colors"
+        >
+          <span className="material-symbols-outlined text-[18px]">grid_view</span>
+          Panel Admin
+        </button>
+      </div>
+
+      {/* Mobile Device Simulator Container */}
+      <div className="relative flex justify-center items-center w-full max-w-4xl py-12 my-4 bg-white/50 backdrop-blur-sm rounded-[40px] border border-outline-variant shadow-xl">
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none rounded-[40px]" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, #003d9b 1px, transparent 0)', backgroundSize: '32px 32px'}}></div>
+        
+        <div className="iphone-frame ring-8 ring-black/5" style={{ transform: 'scale(0.85)', transformOrigin: 'center center' }}>
+          <div className="iphone-notch"></div>
+          
+          {/* iOS Status Bar */}
+          <div className="h-10 w-full flex justify-between items-center px-8 pt-4">
+            <span className="text-[14px] font-bold">{timeStr.slice(0, 5)}</span>
+            <div className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[18px]">signal_cellular_4_bar</span>
+              <span className="material-symbols-outlined text-[18px]">wifi</span>
+              <span className="material-symbols-outlined text-[18px]">battery_full</span>
             </div>
-            <div className="header-info">
-              <h2>SafeDistrict Assistant</h2>
-              <div className="online-status">
-                <span className="online-dot" />
-                En línea
+          </div>
+
+          {/* Chat Header */}
+          <div className="bg-primary px-6 pt-6 pb-4 flex items-center gap-4 text-on-primary">
+            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined" style={{fontVariationSettings: '"FILL" 1'}}>robot_2</span>
+            </div>
+            <div>
+              <h3 className="font-bold text-md leading-tight">SafeDistrict Assistant</h3>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                <span className="text-xs opacity-90">En línea</span>
               </div>
             </div>
+            <button className="ml-auto material-symbols-outlined opacity-80">more_vert</button>
+          </div>
+
+          {/* Chat Body */}
+          <div className="chat-container flex flex-col gap-4 p-4 h-[calc(100%-40px-64px-300px)] overflow-y-auto bg-[#F4F5F7]">
+            {messages.map(msg => (
+              <MessageBubble
+                key={msg.id}
+                msg={msg}
+                onOptionClick={handleOptionFlow}
+                onTypeSelect={handleTypeSelect}
+              />
+            ))}
+            {isTyping && <TypingIndicator />}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area & Keyboard */}
+          <div className="absolute bottom-0 w-full bg-surface-container-low border-t border-outline-variant">
+            <div className="p-3 flex items-center gap-2">
+              <button className="material-symbols-outlined text-primary-container">add_circle</button>
+              <div className="flex-1 bg-white border border-outline-variant rounded-full px-4 py-1.5 text-sm flex items-center">
+                {shouldShowInput ? (
+                  <input
+                    type="text"
+                    className="w-full bg-transparent outline-none text-on-surface-variant"
+                    placeholder={step === steps.REPORT_DESCRIPTION ? 'Describe la emergencia...' : 'Ingresa el código...'}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleInputSubmit()}
+                    autoFocus
+                  />
+                ) : (
+                  <span className="text-on-surface-variant opacity-50">Selecciona una opción arriba...</span>
+                )}
+                {shouldShowInput && <div className="w-[1px] h-4 bg-primary animate-pulse ml-1"></div>}
+              </div>
+              <button 
+                className={`material-symbols-outlined ${shouldShowInput && input.trim() ? 'text-primary' : 'text-outline-variant'}`}
+                style={{fontVariationSettings: '"FILL" 1'}}
+                onClick={handleInputSubmit}
+                disabled={!shouldShowInput || !input.trim()}
+              >
+                send
+              </button>
+            </div>
+
+            {/* iOS Keyboard Simulator */}
+            <div className="bg-surface-dim p-2 flex flex-col gap-3 pb-8">
+              <div className="flex justify-between gap-1">
+                {['Q','W','E','R','T','Y','U','I','O','P'].map(k => (
+                  <div key={k} className="h-[42px] bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium flex-1 cursor-pointer active:scale-95 transition-transform" onClick={() => shouldShowInput && setInput(i => i + k.toLowerCase())}>{k}</div>
+                ))}
+              </div>
+              <div className="flex justify-center gap-1 px-4">
+                {['A','S','D','F','G','H','J','K','L'].map(k => (
+                  <div key={k} className="h-[42px] bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium flex-1 cursor-pointer active:scale-95 transition-transform" onClick={() => shouldShowInput && setInput(i => i + k.toLowerCase())}>{k}</div>
+                ))}
+              </div>
+              <div className="flex justify-between gap-1">
+                <div className="h-[42px] w-12 bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium cursor-pointer active:scale-95 transition-transform"><span className="material-symbols-outlined text-[18px]">shift</span></div>
+                {['Z','X','C','V','B','N','M'].map(k => (
+                  <div key={k} className="h-[42px] bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium flex-1 cursor-pointer active:scale-95 transition-transform" onClick={() => shouldShowInput && setInput(i => i + k.toLowerCase())}>{k}</div>
+                ))}
+                <div className="h-[42px] w-12 bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium cursor-pointer active:scale-95 transition-transform" onClick={() => shouldShowInput && setInput(i => i.slice(0, -1))}><span className="material-symbols-outlined text-[18px]">backspace</span></div>
+              </div>
+              <div className="flex justify-between gap-1">
+                <div className="h-[42px] w-16 text-xs bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium cursor-pointer active:scale-95 transition-transform">123</div>
+                <div className="h-[42px] w-10 bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium cursor-pointer active:scale-95 transition-transform"><span className="material-symbols-outlined text-[18px]">language</span></div>
+                <div className="h-[42px] w-10 bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium cursor-pointer active:scale-95 transition-transform"><span className="material-symbols-outlined text-[18px]">mic</span></div>
+                <div className="h-[42px] flex-[4] text-xs bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center text-on-surface font-medium cursor-pointer active:scale-95 transition-transform" onClick={() => shouldShowInput && setInput(i => i + ' ')}>espacio</div>
+                <div className="h-[42px] w-16 text-xs text-primary font-bold bg-surface-container-highest border border-outline-variant rounded shadow-sm flex items-center justify-center cursor-pointer active:scale-95 transition-transform" onClick={handleInputSubmit}>INTRO</div>
+              </div>
+            </div>
+            
+            {/* iOS Home Indicator */}
+            <div className="w-1/3 h-1 bg-on-surface rounded-full mx-auto my-2 opacity-30"></div>
           </div>
         </div>
-
-        <div className="chatbot-body">
-          {messages.map(msg => (
-            <MessageBubble
-              key={msg.id}
-              msg={msg}
-              onOptionClick={handleOptionFlow}
-              onTypeSelect={handleTypeSelect}
-            />
-          ))}
-          {isTyping && <TypingIndicator />}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {shouldShowInput && (
-          <div className="chatbot-input-bar">
-            <button className="input-icon-btn">
-              <Camera size={18} color="#9ca3af" />
-            </button>
-            <button className="input-icon-btn">
-              <MapPin size={18} color="#9ca3af" />
-            </button>
-            <input
-              type="text"
-              className="chatbot-input"
-              placeholder={
-                step === steps.REPORT_DESCRIPTION
-                  ? 'Describe la emergencia...'
-                  : 'Ingresa el código del reporte...'
-              }
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleInputSubmit()}
-              autoFocus
-            />
-            <button className="send-btn" onClick={handleInputSubmit}>
-              <ArrowUp size={20} />
-            </button>
-          </div>
-        )}
       </div>
-    </div>
+    </section>
   );
 }

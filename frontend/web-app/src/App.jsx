@@ -16,9 +16,9 @@ function Clock() {
     return () => clearInterval(id);
   }, []);
   return (
-    <div className="header-clock">
-      {time.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-    </div>
+    <span className="font-mono-data text-label-bold text-primary block" id="current-time">
+      {time.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
+    </span>
   );
 }
 
@@ -54,46 +54,40 @@ function App() {
     setIncidents(prev => [incident, ...prev]);
   };
 
-  const showPills = currentView === 'mobile' || currentView === 'chat' || currentView === 'dashboard' || currentView === 'reports';
+  const getTitle = () => {
+    switch (currentView) {
+      case 'dashboard': return 'Panel de Comando';
+      case 'chat': return 'Simulador de Reportes Ciudadanos';
+      case 'reports': return 'Reportes del Ciudadano';
+      case 'mobile': return 'App Móvil SafeDistrict';
+      default: return 'SafeDistrict';
+    }
+  };
 
   return (
-    <div className="app-container">
+    <div className="bg-surface text-on-surface h-screen overflow-hidden flex">
       <Sidebar
         currentView={currentView}
         setCurrentView={setCurrentView}
         lastClassification={lastClassification}
       />
 
-      <div className="main-content">
-        <header className="header">
-          <div className="header-title">
-            {currentView === 'dashboard' ? (
-              <span>Panel de Administración</span>
-            ) : currentView === 'chat' ? (
-              <span>Simulador de Reportes Ciudadanos</span>
-            ) : currentView === 'reports' ? (
-              <span>Reportes del Cuidador</span>
-            ) : (
-              <span>App Móvil SafeDistrict</span>
-            )}
-          </div>
-          <div className="header-right">
-            <Clock />
-            <div className="user-profile">
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>Operador 01</div>
-                <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Turno Mañana</div>
+      <main className="ml-sidebar-width flex-1 h-full flex flex-col relative bg-surface-container-lowest">
+        <header className="h-16 border-b border-outline-variant bg-surface px-6 z-40">
+          <div className="flex items-center justify-between h-full">
+            <div className="flex items-center gap-6">
+              <h1 className="font-headline-md text-headline-md text-on-surface">{getTitle()}</h1>
+            </div>
+            <div className="flex items-center gap-6">
+              <div className="text-right">
+                <Clock />
+                <span className="text-[11px] text-outline">Operador 01 - Turno Mañana</span>
               </div>
-              <div className="avatar">O1</div>
             </div>
           </div>
         </header>
 
-        <main className="content-area">
-          {showPills && (
-            <PillNav currentView={currentView} setCurrentView={setCurrentView} />
-          )}
-
+        <div className="flex-1 flex overflow-hidden">
           {currentView === 'dashboard' && (
             <Dashboard
               incidents={incidents}
@@ -107,6 +101,7 @@ function App() {
             <Chatbot
               addIncident={addIncident}
               setLastClassification={setLastClassification}
+              setCurrentView={setCurrentView}
             />
           )}
           {currentView === 'mobile' && (
@@ -122,8 +117,8 @@ function App() {
               setLastClassification={setLastClassification}
             />
           )}
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
