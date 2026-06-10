@@ -172,8 +172,7 @@ export default function IncidentMap({ incidents, focusedIncident, onMarkerClick,
                           {displayPriority}
                         </span>
                       </div>
-                      <p className="text-sm font-bold text-on-surface mb-1">{displayType}</p>
-                      <p className="text-xs text-on-surface-variant line-clamp-2 mb-3">{incident.description}</p>
+                      <p className="text-sm font-bold text-on-surface line-clamp-3 mb-3">{incident.description}</p>
                       <div className="flex items-center gap-1 text-[10px] text-outline mb-3">
                         <span className="material-symbols-outlined text-[12px]">location_on</span>
                         <span className="truncate">{incident.location}</span>

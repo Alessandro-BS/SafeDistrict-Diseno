@@ -18,6 +18,11 @@ const emergencyTypes = {
     keywords: ['médico', 'medico', 'ambulancia', 'herido', 'desmay', 'paro', 'respir', 'corazón', 'corazon', 'infarto', 'sangr', 'fractura', 'quemadura', 'intoxicación', 'intoxicacion', 'convulsión', 'convulsion', 'inconsciente', 'dolor', 'enfermo', 'emergencia'],
     basePriority: 'Critico',
     icon: 'heart-pulse'
+  },
+  asistencia: {
+    keywords: ['gato', 'mascota', 'arbol', 'árbol', 'basura', 'ruido', 'fiesta', 'musica', 'música', 'vecino', 'molestia', 'bache', 'agua', 'luz', 'calle'],
+    basePriority: 'Bajo',
+    icon: 'info'
   }
 };
 
@@ -25,6 +30,7 @@ const urgencyKeywords = {
   Critico: ['inmediato', 'grave', 'muerte', 'desangr', 'incendio', 'explosión', 'explosion', 'derrumbe', 'secuestro', 'violento', 'arma de fuego', 'balacera', 'atentado', 'terrorista', 'paro cardíaco', 'paro cardiaco'],
   Alto: ['urgente', 'robo', 'asalto', 'accidente', 'choque', 'herido', 'sangrado', 'violencia', 'agresión', 'agresion', 'peligro'],
   Medio: ['molestia', 'ruido', 'discusión', 'discusion', 'desorden', 'caída', 'caida', 'dolor', 'fiebre'],
+  Bajo: ['tranquilo', 'calma', 'informacion', 'consulta', 'duda', 'despues']
 };
 
 export function classifyText(text) {
@@ -53,18 +59,17 @@ export function classifyText(text) {
     return {
       type: 'no_detectado',
       typeLabel: 'No detectado',
-      priority: 'Medio',
-      priorityLabel: 'Medio',
+      priority: 'Bajo',
+      priorityLabel: 'Bajo',
       confidence: 0.2,
-      summary: 'No se pudo clasificar automáticamente. Se asignará prioridad media por defecto.',
+      summary: 'No se encontraron palabras clave de emergencia. Se asignará prioridad baja por defecto.',
       matchedKeywords: [],
       icon: 'help-circle'
     };
   }
 
   let urgencyScore = 0;
-  let urgencyLevel = 'Medio';
-
+  
   for (const [, levelKeywords] of Object.entries(urgencyKeywords)) {
     for (const keyword of levelKeywords) {
       if (normalized.includes(keyword)) {
@@ -74,21 +79,26 @@ export function classifyText(text) {
   }
 
   const basePriority = emergencyTypes[bestType].basePriority;
+  let urgencyLevel = basePriority; // Initialize with base priority
+
   if (basePriority === 'Critico') {
     urgencyLevel = 'Critico';
   } else if (basePriority === 'Alto' && urgencyScore > 0) {
     urgencyLevel = 'Critico';
   } else if (basePriority === 'Alto') {
     urgencyLevel = 'Alto';
-  } else if (urgencyScore > 2) {
-    urgencyLevel = urgencyScore > 4 ? 'Critico' : 'Alto';
+  } else if (basePriority === 'Bajo' && urgencyScore > 1) {
+    urgencyLevel = 'Medio';
+  } else if (basePriority === 'Medio' && urgencyScore > 2) {
+    urgencyLevel = 'Alto';
   }
 
   const typeLabels = {
     robo: 'Robo',
     accidente: 'Accidente',
     incendio: 'Incendio',
-    emergencia_medica: 'Emergencia Médica'
+    emergencia_medica: 'Emergencia Médica',
+    asistencia: 'Asistencia / Reporte Menor'
   };
 
   const totalKeywords = matchedKeywords.length;
