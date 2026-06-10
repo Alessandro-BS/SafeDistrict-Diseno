@@ -28,7 +28,7 @@ const priorityConfig = {
   },
 };
 
-export default function RightIncidentPanel({ incidents, onViewRoute, onClassify }) {
+export default function RightIncidentPanel({ incidents, onViewRoute, onClassify, dispatchedUnits = {} }) {
   const [search, setSearch] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [filterPriority, setFilterPriority] = useState('Todos');
@@ -141,9 +141,9 @@ export default function RightIncidentPanel({ incidents, onViewRoute, onClassify 
                     </button>
                     <button 
                       onClick={() => onViewRoute?.(inc)}
-                      className="bg-primary text-on-primary px-4 py-2 rounded-lg text-[12px] font-bold hover:bg-primary-container transition-colors shadow-sm"
+                      className={`px-4 py-2 rounded-lg text-[12px] font-bold transition-colors shadow-sm ${dispatchedUnits[inc.id] ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-primary text-on-primary hover:bg-primary-container'}`}
                     >
-                      {displayPriority === 'Crítico' ? 'Ver Detalles' : 'Ver'}
+                      {dispatchedUnits[inc.id] ? 'En Ruta' : (displayPriority === 'Crítico' ? 'Ver Detalles' : 'Ver')}
                     </button>
                   </div>
                 </div>

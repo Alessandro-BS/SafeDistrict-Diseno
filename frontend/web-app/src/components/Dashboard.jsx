@@ -10,6 +10,14 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
   const [incidentToClassify, setIncidentToClassify] = useState(null);
   const [zoom, setZoom] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [dispatchedUnits, setDispatchedUnits] = useState({});
+
+  const handleDispatch = (incidentId) => {
+    setDispatchedUnits(prev => ({
+      ...prev,
+      [incidentId]: true
+    }));
+  };
 
   const criticos = incidents.filter(i => normalizePriority(i.priority) === 'Crítico').length;
   const altos = incidents.filter(i => normalizePriority(i.priority) === 'Alto').length;
@@ -176,6 +184,8 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
                     focusedIncident={focusedIncident} 
                     onMarkerClick={(inc) => setFocusedIncident(inc)}
                     zoom={zoom}
+                    dispatchedUnits={dispatchedUnits}
+                    onDispatch={handleDispatch}
                   />
                 </div>
               </div>
@@ -215,6 +225,7 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
 
       <RightIncidentPanel
         incidents={incidents}
+        dispatchedUnits={dispatchedUnits}
         onViewRoute={(inc) => {
           setFocusedIncident(inc);
           setActiveTab('mapa');

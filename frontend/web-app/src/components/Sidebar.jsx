@@ -8,7 +8,7 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
     { id: 'dashboard', label: 'Panel de Comando', icon: 'dashboard' },
     { id: 'chat', label: 'Simulador Chatbot', icon: 'forum' },
     { id: 'mobile', label: 'App Móvil', icon: 'smartphone' },
-    { id: 'reports', label: 'Reportes del Cuidador', icon: 'assignment_late' },
+    { id: 'reports', label: 'Reportes del Ciudadano', icon: 'assignment_late', disabled: true },
     { id: 'settings', label: 'Configuración', icon: 'settings', disabled: true },
   ];
 
@@ -68,7 +68,7 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
           <span className="material-symbols-outlined text-[20px]">description</span>
           <span className="font-label-bold text-label-sm">Documentación</span>
         </div>
-        
+
         {/* Toggle Theme if still needed, but hiding for fidelity to the new design which is forced light mode */}
         {/*
         <div className="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors px-2 py-1 rounded-lg" onClick={toggle}>

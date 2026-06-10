@@ -114,18 +114,38 @@ export function generateIncidentId() {
 
 export function normalizePriority(p) {
   if (!p) return 'Medio';
+  const strP = String(p).toLowerCase().trim();
+
   const map = {
-    Critico: 'Crítico',
-    'Crítico': 'Crítico',
+    // Crítico
     critico: 'Crítico',
-    Alto: 'Alto',
+    crítico: 'Crítico',
+    critical: 'Crítico',
+    p1: 'Crítico',
+    '1': 'Crítico',
+    urgente: 'Crítico',
+
+    // Alto
     alto: 'Alto',
-    Medio: 'Medio',
+    high: 'Alto',
+    p2: 'Alto',
+    '2': 'Alto',
+
+    // Medio
     medio: 'Medio',
-    Bajo: 'Bajo',
+    medium: 'Medio',
+    normal: 'Medio',
+    p3: 'Medio',
+    '3': 'Medio',
+
+    // Bajo
     bajo: 'Bajo',
+    low: 'Bajo',
+    p4: 'Bajo',
+    '4': 'Bajo',
   };
-  return map[p] || p;
+
+  return map[strP] || 'Medio';
 }
 
 export function getTimeElapsed(createdAt) {

@@ -58,7 +58,7 @@ function App() {
     switch (currentView) {
       case 'dashboard': return 'Panel de Comando';
       case 'chat': return 'Simulador de Reportes Ciudadanos';
-      case 'reports': return 'Reportes del Cuidador';
+      case 'reports': return 'Reportes del Ciudadano';
       case 'mobile': return 'App Móvil SafeDistrict';
       default: return 'SafeDistrict';
     }

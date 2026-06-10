@@ -19,17 +19,39 @@ function getMarkerPosition(id) {
 
 const typeTranslation = {
   fire: 'Incendio',
+  fire_emergency: 'Incendio',
   theft: 'Robo',
   robbery: 'Robo',
   accident: 'Accidente',
+  traffic_accident: 'Accidente de Tránsito',
   medical: 'Emergencia Médica',
   medical_emergency: 'Emergencia Médica',
   crime_armed: 'Robo Armado',
   criminal_assault: 'Asalto',
-  crime: 'Delito'
+  crime: 'Delito',
+  emergency_general: 'Emergencia General'
 };
 
-export default function IncidentMap({ incidents, focusedIncident, onMarkerClick, zoom = 1 }) {
+function getPatrolPosition(id) {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) hash = ((hash << 5) - hash) + id.charCodeAt(i) + 42;
+  return {
+    x: ((Math.abs(hash * 17) % 74) + 10),
+    y: ((Math.abs(hash * 11) % 68) + 12),
+  };
+}
+
+function getETA(priority) {
+  const normalized = normalizePriority(priority);
+  switch (normalized) {
+    case 'Crítico': return 'ETA 2 min';
+    case 'Alto': return 'ETA 5 min';
+    case 'Medio': return 'ETA 8 min';
+    default: return 'ETA 15 min';
+  }
+}
+
+export default function IncidentMap({ incidents, focusedIncident, onMarkerClick, zoom = 1, dispatchedUnits = {}, onDispatch }) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
@@ -75,12 +97,63 @@ export default function IncidentMap({ incidents, focusedIncident, onMarkerClick,
             <path d="M400,0 L400,600" fill="none" stroke="#737685" strokeWidth="0.5"></path>
           </svg>
         </div>
-        <div className="relative w-full h-full">
+
+        {/* Routes Layer (SVG) */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
+            {activeIncidents.map(incident => {
+              if (!dispatchedUnits[incident.id]) return null;
+              const target = getMarkerPosition(incident.id);
+              const start = getPatrolPosition(incident.id);
+              
+              // Draw a curved path
+              const midX = (start.x + target.x) / 2;
+              const midY = start.y; // simple curve control point
+
+              return (
+                <path 
+                  key={`route-${incident.id}`}
+                  d={`M${start.x}% ${start.y}% Q${midX}% ${midY}% ${target.x}% ${target.y}%`} 
+                  fill="none" 
+                  stroke="#2563EB" 
+                  strokeWidth="3" 
+                  strokeDasharray="6,6"
+                  className="animate-[dash_1s_linear_infinite] drop-shadow-md"
+                />
+              );
+            })}
+          </svg>
+        </div>
+
+        {/* Patrol Markers */}
+        {activeIncidents.map(incident => {
+          if (!dispatchedUnits[incident.id]) return null;
+          const pos = getPatrolPosition(incident.id);
+          const etaLabel = getETA(incident.priority);
+          
+          return (
+            <div
+              key={`patrol-${incident.id}`}
+              className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
+              style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+            >
+              <div className="relative bg-white text-blue-600 border-2 border-blue-600 w-8 h-8 rounded-full flex items-center justify-center shadow-lg animate-[bounce_2s_infinite]">
+                <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: '"FILL" 1' }}>local_police</span>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap">
+                  {etaLabel}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        <div className="relative w-full h-full z-10">
           {activeIncidents.map((incident) => {
             const pos = getMarkerPosition(incident.id);
             const displayPriority = normalizePriority(incident.priority);
             const cfg = priorityConfig[displayPriority] || priorityConfig.Medio;
             const isFocused = focusedIncident?.id === incident.id;
+            const isDispatched = dispatchedUnits[incident.id];
             
             const rawType = incident.type?.toLowerCase() || '';
             const displayType = typeTranslation[rawType] || incident.type;
@@ -92,14 +165,14 @@ export default function IncidentMap({ incidents, focusedIncident, onMarkerClick,
                 style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
               >
                 <div className="relative">
-                  {cfg.ping && !isFocused && (
+                  {cfg.ping && !isFocused && !isDispatched && (
                     <div className={`absolute -inset-4 ${cfg.colorClass}/20 rounded-full animate-ping`}></div>
                   )}
                   {isFocused && (
                     <div className={`absolute -inset-3 ${cfg.colorClass}/40 rounded-full animate-pulse`}></div>
                   )}
                   <div 
-                    className={`relative ${cfg.colorClass} ${cfg.text} ${cfg.size} rounded-full flex items-center justify-center shadow-md cursor-pointer hover:scale-110 transition-transform ${isFocused ? 'ring-4 ring-primary ring-offset-2 scale-110 border-none' : 'border-2 border-surface'}`}
+                    className={`relative ${cfg.colorClass} ${cfg.text} ${cfg.size} rounded-full flex items-center justify-center shadow-md cursor-pointer hover:scale-110 transition-transform ${isFocused ? 'ring-4 ring-primary ring-offset-2 scale-110 border-none' : 'border-2 border-surface'} ${isDispatched ? 'ring-4 ring-green-400' : ''}`}
                     onClick={(e) => { e.stopPropagation(); onMarkerClick && onMarkerClick(incident); }}
                   >
                     <span className={`material-symbols-outlined ${cfg.iconSize}`} style={{ fontVariationSettings: '"FILL" 1' }}>{cfg.icon}</span>
@@ -107,7 +180,7 @@ export default function IncidentMap({ incidents, focusedIncident, onMarkerClick,
                   
                   {/* Info Card Popover */}
                   {isFocused && (
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-surface rounded-xl shadow-xl border border-outline-variant/50 p-3 animate-[slideIn_0.2s_ease-out] z-50">
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-surface rounded-xl shadow-2xl border border-outline-variant/50 p-4 animate-[slideIn_0.2s_ease-out] z-50">
                       <div className="flex justify-between items-start mb-2">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-outline">{incident.id}</span>
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${cfg.colorClass} ${cfg.text}`}>
@@ -115,11 +188,27 @@ export default function IncidentMap({ incidents, focusedIncident, onMarkerClick,
                         </span>
                       </div>
                       <p className="text-sm font-bold text-on-surface mb-1">{displayType}</p>
-                      <p className="text-xs text-on-surface-variant line-clamp-2 mb-2">{incident.description}</p>
-                      <div className="flex items-center gap-1 text-[10px] text-outline">
+                      <p className="text-xs text-on-surface-variant line-clamp-2 mb-3">{incident.description}</p>
+                      <div className="flex items-center gap-1 text-[10px] text-outline mb-3">
                         <span className="material-symbols-outlined text-[12px]">location_on</span>
                         <span className="truncate">{incident.location}</span>
                       </div>
+                      
+                      {!isDispatched ? (
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); onDispatch && onDispatch(incident.id); }}
+                          className="w-full bg-primary hover:bg-primary-container text-on-primary py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">electric_car</span>
+                          Despachar Unidad
+                        </button>
+                      ) : (
+                        <div className="w-full bg-green-100 text-green-700 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 border border-green-200">
+                          <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                          Unidad en Ruta
+                        </div>
+                      )}
+                      
                       <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-surface border-b border-r border-outline-variant/50 rotate-45"></div>
                     </div>
                   )}

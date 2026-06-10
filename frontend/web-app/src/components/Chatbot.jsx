@@ -401,8 +401,8 @@ export default function Chatbot({ addIncident, setLastClassification, setCurrent
           Chatbot
         </button>
         <button 
-          onClick={() => setCurrentView('reports')}
-          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant hover:text-on-surface font-label-bold transition-colors"
+          disabled
+          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant font-label-bold transition-colors opacity-50 cursor-not-allowed"
         >
           <span className="material-symbols-outlined text-[18px]">analytics</span>
           Reportes

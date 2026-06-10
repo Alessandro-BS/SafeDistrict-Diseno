@@ -31,7 +31,7 @@ export default function Reports({ addIncident, setLastClassification }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: `[REPORTE CUIDADOR - Prioridad: ${priority.label}] ${description}`,
+          text: `[REPORTE CIUDADANO - Prioridad: ${priority.label}] ${description}`,
           location: location.trim() || 'Comas, Lima',
         }),
       });
@@ -72,7 +72,7 @@ export default function Reports({ addIncident, setLastClassification }) {
               </div>
             </div>
             <h2 className="reports-success-title" style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#f8fafc', marginBottom: '8px' }}>Reporte enviado</h2>
-            <p className="reports-success-sub" style={{ color: '#94a3b8', fontSize: '1rem', marginBottom: '32px' }}>El reporte del cuidador ha sido registrado exitosamente.</p>
+            <p className="reports-success-sub" style={{ color: '#94a3b8', fontSize: '1rem', marginBottom: '32px' }}>El reporte del ciudadano ha sido registrado exitosamente.</p>
 
             <div style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '24px', marginBottom: '32px', textAlign: 'left' }}>
               <div className="reports-success-id-label" style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Código de reporte</div>
@@ -130,7 +130,7 @@ export default function Reports({ addIncident, setLastClassification }) {
             <ShieldCheck size={24} color="white" />
           </div>
           <div className="reports-header-text">
-            <h2 className="reports-header-title">Reporte del Cuidador</h2>
+            <h2 className="reports-header-title">Reporte del Ciudadano</h2>
             <p className="reports-header-sub">Describe la situación y asigna una prioridad</p>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function Reports({ addIncident, setLastClassification }) {
             </div>
             <textarea
               className="reports-textarea"
-              placeholder="Describe detalladamente la situación que estás reportando como cuidador..."
+              placeholder="Describe detalladamente la situación que estás reportando como ciudadano..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
