@@ -1,5 +1,5 @@
 import { useMemo, useState, useRef } from 'react';
-import { normalizePriority } from '../data/classificationEngine';
+import { normalizePriority, translateType } from '../data/classificationEngine';
 
 const priorityConfig = {
   'Crítico': { colorClass: 'bg-triage-critical', icon: 'warning', text: 'text-on-error', size: 'w-10 h-10', iconSize: 'text-[20px]', ping: true },
@@ -16,21 +16,6 @@ function getMarkerPosition(id) {
     y: ((Math.abs(hash * 7) % 68) + 12),
   };
 }
-
-const typeTranslation = {
-  fire: 'Incendio',
-  fire_emergency: 'Incendio',
-  theft: 'Robo',
-  robbery: 'Robo',
-  accident: 'Accidente',
-  traffic_accident: 'Accidente de Tránsito',
-  medical: 'Emergencia Médica',
-  medical_emergency: 'Emergencia Médica',
-  crime_armed: 'Robo Armado',
-  criminal_assault: 'Asalto',
-  crime: 'Delito',
-  emergency_general: 'Emergencia General'
-};
 
 function getPatrolPosition(id) {
   let hash = 0;
@@ -156,7 +141,7 @@ export default function IncidentMap({ incidents, focusedIncident, onMarkerClick,
             const isDispatched = dispatchedUnits[incident.id];
             
             const rawType = incident.type?.toLowerCase() || '';
-            const displayType = typeTranslation[rawType] || incident.type;
+            const displayType = translateType(rawType);
             
             return (
               <div

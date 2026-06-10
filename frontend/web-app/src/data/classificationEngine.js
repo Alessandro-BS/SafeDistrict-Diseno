@@ -175,6 +175,34 @@ export function getTimeElapsed(createdAt) {
   return `${diffD}d ${diffH % 24}h`;
 }
 
+export function translateType(type) {
+  if (!type) return 'Desconocido';
+  const raw = type.toLowerCase().trim();
+  const map = {
+    fire: 'Incendio',
+    fire_emergency: 'Incendio',
+    theft: 'Robo',
+    robbery: 'Robo',
+    accident: 'Accidente',
+    traffic_accident: 'Accidente de Tránsito',
+    medical: 'Emergencia Médica',
+    medical_emergency: 'Emergencia Médica',
+    crime_armed: 'Robo Armado',
+    criminal_assault: 'Asalto',
+    crime: 'Delito',
+    emergency_general: 'Emergencia General',
+    security_incident: 'Incidente de Seguridad',
+    suspicious_activity: 'Actividad Sospechosa',
+    vandalism: 'Vandalismo',
+    domestic_violence: 'Violencia Doméstica'
+  };
+  
+  if (map[raw]) return map[raw];
+  
+  // Fallback: replace underscores with spaces and capitalize
+  return raw.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
 export const emergencyTypeOptions = [
   { value: 'robo', label: 'Robo', icon: 'shield-off' },
   { value: 'accidente', label: 'Accidente', icon: 'car-front' },
