@@ -1,225 +1,206 @@
-import { useState } from 'react';
-import { ShieldCheck, Send, TriangleAlert, MapPin, Check, Loader } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Download, Search, Filter, ShieldCheck, Eye, FileWarning, CheckCircle } from 'lucide-react';
+import { normalizePriority } from '../data/classificationEngine';
 
-const API_BASE = 'http://localhost:8080/api';
+export default function Reports({ incidents = [] }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterPriority, setFilterPriority] = useState('Todos');
+  const [filterStatus, setFilterStatus] = useState('Todos');
 
-const priorities = [
-  { id: 'bajo', label: 'Bajo', color: '#22c55e', bg: '#052e16', border: '#166534', icon: ShieldCheck, desc: 'Controlable, sin riesgo inmediato' },
-  { id: 'medio', label: 'Medio', color: '#eab308', bg: '#422006', border: '#854d0e', icon: ShieldCheck, desc: 'Requiere atención, posible riesgo' },
-  { id: 'alto', label: 'Alto', color: '#f97316', bg: '#431407', border: '#9a3412', icon: TriangleAlert, desc: 'Urgente, riesgo significativo' },
-  { id: 'critico', label: 'Crítico', color: '#ef4444', bg: '#450a0a', border: '#991b1b', icon: TriangleAlert, desc: 'Peligro inminente, acción inmediata' },
-];
+  const filteredIncidents = useMemo(() => {
+    return incidents.filter(inc => {
+      const matchesSearch = inc.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                            (inc.description || '').toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesPriority = filterPriority === 'Todos' || normalizePriority(inc.priority) === filterPriority;
+      const matchesStatus = filterStatus === 'Todos' || (inc.status || 'Pendiente') === filterStatus;
+      
+      return matchesSearch && matchesPriority && matchesStatus;
+    });
+  }, [incidents, searchTerm, filterPriority, filterStatus]);
 
-export default function Reports({ addIncident, setLastClassification }) {
-  const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
-  const [priority, setPriority] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(null);
-  const [error, setError] = useState(null);
+  const handleExportCSV = () => {
+    if (filteredIncidents.length === 0) return;
+    
+    // Create CSV Header
+    const headers = ['ID', 'Fecha', 'Prioridad', 'Tipo', 'Estado', 'Ubicación', 'Descripción'];
+    const csvRows = [headers.join(',')];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!description.trim() || !priority) return;
+    // Format Data
+    filteredIncidents.forEach(inc => {
+      const row = [
+        inc.id,
+        inc.createdAt || 'N/A',
+        normalizePriority(inc.priority),
+        inc.classification?.typeLabel || inc.type || 'N/A',
+        inc.status || 'Pendiente',
+        `"${(inc.location || '').replace(/"/g, '""')}"`,
+        `"${(inc.description || '').replace(/"/g, '""')}"`
+      ];
+      csvRows.push(row.join(','));
+    });
 
-    setSubmitting(true);
-    setError(null);
-    setSuccess(null);
-
-    try {
-      const res = await fetch(`${API_BASE}/incidents/report`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: `[REPORTE CIUDADANO - Prioridad: ${priority.label}] ${description}`,
-          location: location.trim() || 'Comas, Lima',
-        }),
-      });
-
-      if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
-
-      const data = await res.json();
-      addIncident({ ...data, timeElapsed: '0 min' });
-      setLastClassification({
-        ...data.classification,
-        description: data.description,
-        incidentId: data.id,
-      });
-      setSuccess(data);
-      setSubmitting(false);
-    } catch (err) {
-      setError(err.message);
-      setSubmitting(false);
-    }
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `reportes_safedistrict_${new Date().getTime()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  const reset = () => {
-    setDescription('');
-    setLocation('');
-    setPriority(null);
-    setSuccess(null);
-    setError(null);
+  const getPriorityColor = (priority) => {
+    const p = normalizePriority(priority);
+    if (p === 'Crítico') return 'bg-error text-on-error';
+    if (p === 'Alto') return 'bg-orange-100 text-orange-800 border-orange-200 border';
+    if (p === 'Medio') return 'bg-yellow-100 text-yellow-800 border-yellow-200 border';
+    return 'bg-green-100 text-green-800 border-green-200 border';
   };
-
-  if (success) {
-    return (
-      <div className="reports-wrapper slide-up-fade" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-        <div className="reports-card premium-glass-card" style={{ maxWidth: '500px', width: '100%', textAlign: 'center' }}>
-          <div className="reports-success premium-success-content">
-            <div className="reports-success-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-              <div className="success-check-anim" style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(34, 197, 94, 0.4)' }}>
-                <Check size={48} color="white" />
-              </div>
-            </div>
-            <h2 className="reports-success-title" style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#f8fafc', marginBottom: '8px' }}>Reporte enviado</h2>
-            <p className="reports-success-sub" style={{ color: '#94a3b8', fontSize: '1rem', marginBottom: '32px' }}>El reporte del ciudadano ha sido registrado exitosamente.</p>
-
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '24px', marginBottom: '32px', textAlign: 'left' }}>
-              <div className="reports-success-id-label" style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Código de reporte</div>
-              <div className="reports-success-id" style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3b82f6', marginBottom: '20px', fontFamily: 'monospace' }}>{success.id}</div>
-
-              <div className="reports-success-details" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div className="reports-detail-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div className="detail-left" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div className="detail-dot" style={{ background: '#22c55e', width: '8px', height: '8px', borderRadius: '50%' }} />
-                    <span className="detail-label" style={{ color: '#e2e8f0', fontSize: '0.95rem' }}>Prioridad asignada</span>
-                  </div>
-                  <span className="detail-value" style={{
-                    fontWeight: 'bold',
-                    fontSize: '1rem',
-                    color: success.classification?.priority === 'Crítico' || success.classification?.priority === 'Critico' ? '#ef4444' :
-                      success.classification?.priority === 'Alto' ? '#f97316' :
-                        success.classification?.priority === 'Medio' ? '#eab308' : '#22c55e',
-                  }}>
-                    {success.classification?.priorityLabel || priority.label}
-                  </span>
-                </div>
-                <div className="reports-detail-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div className="detail-left" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div className="detail-dot" style={{ background: '#3b82f6', width: '8px', height: '8px', borderRadius: '50%' }} />
-                    <span className="detail-label" style={{ color: '#e2e8f0', fontSize: '0.95rem' }}>Tipo de emergencia</span>
-                  </div>
-                  <span className="detail-value" style={{ fontWeight: '600', color: '#f8fafc' }}>{success.classification?.typeLabel || '—'}</span>
-                </div>
-                <div className="reports-detail-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div className="detail-left" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div className="detail-dot" style={{ background: '#8b5cf6', width: '8px', height: '8px', borderRadius: '50%' }} />
-                    <span className="detail-label" style={{ color: '#e2e8f0', fontSize: '0.95rem' }}>Confianza de la IA</span>
-                  </div>
-                  <span className="detail-value" style={{ fontWeight: '600', color: '#a78bfa' }}>{Math.round((success.classification?.confidence || 0) * 100)}%</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="reports-success-actions">
-              <button className="reports-btn premium-submit-btn" onClick={reset} style={{ margin: 0 }}>
-                Nuevo reporte
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="reports-wrapper slide-up-fade">
-      <div className="reports-card premium-glass-card">
-        <div className="reports-header premium-header">
-          <div className="reports-header-icon premium-icon-glow">
-            <ShieldCheck size={24} color="white" />
+    <div className="flex flex-col h-full bg-surface-container-low p-6">
+      <div className="bg-surface rounded-2xl shadow-sm border border-outline-variant flex flex-col h-full overflow-hidden">
+        
+        {/* Header Toolbar */}
+        <div className="p-6 border-b border-outline-variant flex flex-wrap gap-4 items-center justify-between bg-white">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+              <ShieldCheck size={24} />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Reportes del Ciudadano</h2>
+              <p className="text-sm text-gray-500">Historial y gestión de reportes de emergencias</p>
+            </div>
           </div>
-          <div className="reports-header-text">
-            <h2 className="reports-header-title">Reporte del Ciudadano</h2>
-            <p className="reports-header-sub">Describe la situación y asigna una prioridad</p>
+          
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={handleExportCSV}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm transition-colors shadow-sm"
+            >
+              <Download size={16} />
+              Exportar CSV
+            </button>
           </div>
         </div>
 
-        <form className="reports-form" onSubmit={handleSubmit}>
-          <div className="reports-section">
-            <div className="reports-section-header">
-              <label className="reports-label">¿Qué está sucediendo?</label>
-              <span className="reports-char-count">{description.length} caracteres</span>
-            </div>
-            <textarea
-              className="reports-textarea"
-              placeholder="Describe detalladamente la situación que estás reportando como ciudadano..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-              required
+        {/* Filters */}
+        <div className="p-4 border-b border-outline-variant bg-gray-50/50 flex flex-wrap gap-4 items-center">
+          <div className="relative flex-1 min-w-[250px]">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <input 
+              type="text" 
+              placeholder="Buscar por ID o descripción..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
             />
           </div>
-
-          <div className="reports-section">
-            <label className="reports-label">¿Dónde ocurre?</label>
-            <div className="reports-input-wrap">
-              <MapPin size={16} className="reports-input-icon" />
-              <input
-                className="reports-input"
-                type="text"
-                placeholder="Ej: Av. Túpac Amaru 1500, Comas"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-            </div>
+          
+          <div className="flex items-center gap-2">
+            <Filter size={16} className="text-gray-400" />
+            <select 
+              value={filterPriority}
+              onChange={(e) => setFilterPriority(e.target.value)}
+              className="border border-gray-300 rounded-lg py-2 px-3 text-sm bg-white outline-none"
+            >
+              <option value="Todos">Todas las Prioridades</option>
+              <option value="Crítico">Crítico</option>
+              <option value="Alto">Alto</option>
+              <option value="Medio">Medio</option>
+              <option value="Bajo">Bajo</option>
+            </select>
+            
+            <select 
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="border border-gray-300 rounded-lg py-2 px-3 text-sm bg-white outline-none"
+            >
+              <option value="Todos">Todos los Estados</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Curso">En Curso</option>
+              <option value="Atendido">Atendido</option>
+              <option value="Rechazado">Falso / Rechazado</option>
+            </select>
           </div>
+        </div>
 
-          <div className="reports-section">
-            <label className="reports-label">Nivel de prioridad</label>
-            <div className="reports-priority-grid">
-              {priorities.map((p) => {
-                const PIcon = p.icon;
-                const isSelected = priority?.id === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    className={`reports-priority-card ${isSelected ? 'selected' : ''}`}
-                    style={{
-                      borderColor: isSelected ? p.color : 'var(--border-color)',
-                      background: isSelected ? p.bg : 'var(--bg-panel)',
-                    }}
-                    onClick={() => setPriority(p)}
-                  >
-                    <div className="priority-top">
-                      <div className="priority-icon-wrap" style={{ background: isSelected ? p.color : 'transparent', borderColor: isSelected ? p.color : 'var(--border-color)' }}>
-                        <PIcon size={14} color={isSelected ? 'white' : 'var(--text-muted)'} />
-                      </div>
-                      <span className="priority-label" style={{ color: isSelected ? p.color : 'var(--text-main)' }}>
-                        {p.label}
-                      </span>
-                      {isSelected && <div className="priority-selected-check" style={{ color: p.color }}>✓</div>}
+        {/* Data Table */}
+        <div className="flex-1 overflow-auto bg-white">
+          <table className="w-full text-left border-collapse">
+            <thead className="bg-gray-50 sticky top-0 z-10 shadow-sm">
+              <tr>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200">ID Reporte</th>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200">Fecha / Hora</th>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200">Prioridad</th>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200">Tipo</th>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200">Estado</th>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200">Ubicación</th>
+                <th className="py-3 px-4 font-bold text-xs text-gray-500 uppercase tracking-wider border-b border-gray-200 text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {filteredIncidents.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="py-12 text-center text-gray-400">
+                    <div className="flex flex-col items-center justify-center">
+                      <Search size={48} className="mb-4 opacity-20" />
+                      <p>No se encontraron reportes con estos filtros</p>
                     </div>
-                    <span className="priority-desc">{p.desc}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {error && (
-            <div className="reports-error">
-              <TriangleAlert size={16} />
-              <div className="reports-error-text">
-                <span className="reports-error-title">Error al enviar</span>
-                <span className="reports-error-desc">{error}. Verifica tu conexión e intenta nuevamente.</span>
-              </div>
-            </div>
-          )}
-
-          <button
-            type="submit"
-            className="reports-submit-btn premium-submit-btn"
-            disabled={submitting || !description.trim() || !priority}
-          >
-            {submitting ? (
-              <><Loader size={20} className="reports-spinner" /> Enviando reporte...</>
-            ) : (
-              <><Send size={20} /> Enviar Reporte</>
-            )}
-          </button>
-        </form>
+                  </td>
+                </tr>
+              ) : (
+                filteredIncidents.map(inc => (
+                  <tr key={inc.id} className="hover:bg-gray-50/80 transition-colors">
+                    <td className="py-3 px-4">
+                      <span className="font-mono text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded">{inc.id}</span>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-gray-600">
+                      {inc.createdAt ? new Date(inc.createdAt).toLocaleString('es-PE') : 'N/A'}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${getPriorityColor(inc.priority)}`}>
+                        {normalizePriority(inc.priority)}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-sm font-medium text-gray-700">
+                      {inc.classification?.typeLabel || inc.type || 'Desconocido'}
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-1.5 text-sm font-medium text-gray-600">
+                        <span className={`w-2 h-2 rounded-full ${inc.status === 'Pendiente' ? 'bg-blue-500' : inc.status === 'En Curso' ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                        {inc.status || 'Pendiente'}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-gray-600 max-w-[200px] truncate" title={inc.location}>
+                      {inc.location || 'No especificada'}
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="flex justify-center gap-2">
+                        <button className="p-1.5 text-gray-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Detalles">
+                          <Eye size={18} />
+                        </button>
+                        <button className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded transition-colors" title="Marcar Resuelto">
+                          <CheckCircle size={18} />
+                        </button>
+                        <button className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Marcar Falso">
+                          <FileWarning size={18} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        
+        {/* Footer */}
+        <div className="p-4 border-t border-outline-variant bg-gray-50 flex items-center justify-between text-xs text-gray-500">
+          <span>Mostrando {filteredIncidents.length} de {incidents.length} reportes</span>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,501 @@
+ID,Timestamp,Sector,Tipo_Emergencia,Latitud,Longitud,Confiabilidad_Usuario,Prioridad_IA,Nivel_Prioridad,Estado_IA,Tiempo_Respuesta_Min,Estado_Reporte
+#1001,2026-07-13 20:55:25,San Agustín,Emergencia Médica,-11.936437,-77.0174,16,15,Baja,Validado,6.4,Atendido
+#1002,2026-07-14 07:40:25,Comas Norte,Sospecha,-11.927896,-77.025919,64,40,Media,Validado,23.8,En Proceso
+#1003,2026-07-13 21:13:25,San Agustín,Sospecha,-11.941929,-77.018938,18,52,Media,Validado,23.4,Atendido
+#1004,2026-07-13 20:17:25,La Balanza,Sospecha,-11.913735,-77.056938,63,64,Media,Validado,11.3,Atendido
+#1005,2026-07-14 13:24:25,Collique,Emergencia Médica,-11.916664,-77.010982,86,18,Baja,Validado,5.0,Pendiente
+#1006,2026-07-14 09:37:25,San Agustín,Emergencia Médica,-11.928663,-77.036803,92,53,Media,Validado,19.2,Atendido
+#1007,2026-07-14 04:25:25,Comas Sur,Incendio,-11.929255,-77.051569,12,19,Baja,Validado,3.5,Pendiente
+#1008,2026-07-14 09:32:25,La Balanza,Robo,-11.884578,-77.025198,70,15,Baja,Validado,8.2,Atendido
+#1009,2026-07-14 16:51:25,Comas Norte,Incendio,-11.883549,-77.031007,46,80,Alta,Validado,7.6,Atendido
+#1010,2026-07-14 03:26:25,Collique,Robo,-11.938347,-77.0219,100,80,Alta,Validado,7.1,En Proceso
+#1011,2026-07-14 09:47:25,La Balanza,Sospecha,-11.918677,-77.02244,64,58,Media,Validado,14.2,En Proceso
+#1012,2026-07-14 14:56:25,La Balanza,Emergencia Médica,-11.923911,-77.044411,48,98,Alta,Validado,18.5,Atendido
+#1013,2026-07-13 22:50:25,San Agustín,Sospecha,-11.900675,-77.025976,20,95,Alta,Validado,5.1,Atendido
+#1014,2026-07-14 18:08:25,Comas Norte,Robo,-11.913526,-77.044007,40,99,Alta,Validado,22.6,Atendido
+#1015,2026-07-14 12:47:25,Collique,Incendio,-11.910614,-77.055848,100,59,Media,Validado,15.3,Atendido
+#1016,2026-07-14 17:33:25,Comas Norte,Sospecha,-11.893519,-77.051259,99,86,Alta,Descartado,0.0,Atendido
+#1017,2026-07-13 22:36:25,Comas Sur,Incendio,-11.907528,-77.034115,50,56,Media,Validado,11.5,Atendido
+#1018,2026-07-14 06:25:25,Comas Norte,Emergencia Médica,-11.880884,-77.018875,28,37,Baja,Validado,7.0,En Proceso
+#1019,2026-07-14 02:52:25,La Balanza,Incendio,-11.891598,-77.034806,89,61,Media,Validado,2.8,Atendido
+#1020,2026-07-14 14:48:25,Comas Sur,Robo,-11.916685,-77.01997,74,45,Media,Validado,16.1,Pendiente
+#1021,2026-07-13 20:38:25,Comas Norte,Emergencia Médica,-11.923269,-77.010819,32,39,Baja,Validado,3.9,Pendiente
+#1022,2026-07-14 00:57:25,La Balanza,Incendio,-11.913732,-77.04831,90,66,Media,Validado,12.0,En Proceso
+#1023,2026-07-14 07:16:25,Collique,Emergencia Médica,-11.940073,-77.030052,32,72,Media,Validado,12.1,Atendido
+#1024,2026-07-14 13:45:25,Collique,Accidente de Tránsito,-11.936989,-77.046985,31,76,Media,Validado,21.1,Atendido
+#1025,2026-07-13 20:36:25,San Agustín,Accidente de Tránsito,-11.919832,-77.02704,46,41,Media,Validado,9.0,Pendiente
+#1026,2026-07-13 20:14:25,Comas Norte,Accidente de Tránsito,-11.938729,-77.01738,63,69,Media,Validado,11.5,Pendiente
+#1027,2026-07-14 00:08:25,San Agustín,Emergencia Médica,-11.930401,-77.045054,73,32,Baja,Validado,15.8,En Proceso
+#1028,2026-07-14 15:41:25,Comas Sur,Robo,-11.917661,-77.044577,71,87,Alta,Validado,5.2,Atendido
+#1029,2026-07-14 16:59:25,Comas Sur,Emergencia Médica,-11.919648,-77.029272,63,23,Baja,Validado,20.6,Atendido
+#1030,2026-07-14 16:45:25,Comas Sur,Incendio,-11.940251,-77.059563,51,71,Media,Validado,5.9,En Proceso
+#1031,2026-07-14 04:49:25,San Agustín,Emergencia Médica,-11.908773,-77.026627,59,29,Baja,Validado,20.7,Atendido
+#1032,2026-07-14 13:13:25,San Agustín,Accidente de Tránsito,-11.894638,-77.011364,20,54,Media,Validado,14.7,Atendido
+#1033,2026-07-14 13:20:25,La Balanza,Accidente de Tránsito,-11.890218,-77.04698,93,30,Baja,Validado,23.2,Pendiente
+#1034,2026-07-14 15:48:25,Collique,Robo,-11.946718,-77.059822,91,93,Alta,Validado,6.0,Pendiente
+#1035,2026-07-14 06:09:25,Comas Norte,Emergencia Médica,-11.946442,-77.015508,34,87,Alta,Validado,6.9,Pendiente
+#1036,2026-07-14 04:32:25,Comas Sur,Incendio,-11.915533,-77.010724,94,95,Alta,Validado,11.6,Pendiente
+#1037,2026-07-14 18:09:25,San Agustín,Robo,-11.947136,-77.025267,58,30,Baja,Validado,18.9,En Proceso
+#1038,2026-07-14 05:30:25,San Agustín,Accidente de Tránsito,-11.915883,-77.034162,53,74,Media,Validado,18.8,Pendiente
+#1039,2026-07-14 12:00:25,Comas Norte,Robo,-11.940775,-77.044958,100,47,Media,Validado,13.9,En Proceso
+#1040,2026-07-14 09:07:25,Comas Norte,Emergencia Médica,-11.947657,-77.052196,26,34,Baja,Validado,23.9,En Proceso
+#1041,2026-07-14 09:58:25,La Balanza,Robo,-11.9161,-77.059001,92,90,Alta,Validado,1.5,En Proceso
+#1042,2026-07-14 08:49:25,Comas Sur,Emergencia Médica,-11.891997,-77.058131,12,28,Baja,Validado,20.6,Pendiente
+#1043,2026-07-14 03:09:25,Collique,Accidente de Tránsito,-11.902026,-77.02104,68,16,Baja,Descartado,0.0,Atendido
+#1044,2026-07-14 01:50:25,Collique,Robo,-11.942185,-77.021154,46,32,Baja,Validado,21.4,Pendiente
+#1045,2026-07-14 14:33:25,La Balanza,Robo,-11.882662,-77.045587,71,86,Alta,Validado,4.0,Pendiente
+#1046,2026-07-14 09:58:25,Comas Sur,Incendio,-11.912864,-77.041313,32,39,Baja,Validado,14.1,En Proceso
+#1047,2026-07-13 20:53:25,Comas Norte,Accidente de Tránsito,-11.881687,-77.027791,28,50,Media,Validado,11.3,En Proceso
+#1048,2026-07-14 05:39:25,Comas Norte,Sospecha,-11.885723,-77.031537,55,13,Baja,Validado,4.0,Atendido
+#1049,2026-07-14 15:37:25,Collique,Sospecha,-11.946789,-77.050154,60,45,Media,Validado,21.0,Pendiente
+#1050,2026-07-14 03:36:25,Comas Norte,Emergencia Médica,-11.89682,-77.030245,97,44,Media,Descartado,0.0,Atendido
+#1051,2026-07-14 10:41:25,Comas Norte,Accidente de Tránsito,-11.943909,-77.02268,42,80,Alta,Validado,6.6,Pendiente
+#1052,2026-07-14 09:54:25,San Agustín,Incendio,-11.947953,-77.050057,80,38,Baja,Validado,6.4,Pendiente
+#1053,2026-07-14 07:04:25,Comas Sur,Emergencia Médica,-11.917031,-77.058746,66,59,Media,Validado,23.0,Pendiente
+#1054,2026-07-14 16:28:25,La Balanza,Accidente de Tránsito,-11.923633,-77.03213,88,44,Media,Validado,21.0,En Proceso
+#1055,2026-07-14 12:38:25,San Agustín,Emergencia Médica,-11.925441,-77.052163,38,45,Media,Validado,9.9,Pendiente
+#1056,2026-07-13 23:33:25,Comas Sur,Sospecha,-11.90078,-77.033537,10,33,Baja,Validado,24.2,En Proceso
+#1057,2026-07-14 06:24:25,San Agustín,Robo,-11.945291,-77.039792,78,86,Alta,Validado,9.1,Atendido
+#1058,2026-07-13 20:55:25,Collique,Incendio,-11.899334,-77.049121,72,24,Baja,Validado,3.9,En Proceso
+#1059,2026-07-14 01:17:25,La Balanza,Accidente de Tránsito,-11.900021,-77.012956,63,78,Media,Validado,1.9,Atendido
+#1060,2026-07-14 01:49:25,Comas Sur,Sospecha,-11.94419,-77.040221,88,58,Media,Validado,21.9,Pendiente
+#1061,2026-07-14 18:20:25,Collique,Sospecha,-11.915815,-77.042358,61,10,Baja,Validado,7.0,Pendiente
+#1062,2026-07-14 19:44:25,Collique,Incendio,-11.926876,-77.041425,26,68,Media,Validado,18.0,En Proceso
+#1063,2026-07-14 18:28:25,La Balanza,Accidente de Tránsito,-11.885354,-77.01432,55,98,Alta,Validado,4.5,En Proceso
+#1064,2026-07-13 22:05:25,Collique,Accidente de Tránsito,-11.944697,-77.028525,68,65,Media,Validado,18.2,Pendiente
+#1065,2026-07-14 12:04:25,Comas Sur,Accidente de Tránsito,-11.928896,-77.018279,48,66,Media,Descartado,0.0,Atendido
+#1066,2026-07-14 07:28:25,Comas Norte,Sospecha,-11.927745,-77.036932,14,74,Media,Validado,20.2,En Proceso
+#1067,2026-07-14 09:14:25,Comas Sur,Robo,-11.923003,-77.044415,52,23,Baja,Validado,18.2,Atendido
+#1068,2026-07-14 00:05:25,San Agustín,Sospecha,-11.936019,-77.040019,96,76,Media,Validado,6.9,Atendido
+#1069,2026-07-14 10:29:25,Comas Norte,Accidente de Tránsito,-11.918021,-77.024231,20,96,Alta,Validado,5.2,Atendido
+#1070,2026-07-14 12:28:25,La Balanza,Robo,-11.947591,-77.024022,17,93,Alta,Descartado,0.0,Atendido
+#1071,2026-07-13 22:27:25,San Agustín,Accidente de Tránsito,-11.904695,-77.031261,34,95,Alta,Validado,10.5,Atendido
+#1072,2026-07-13 20:01:25,La Balanza,Robo,-11.947097,-77.034774,63,98,Alta,Validado,4.1,Atendido
+#1073,2026-07-14 16:25:25,Collique,Emergencia Médica,-11.901825,-77.049617,31,92,Alta,Validado,1.3,Pendiente
+#1074,2026-07-14 10:31:25,Comas Norte,Robo,-11.930865,-77.049289,59,29,Baja,Validado,3.2,En Proceso
+#1075,2026-07-14 12:47:25,La Balanza,Emergencia Médica,-11.920408,-77.014138,44,41,Media,Validado,19.1,Atendido
+#1076,2026-07-14 11:27:25,Collique,Emergencia Médica,-11.932072,-77.014759,83,60,Media,Validado,14.3,Pendiente
+#1077,2026-07-14 16:45:25,San Agustín,Sospecha,-11.899387,-77.033539,99,89,Alta,Descartado,0.0,Atendido
+#1078,2026-07-14 03:50:25,Comas Sur,Accidente de Tránsito,-11.89357,-77.045152,93,98,Alta,Descartado,0.0,Atendido
+#1079,2026-07-14 03:03:25,La Balanza,Sospecha,-11.912225,-77.020378,55,64,Media,Validado,10.6,Pendiente
+#1080,2026-07-14 19:43:25,La Balanza,Accidente de Tránsito,-11.919914,-77.024703,67,21,Baja,Validado,2.2,Pendiente
+#1081,2026-07-13 21:28:25,Comas Sur,Incendio,-11.901997,-77.049175,51,46,Media,Validado,20.3,En Proceso
+#1082,2026-07-14 18:27:25,Collique,Accidente de Tránsito,-11.894185,-77.027939,61,31,Baja,Validado,12.1,En Proceso
+#1083,2026-07-14 07:42:25,Comas Norte,Accidente de Tránsito,-11.910157,-77.032703,48,52,Media,Validado,6.1,Pendiente
+#1084,2026-07-14 08:59:25,La Balanza,Accidente de Tránsito,-11.89811,-77.049764,13,26,Baja,Validado,8.1,En Proceso
+#1085,2026-07-13 21:50:25,La Balanza,Emergencia Médica,-11.897021,-77.059919,66,51,Media,Validado,15.1,Atendido
+#1086,2026-07-14 05:19:25,Comas Sur,Incendio,-11.910585,-77.036062,100,56,Media,Validado,16.3,Pendiente
+#1087,2026-07-14 02:33:25,Comas Sur,Incendio,-11.932042,-77.038788,96,13,Baja,Validado,10.8,En Proceso
+#1088,2026-07-14 14:30:25,Collique,Accidente de Tránsito,-11.913754,-77.037948,58,52,Media,Descartado,0.0,Atendido
+#1089,2026-07-14 17:24:25,San Agustín,Sospecha,-11.888155,-77.043635,38,91,Alta,Validado,8.4,Pendiente
+#1090,2026-07-13 19:53:25,San Agustín,Accidente de Tránsito,-11.889951,-77.051465,99,32,Baja,Validado,23.4,En Proceso
+#1091,2026-07-14 19:40:25,Comas Sur,Sospecha,-11.948619,-77.010815,31,28,Baja,Validado,11.7,Atendido
+#1092,2026-07-14 02:44:25,San Agustín,Robo,-11.938421,-77.059082,73,27,Baja,Validado,1.6,En Proceso
+#1093,2026-07-13 23:21:25,San Agustín,Incendio,-11.940993,-77.028092,77,22,Baja,Validado,13.9,En Proceso
+#1094,2026-07-14 09:35:25,Collique,Emergencia Médica,-11.883147,-77.011475,48,26,Baja,Validado,20.7,Pendiente
+#1095,2026-07-14 09:27:25,Comas Norte,Emergencia Médica,-11.907629,-77.041663,100,41,Media,Validado,16.7,Atendido
+#1096,2026-07-14 16:51:25,La Balanza,Sospecha,-11.89523,-77.018505,31,56,Media,Validado,11.9,Atendido
+#1097,2026-07-14 16:43:25,Collique,Emergencia Médica,-11.894492,-77.026664,53,81,Alta,Validado,1.5,En Proceso
+#1098,2026-07-14 00:30:25,Comas Sur,Sospecha,-11.931414,-77.042605,66,47,Media,Validado,9.6,En Proceso
+#1099,2026-07-14 12:28:25,Collique,Sospecha,-11.90706,-77.023981,84,10,Baja,Validado,7.6,En Proceso
+#1100,2026-07-14 02:21:25,Comas Norte,Robo,-11.907288,-77.059514,55,39,Baja,Validado,22.7,En Proceso
+#1101,2026-07-14 18:46:25,Comas Sur,Accidente de Tránsito,-11.896432,-77.053585,85,92,Alta,Validado,15.4,Atendido
+#1102,2026-07-14 19:39:25,San Agustín,Accidente de Tránsito,-11.913494,-77.029537,16,85,Alta,Validado,1.4,Pendiente
+#1103,2026-07-14 13:43:25,Collique,Sospecha,-11.884375,-77.024637,36,83,Alta,Validado,3.0,Pendiente
+#1104,2026-07-13 20:28:25,Comas Norte,Sospecha,-11.913174,-77.011928,99,42,Media,Validado,4.2,En Proceso
+#1105,2026-07-14 02:33:25,San Agustín,Accidente de Tránsito,-11.92849,-77.03152,61,52,Media,Validado,24.4,En Proceso
+#1106,2026-07-14 00:38:25,Comas Norte,Emergencia Médica,-11.89734,-77.058251,44,20,Baja,Validado,20.3,Pendiente
+#1107,2026-07-14 11:47:25,San Agustín,Emergencia Médica,-11.929177,-77.043291,98,31,Baja,Validado,13.8,Pendiente
+#1108,2026-07-14 18:33:25,Comas Sur,Robo,-11.924466,-77.010023,82,68,Media,Descartado,0.0,Atendido
+#1109,2026-07-14 10:34:25,Comas Norte,Emergencia Médica,-11.922311,-77.054822,45,19,Baja,Validado,6.2,Pendiente
+#1110,2026-07-14 01:49:25,Comas Sur,Emergencia Médica,-11.892776,-77.025449,17,65,Media,Validado,6.1,Atendido
+#1111,2026-07-14 07:02:25,Comas Norte,Sospecha,-11.90725,-77.021254,32,61,Media,Validado,19.5,Atendido
+#1112,2026-07-13 23:11:25,Comas Norte,Robo,-11.938608,-77.01363,10,28,Baja,Descartado,0.0,Atendido
+#1113,2026-07-14 13:11:25,San Agustín,Emergencia Médica,-11.894793,-77.038708,38,37,Baja,Descartado,0.0,Atendido
+#1114,2026-07-13 21:56:25,Comas Norte,Emergencia Médica,-11.89908,-77.033459,96,32,Baja,Validado,22.4,En Proceso
+#1115,2026-07-14 07:19:25,Comas Sur,Emergencia Médica,-11.913209,-77.010513,43,23,Baja,Validado,12.7,Atendido
+#1116,2026-07-14 05:22:25,San Agustín,Sospecha,-11.910741,-77.010864,14,96,Alta,Validado,12.5,Atendido
+#1117,2026-07-13 20:36:25,Comas Sur,Incendio,-11.880027,-77.019254,82,79,Media,Validado,14.0,En Proceso
+#1118,2026-07-14 08:24:25,Collique,Robo,-11.9378,-77.03666,15,12,Baja,Validado,8.4,En Proceso
+#1119,2026-07-13 20:56:25,La Balanza,Emergencia Médica,-11.883668,-77.016156,94,87,Alta,Validado,23.3,En Proceso
+#1120,2026-07-14 11:34:25,Comas Sur,Robo,-11.914117,-77.051009,22,36,Baja,Descartado,0.0,Atendido
+#1121,2026-07-14 14:38:25,La Balanza,Accidente de Tránsito,-11.94787,-77.020777,78,80,Alta,Validado,24.9,Atendido
+#1122,2026-07-14 18:40:25,San Agustín,Incendio,-11.948536,-77.049115,82,45,Media,Descartado,0.0,Atendido
+#1123,2026-07-14 05:49:25,Comas Sur,Robo,-11.908176,-77.01677,46,69,Media,Descartado,0.0,Atendido
+#1124,2026-07-14 16:51:25,Comas Sur,Sospecha,-11.924313,-77.037448,85,61,Media,Validado,2.4,Atendido
+#1125,2026-07-14 09:13:25,Collique,Robo,-11.924707,-77.032583,98,61,Media,Validado,23.3,Atendido
+#1126,2026-07-14 06:09:25,San Agustín,Emergencia Médica,-11.902133,-77.017406,83,24,Baja,Validado,18.3,Pendiente
+#1127,2026-07-13 21:12:25,Collique,Accidente de Tránsito,-11.923642,-77.015061,58,44,Media,Validado,21.6,Atendido
+#1128,2026-07-14 07:25:25,San Agustín,Incendio,-11.942058,-77.021237,38,67,Media,Validado,1.2,Atendido
+#1129,2026-07-14 19:36:25,Comas Sur,Incendio,-11.938076,-77.031476,68,27,Baja,Validado,13.2,Atendido
+#1130,2026-07-14 07:36:25,San Agustín,Incendio,-11.91792,-77.042995,94,58,Media,Validado,15.1,Atendido
+#1131,2026-07-13 20:24:25,Comas Norte,Incendio,-11.934848,-77.030161,35,72,Media,Validado,3.4,Atendido
+#1132,2026-07-14 12:37:25,La Balanza,Emergencia Médica,-11.917238,-77.052149,16,48,Media,Descartado,0.0,Atendido
+#1133,2026-07-14 02:32:25,Comas Sur,Incendio,-11.947446,-77.032909,51,79,Media,Validado,2.0,En Proceso
+#1134,2026-07-14 16:40:25,Comas Norte,Sospecha,-11.927306,-77.036088,89,68,Media,Validado,1.2,Atendido
+#1135,2026-07-13 22:30:25,Comas Norte,Accidente de Tránsito,-11.934856,-77.02545,10,33,Baja,Validado,16.3,En Proceso
+#1136,2026-07-14 15:28:25,Collique,Emergencia Médica,-11.932881,-77.0119,23,54,Media,Validado,21.9,Atendido
+#1137,2026-07-14 06:06:25,Comas Norte,Sospecha,-11.946908,-77.011325,44,14,Baja,Validado,6.4,En Proceso
+#1138,2026-07-14 15:02:25,Collique,Robo,-11.934147,-77.017038,100,48,Media,Validado,7.1,Atendido
+#1139,2026-07-14 04:59:25,La Balanza,Accidente de Tránsito,-11.909776,-77.012287,69,20,Baja,Validado,12.4,En Proceso
+#1140,2026-07-14 10:51:25,Comas Norte,Incendio,-11.934084,-77.043822,79,55,Media,Validado,7.3,Atendido
+#1141,2026-07-14 17:28:25,Collique,Robo,-11.895957,-77.038981,38,34,Baja,Validado,16.2,Pendiente
+#1142,2026-07-14 06:22:25,Comas Sur,Incendio,-11.931611,-77.017376,15,83,Alta,Descartado,0.0,Atendido
+#1143,2026-07-14 08:42:25,Comas Norte,Emergencia Médica,-11.933591,-77.052478,98,33,Baja,Validado,10.2,Pendiente
+#1144,2026-07-14 04:30:25,Comas Sur,Accidente de Tránsito,-11.944944,-77.041131,78,81,Alta,Validado,17.3,En Proceso
+#1145,2026-07-14 18:57:25,La Balanza,Sospecha,-11.930262,-77.018286,33,91,Alta,Validado,8.8,Atendido
+#1146,2026-07-13 19:58:25,La Balanza,Robo,-11.944566,-77.047937,64,38,Baja,Validado,22.9,Atendido
+#1147,2026-07-14 09:10:25,La Balanza,Incendio,-11.920764,-77.049487,73,46,Media,Validado,5.2,Pendiente
+#1148,2026-07-13 22:33:25,Comas Norte,Accidente de Tránsito,-11.917725,-77.040915,96,79,Media,Validado,24.1,Atendido
+#1149,2026-07-13 20:11:25,Comas Norte,Robo,-11.882363,-77.051311,82,35,Baja,Validado,23.5,Atendido
+#1150,2026-07-14 06:19:25,La Balanza,Robo,-11.932191,-77.049502,65,62,Media,Validado,1.6,Atendido
+#1151,2026-07-13 19:56:25,Comas Sur,Emergencia Médica,-11.903834,-77.057465,59,39,Baja,Validado,21.7,En Proceso
+#1152,2026-07-14 03:30:25,Collique,Accidente de Tránsito,-11.924486,-77.058724,49,10,Baja,Validado,8.7,Atendido
+#1153,2026-07-13 22:41:25,La Balanza,Sospecha,-11.941989,-77.043462,84,69,Media,Validado,2.8,Pendiente
+#1154,2026-07-14 10:11:25,Comas Norte,Robo,-11.896728,-77.042478,100,45,Media,Validado,1.3,En Proceso
+#1155,2026-07-14 13:49:25,San Agustín,Robo,-11.880999,-77.017934,99,58,Media,Validado,7.4,En Proceso
+#1156,2026-07-14 19:22:25,La Balanza,Incendio,-11.920634,-77.02213,10,66,Media,Descartado,0.0,Atendido
+#1157,2026-07-14 14:37:25,San Agustín,Sospecha,-11.929621,-77.035022,24,22,Baja,Descartado,0.0,Atendido
+#1158,2026-07-14 16:47:25,Comas Norte,Sospecha,-11.897261,-77.033453,65,39,Baja,Validado,13.1,Pendiente
+#1159,2026-07-14 02:34:25,Collique,Emergencia Médica,-11.925461,-77.021773,53,55,Media,Validado,17.4,Atendido
+#1160,2026-07-14 05:28:25,Comas Sur,Accidente de Tránsito,-11.901587,-77.040689,32,50,Media,Validado,10.2,En Proceso
+#1161,2026-07-14 19:30:25,San Agustín,Robo,-11.906125,-77.036085,38,90,Alta,Validado,22.3,Atendido
+#1162,2026-07-14 09:20:25,Comas Norte,Sospecha,-11.88025,-77.027209,90,62,Media,Descartado,0.0,Atendido
+#1163,2026-07-13 20:48:25,Comas Sur,Incendio,-11.94838,-77.029223,59,51,Media,Validado,12.0,Pendiente
+#1164,2026-07-14 17:42:25,San Agustín,Incendio,-11.942827,-77.043622,61,66,Media,Validado,25.0,Atendido
+#1165,2026-07-14 18:23:25,Comas Norte,Robo,-11.924808,-77.011485,52,73,Media,Validado,21.7,Pendiente
+#1166,2026-07-14 03:26:25,Collique,Emergencia Médica,-11.920957,-77.055043,71,14,Baja,Validado,5.3,Atendido
+#1167,2026-07-14 05:58:25,Collique,Incendio,-11.887316,-77.037752,73,57,Media,Validado,24.5,Pendiente
+#1168,2026-07-14 04:55:25,San Agustín,Sospecha,-11.912647,-77.020551,84,11,Baja,Validado,18.9,En Proceso
+#1169,2026-07-14 00:58:25,La Balanza,Sospecha,-11.916973,-77.049393,57,99,Alta,Validado,1.6,Atendido
+#1170,2026-07-14 19:23:25,La Balanza,Accidente de Tránsito,-11.93445,-77.023774,33,54,Media,Validado,4.1,Pendiente
+#1171,2026-07-14 16:55:25,Collique,Incendio,-11.909327,-77.039087,47,77,Media,Validado,15.2,Atendido
+#1172,2026-07-14 13:01:25,La Balanza,Sospecha,-11.888006,-77.059432,94,38,Baja,Validado,2.2,En Proceso
+#1173,2026-07-14 04:03:25,Comas Sur,Accidente de Tránsito,-11.90876,-77.037905,23,84,Alta,Validado,19.9,Atendido
+#1174,2026-07-14 02:09:25,Collique,Sospecha,-11.928175,-77.050707,46,21,Baja,Validado,24.8,Atendido
+#1175,2026-07-14 07:06:25,La Balanza,Incendio,-11.947481,-77.035352,46,11,Baja,Validado,16.6,Pendiente
+#1176,2026-07-14 07:02:25,Comas Norte,Robo,-11.919625,-77.02779,30,93,Alta,Validado,23.0,Pendiente
+#1177,2026-07-13 20:27:25,Comas Sur,Accidente de Tránsito,-11.93981,-77.02856,93,72,Media,Validado,9.2,Atendido
+#1178,2026-07-14 15:09:25,La Balanza,Sospecha,-11.922066,-77.020684,71,51,Media,Validado,11.7,En Proceso
+#1179,2026-07-13 20:05:25,La Balanza,Incendio,-11.901552,-77.019277,67,22,Baja,Validado,24.2,Pendiente
+#1180,2026-07-14 04:12:25,La Balanza,Incendio,-11.914216,-77.055143,66,21,Baja,Validado,15.0,Pendiente
+#1181,2026-07-14 11:14:25,Collique,Sospecha,-11.88795,-77.057254,89,43,Media,Validado,6.2,Atendido
+#1182,2026-07-14 04:53:25,Comas Norte,Incendio,-11.922482,-77.051318,90,73,Media,Validado,23.1,En Proceso
+#1183,2026-07-14 16:48:25,La Balanza,Incendio,-11.890932,-77.013923,99,91,Alta,Validado,12.1,Pendiente
+#1184,2026-07-14 18:36:25,La Balanza,Emergencia Médica,-11.905972,-77.011712,29,73,Media,Validado,9.2,Pendiente
+#1185,2026-07-14 11:18:25,Comas Norte,Accidente de Tránsito,-11.885242,-77.055231,89,34,Baja,Validado,13.2,Pendiente
+#1186,2026-07-14 12:37:25,Collique,Incendio,-11.925504,-77.040651,85,66,Media,Validado,11.7,Atendido
+#1187,2026-07-14 02:22:25,Comas Norte,Accidente de Tránsito,-11.927505,-77.014086,15,93,Alta,Validado,21.9,En Proceso
+#1188,2026-07-14 10:34:25,Comas Sur,Robo,-11.912424,-77.04115,66,93,Alta,Validado,23.3,Atendido
+#1189,2026-07-14 09:08:25,Collique,Accidente de Tránsito,-11.917251,-77.029099,33,73,Media,Validado,24.4,En Proceso
+#1190,2026-07-14 01:29:25,La Balanza,Incendio,-11.926986,-77.013683,65,97,Alta,Validado,19.1,En Proceso
+#1191,2026-07-14 11:01:25,San Agustín,Emergencia Médica,-11.880038,-77.03118,10,24,Baja,Validado,1.4,En Proceso
+#1192,2026-07-14 00:55:25,San Agustín,Incendio,-11.903457,-77.036409,71,47,Media,Validado,4.2,En Proceso
+#1193,2026-07-14 09:28:25,Comas Norte,Incendio,-11.909831,-77.046348,83,73,Media,Validado,5.6,En Proceso
+#1194,2026-07-14 18:38:25,Collique,Robo,-11.919252,-77.052864,21,17,Baja,Validado,14.6,En Proceso
+#1195,2026-07-13 21:10:25,Comas Sur,Emergencia Médica,-11.943784,-77.051858,39,59,Media,Validado,1.0,Atendido
+#1196,2026-07-13 21:31:25,Comas Norte,Accidente de Tránsito,-11.901037,-77.010133,19,50,Media,Validado,15.0,Pendiente
+#1197,2026-07-14 11:45:25,Collique,Incendio,-11.912887,-77.011943,22,22,Baja,Validado,22.1,Atendido
+#1198,2026-07-13 21:02:25,Comas Sur,Incendio,-11.924442,-77.015404,23,93,Alta,Descartado,0.0,Atendido
+#1199,2026-07-13 20:18:25,La Balanza,Incendio,-11.93556,-77.045172,90,48,Media,Validado,9.4,Pendiente
+#1200,2026-07-14 01:54:25,Comas Sur,Robo,-11.888223,-77.059569,10,33,Baja,Validado,22.3,Pendiente
+#1201,2026-07-14 05:33:25,Collique,Robo,-11.946835,-77.041367,28,35,Baja,Validado,14.3,Atendido
+#1202,2026-07-14 15:07:25,La Balanza,Accidente de Tránsito,-11.907309,-77.033314,53,56,Media,Descartado,0.0,Atendido
+#1203,2026-07-13 22:17:25,Collique,Accidente de Tránsito,-11.905697,-77.043655,78,84,Alta,Validado,1.4,Pendiente
+#1204,2026-07-14 01:25:25,La Balanza,Incendio,-11.939945,-77.030178,100,92,Alta,Validado,21.7,En Proceso
+#1205,2026-07-14 09:57:25,La Balanza,Sospecha,-11.903084,-77.035221,62,14,Baja,Descartado,0.0,Atendido
+#1206,2026-07-14 18:37:25,La Balanza,Robo,-11.943974,-77.059668,29,11,Baja,Validado,14.8,Pendiente
+#1207,2026-07-14 06:32:25,San Agustín,Sospecha,-11.897393,-77.046628,68,47,Media,Validado,11.7,Atendido
+#1208,2026-07-13 23:34:25,Comas Sur,Incendio,-11.928755,-77.013711,55,15,Baja,Validado,19.1,Atendido
+#1209,2026-07-14 10:50:25,Collique,Robo,-11.913539,-77.029861,59,10,Baja,Descartado,0.0,Atendido
+#1210,2026-07-14 14:09:25,San Agustín,Robo,-11.89421,-77.015138,82,70,Media,Validado,19.4,En Proceso
+#1211,2026-07-13 22:18:25,Comas Sur,Accidente de Tránsito,-11.924025,-77.025057,32,17,Baja,Validado,4.4,En Proceso
+#1212,2026-07-14 03:58:25,Collique,Emergencia Médica,-11.92005,-77.016409,15,41,Media,Validado,4.6,En Proceso
+#1213,2026-07-13 21:02:25,Collique,Robo,-11.937284,-77.029473,50,41,Media,Validado,10.7,Atendido
+#1214,2026-07-14 09:36:25,La Balanza,Incendio,-11.900507,-77.016286,81,47,Media,Validado,11.7,Atendido
+#1215,2026-07-14 01:59:25,Collique,Incendio,-11.89088,-77.041595,20,17,Baja,Validado,4.7,En Proceso
+#1216,2026-07-14 18:19:25,Comas Norte,Sospecha,-11.917241,-77.039217,81,95,Alta,Validado,6.6,Pendiente
+#1217,2026-07-14 15:32:25,Comas Sur,Sospecha,-11.946111,-77.047988,54,68,Media,Descartado,0.0,Atendido
+#1218,2026-07-14 01:56:25,Comas Norte,Robo,-11.907694,-77.03601,18,81,Alta,Validado,17.6,Pendiente
+#1219,2026-07-14 00:40:25,La Balanza,Robo,-11.890472,-77.023611,34,22,Baja,Validado,2.3,En Proceso
+#1220,2026-07-13 22:44:25,Comas Sur,Emergencia Médica,-11.918837,-77.010542,97,57,Media,Validado,21.7,Pendiente
+#1221,2026-07-13 20:13:25,Comas Sur,Robo,-11.908198,-77.019663,28,63,Media,Validado,5.2,En Proceso
+#1222,2026-07-14 08:35:25,Comas Norte,Robo,-11.920178,-77.047046,11,71,Media,Descartado,0.0,Atendido
+#1223,2026-07-14 14:46:25,La Balanza,Emergencia Médica,-11.918608,-77.051828,24,44,Media,Descartado,0.0,Atendido
+#1224,2026-07-14 11:15:25,Comas Sur,Incendio,-11.908738,-77.030502,55,13,Baja,Validado,20.9,En Proceso
+#1225,2026-07-14 00:43:25,San Agustín,Sospecha,-11.907942,-77.051694,85,35,Baja,Validado,20.6,Pendiente
+#1226,2026-07-14 13:30:25,Comas Norte,Sospecha,-11.924351,-77.053692,60,27,Baja,Validado,24.2,En Proceso
+#1227,2026-07-14 01:19:25,Comas Sur,Incendio,-11.903076,-77.034461,43,98,Alta,Validado,11.6,Pendiente
+#1228,2026-07-14 05:37:25,La Balanza,Emergencia Médica,-11.896537,-77.010574,63,50,Media,Validado,8.2,Atendido
+#1229,2026-07-14 15:23:25,Collique,Sospecha,-11.937679,-77.044971,89,44,Media,Validado,21.3,Pendiente
+#1230,2026-07-14 13:13:25,La Balanza,Sospecha,-11.928304,-77.023271,32,26,Baja,Validado,16.0,Pendiente
+#1231,2026-07-14 17:36:25,La Balanza,Sospecha,-11.890321,-77.015108,61,86,Alta,Descartado,0.0,Atendido
+#1232,2026-07-14 06:08:25,Comas Sur,Incendio,-11.925669,-77.057383,49,80,Alta,Validado,19.7,Pendiente
+#1233,2026-07-14 08:37:25,Comas Norte,Emergencia Médica,-11.912838,-77.010685,60,99,Alta,Validado,9.3,En Proceso
+#1234,2026-07-14 16:38:25,Collique,Sospecha,-11.932005,-77.054927,25,16,Baja,Descartado,0.0,Atendido
+#1235,2026-07-14 17:25:25,San Agustín,Incendio,-11.901304,-77.024126,24,77,Media,Validado,18.3,Pendiente
+#1236,2026-07-13 22:36:25,San Agustín,Accidente de Tránsito,-11.914163,-77.059922,42,35,Baja,Validado,21.6,Pendiente
+#1237,2026-07-14 10:19:25,Comas Sur,Sospecha,-11.912283,-77.053238,47,43,Media,Validado,23.7,Atendido
+#1238,2026-07-13 22:24:25,Collique,Incendio,-11.899029,-77.027697,61,100,Alta,Validado,19.2,Atendido
+#1239,2026-07-13 22:16:25,Comas Norte,Robo,-11.899393,-77.011832,39,43,Media,Validado,7.2,Atendido
+#1240,2026-07-13 23:42:25,Comas Sur,Accidente de Tránsito,-11.944751,-77.029896,78,73,Media,Validado,2.9,Atendido
+#1241,2026-07-14 07:45:25,Collique,Accidente de Tránsito,-11.942179,-77.054248,72,71,Media,Validado,5.9,En Proceso
+#1242,2026-07-14 10:14:25,La Balanza,Robo,-11.911143,-77.014419,95,66,Media,Validado,11.0,Pendiente
+#1243,2026-07-14 13:01:25,Collique,Incendio,-11.94504,-77.013602,85,14,Baja,Validado,4.2,En Proceso
+#1244,2026-07-14 06:41:25,La Balanza,Sospecha,-11.892926,-77.018008,42,36,Baja,Validado,2.9,En Proceso
+#1245,2026-07-14 12:59:25,Collique,Incendio,-11.946286,-77.018554,69,19,Baja,Validado,17.8,En Proceso
+#1246,2026-07-14 06:56:25,La Balanza,Incendio,-11.907431,-77.041587,64,44,Media,Validado,4.6,Pendiente
+#1247,2026-07-14 08:35:25,Comas Sur,Emergencia Médica,-11.908684,-77.017813,81,96,Alta,Validado,19.0,Pendiente
+#1248,2026-07-13 23:56:25,La Balanza,Accidente de Tránsito,-11.914567,-77.023984,35,55,Media,Validado,8.1,Atendido
+#1249,2026-07-14 00:01:25,Collique,Robo,-11.899565,-77.037933,76,14,Baja,Validado,7.6,Atendido
+#1250,2026-07-14 16:51:25,Comas Norte,Emergencia Médica,-11.891477,-77.046656,74,12,Baja,Validado,19.3,Pendiente
+#1251,2026-07-14 08:24:25,Comas Sur,Emergencia Médica,-11.913178,-77.0399,46,40,Media,Validado,13.7,En Proceso
+#1252,2026-07-14 07:53:25,San Agustín,Incendio,-11.893751,-77.029724,21,88,Alta,Validado,6.7,Atendido
+#1253,2026-07-14 19:11:25,La Balanza,Sospecha,-11.924567,-77.021248,30,58,Media,Validado,6.9,Pendiente
+#1254,2026-07-14 14:44:25,San Agustín,Emergencia Médica,-11.882109,-77.01547,87,69,Media,Validado,24.4,En Proceso
+#1255,2026-07-14 03:36:25,Collique,Robo,-11.896493,-77.032692,100,31,Baja,Validado,1.4,Pendiente
+#1256,2026-07-14 04:45:25,San Agustín,Accidente de Tránsito,-11.929696,-77.010119,43,77,Media,Validado,22.2,Atendido
+#1257,2026-07-14 19:13:25,Collique,Accidente de Tránsito,-11.891791,-77.052528,68,94,Alta,Validado,24.5,Pendiente
+#1258,2026-07-14 17:10:25,Comas Sur,Robo,-11.927795,-77.056728,25,96,Alta,Validado,23.5,En Proceso
+#1259,2026-07-13 22:03:25,San Agustín,Sospecha,-11.911748,-77.057122,98,71,Media,Validado,14.4,Pendiente
+#1260,2026-07-14 16:49:25,Collique,Sospecha,-11.886001,-77.046225,42,18,Baja,Validado,5.4,En Proceso
+#1261,2026-07-14 17:45:25,Comas Sur,Emergencia Médica,-11.944783,-77.044805,64,19,Baja,Validado,14.0,Atendido
+#1262,2026-07-14 02:52:25,La Balanza,Sospecha,-11.936881,-77.013009,99,87,Alta,Validado,9.6,En Proceso
+#1263,2026-07-14 15:52:25,San Agustín,Robo,-11.88424,-77.035641,14,12,Baja,Validado,6.0,Atendido
+#1264,2026-07-14 07:57:25,Collique,Incendio,-11.911778,-77.044595,14,11,Baja,Validado,23.1,En Proceso
+#1265,2026-07-14 01:16:25,Comas Norte,Robo,-11.887331,-77.0598,12,34,Baja,Validado,19.2,En Proceso
+#1266,2026-07-14 04:59:25,Collique,Emergencia Médica,-11.89758,-77.0531,52,16,Baja,Validado,5.6,En Proceso
+#1267,2026-07-14 03:05:25,Comas Norte,Incendio,-11.883415,-77.050161,23,55,Media,Validado,12.8,En Proceso
+#1268,2026-07-14 11:42:25,Collique,Incendio,-11.917986,-77.019306,67,73,Media,Validado,18.3,En Proceso
+#1269,2026-07-14 17:13:25,Comas Sur,Robo,-11.883581,-77.038602,89,38,Baja,Validado,22.3,Atendido
+#1270,2026-07-14 04:32:25,Comas Sur,Sospecha,-11.920803,-77.039274,34,30,Baja,Validado,4.6,Atendido
+#1271,2026-07-14 15:47:25,Collique,Incendio,-11.89456,-77.048853,21,89,Alta,Validado,21.3,Pendiente
+#1272,2026-07-14 10:43:25,La Balanza,Accidente de Tránsito,-11.88975,-77.056378,46,12,Baja,Descartado,0.0,Atendido
+#1273,2026-07-14 00:04:25,Collique,Incendio,-11.91027,-77.019779,90,79,Media,Validado,14.2,En Proceso
+#1274,2026-07-14 15:27:25,La Balanza,Emergencia Médica,-11.935859,-77.035007,55,15,Baja,Validado,14.9,Pendiente
+#1275,2026-07-13 20:39:25,Comas Sur,Robo,-11.910867,-77.058273,64,55,Media,Validado,18.2,Pendiente
+#1276,2026-07-13 23:55:25,La Balanza,Incendio,-11.929403,-77.027981,14,52,Media,Validado,21.1,En Proceso
+#1277,2026-07-14 09:17:25,Comas Norte,Incendio,-11.938311,-77.035126,56,63,Media,Validado,5.8,Atendido
+#1278,2026-07-14 18:52:25,Comas Norte,Sospecha,-11.915604,-77.032437,14,85,Alta,Validado,21.3,Atendido
+#1279,2026-07-14 16:09:25,Collique,Robo,-11.944599,-77.045183,36,21,Baja,Descartado,0.0,Atendido
+#1280,2026-07-13 21:57:25,Collique,Sospecha,-11.930739,-77.024053,99,90,Alta,Validado,2.7,Atendido
+#1281,2026-07-14 05:59:25,Collique,Emergencia Médica,-11.92908,-77.035602,99,75,Media,Validado,1.7,Atendido
+#1282,2026-07-14 04:31:25,Comas Norte,Accidente de Tránsito,-11.923645,-77.012941,94,95,Alta,Descartado,0.0,Atendido
+#1283,2026-07-14 01:30:25,San Agustín,Accidente de Tránsito,-11.908532,-77.019491,32,14,Baja,Validado,3.1,Atendido
+#1284,2026-07-13 23:14:25,Collique,Sospecha,-11.901549,-77.01293,93,42,Media,Validado,11.2,Pendiente
+#1285,2026-07-13 22:30:25,Comas Norte,Robo,-11.896279,-77.013217,32,69,Media,Validado,13.9,Atendido
+#1286,2026-07-14 11:27:25,Comas Norte,Robo,-11.906757,-77.026009,16,59,Media,Validado,24.7,Atendido
+#1287,2026-07-14 01:15:25,Collique,Incendio,-11.949861,-77.04242,37,74,Media,Validado,12.4,Atendido
+#1288,2026-07-14 01:48:25,San Agustín,Sospecha,-11.912255,-77.023711,49,15,Baja,Validado,11.6,Pendiente
+#1289,2026-07-14 18:18:25,La Balanza,Robo,-11.90142,-77.014861,64,22,Baja,Validado,5.4,En Proceso
+#1290,2026-07-14 16:19:25,San Agustín,Incendio,-11.940551,-77.025859,10,50,Media,Validado,24.2,Atendido
+#1291,2026-07-13 19:56:25,San Agustín,Accidente de Tránsito,-11.926007,-77.039434,95,22,Baja,Validado,9.6,En Proceso
+#1292,2026-07-14 12:27:25,Comas Sur,Incendio,-11.934757,-77.032456,69,29,Baja,Validado,11.4,Pendiente
+#1293,2026-07-14 03:38:25,Comas Sur,Emergencia Médica,-11.902097,-77.045204,95,79,Media,Validado,4.8,En Proceso
+#1294,2026-07-14 07:07:25,La Balanza,Emergencia Médica,-11.889708,-77.034884,25,11,Baja,Validado,24.8,En Proceso
+#1295,2026-07-14 02:22:25,Comas Sur,Incendio,-11.931417,-77.056222,59,30,Baja,Validado,18.7,Pendiente
+#1296,2026-07-14 01:12:25,San Agustín,Accidente de Tránsito,-11.945599,-77.049712,94,50,Media,Validado,22.8,Pendiente
+#1297,2026-07-14 06:28:25,Collique,Sospecha,-11.881757,-77.034512,98,45,Media,Validado,13.3,En Proceso
+#1298,2026-07-14 17:00:25,La Balanza,Incendio,-11.914166,-77.05989,76,21,Baja,Descartado,0.0,Atendido
+#1299,2026-07-14 16:23:25,Comas Sur,Emergencia Médica,-11.90798,-77.02709,59,34,Baja,Validado,12.3,En Proceso
+#1300,2026-07-14 05:37:25,La Balanza,Robo,-11.920221,-77.056938,31,77,Media,Validado,16.6,En Proceso
+#1301,2026-07-13 21:07:25,San Agustín,Robo,-11.94808,-77.011068,83,12,Baja,Validado,5.6,En Proceso
+#1302,2026-07-14 17:23:25,La Balanza,Robo,-11.895312,-77.016659,88,93,Alta,Validado,13.5,En Proceso
+#1303,2026-07-14 14:44:25,La Balanza,Incendio,-11.934349,-77.019137,27,15,Baja,Validado,4.5,Pendiente
+#1304,2026-07-14 14:28:25,Comas Norte,Sospecha,-11.93033,-77.043388,26,87,Alta,Validado,18.1,Pendiente
+#1305,2026-07-14 14:07:25,San Agustín,Incendio,-11.945317,-77.033725,73,41,Media,Validado,21.4,Pendiente
+#1306,2026-07-13 21:10:25,La Balanza,Accidente de Tránsito,-11.936073,-77.033399,76,15,Baja,Validado,16.9,En Proceso
+#1307,2026-07-14 00:25:25,Collique,Emergencia Médica,-11.895378,-77.042837,30,74,Media,Validado,24.2,En Proceso
+#1308,2026-07-14 15:01:25,La Balanza,Robo,-11.949001,-77.013619,43,84,Alta,Validado,10.0,Atendido
+#1309,2026-07-14 07:06:25,San Agustín,Incendio,-11.899448,-77.016908,87,82,Alta,Validado,20.7,En Proceso
+#1310,2026-07-14 10:16:25,San Agustín,Emergencia Médica,-11.900932,-77.01632,95,14,Baja,Descartado,0.0,Atendido
+#1311,2026-07-14 14:09:25,Collique,Robo,-11.932375,-77.04784,21,52,Media,Validado,24.7,Pendiente
+#1312,2026-07-14 06:07:25,La Balanza,Emergencia Médica,-11.926255,-77.042794,59,61,Media,Validado,9.0,Atendido
+#1313,2026-07-14 07:56:25,Comas Sur,Sospecha,-11.914655,-77.012692,58,58,Media,Validado,6.6,En Proceso
+#1314,2026-07-13 21:05:25,Comas Norte,Accidente de Tránsito,-11.920451,-77.055599,49,31,Baja,Validado,8.8,En Proceso
+#1315,2026-07-14 18:34:25,Collique,Incendio,-11.923333,-77.0419,25,55,Media,Validado,4.5,Pendiente
+#1316,2026-07-14 08:34:25,Collique,Incendio,-11.937076,-77.046225,57,58,Media,Validado,23.8,En Proceso
+#1317,2026-07-14 10:20:25,Collique,Accidente de Tránsito,-11.899842,-77.018823,47,100,Alta,Validado,13.8,Pendiente
+#1318,2026-07-14 17:41:25,Comas Sur,Emergencia Médica,-11.930757,-77.031305,17,86,Alta,Validado,7.1,Pendiente
+#1319,2026-07-14 14:04:25,San Agustín,Incendio,-11.940391,-77.031739,62,45,Media,Validado,23.6,Atendido
+#1320,2026-07-14 13:59:25,Comas Norte,Sospecha,-11.891275,-77.035985,97,87,Alta,Validado,3.9,Pendiente
+#1321,2026-07-13 22:34:25,Comas Sur,Robo,-11.906524,-77.031454,85,76,Media,Validado,23.4,Pendiente
+#1322,2026-07-14 12:01:25,Comas Norte,Sospecha,-11.882884,-77.040371,20,38,Baja,Validado,2.7,Pendiente
+#1323,2026-07-14 00:19:25,Comas Sur,Robo,-11.918403,-77.05135,41,13,Baja,Validado,23.1,En Proceso
+#1324,2026-07-14 06:58:25,San Agustín,Robo,-11.893639,-77.020732,76,93,Alta,Validado,19.6,Atendido
+#1325,2026-07-14 13:09:25,La Balanza,Incendio,-11.919841,-77.037626,34,58,Media,Descartado,0.0,Atendido
+#1326,2026-07-14 09:25:25,La Balanza,Sospecha,-11.946376,-77.025922,32,50,Media,Validado,5.4,En Proceso
+#1327,2026-07-14 07:04:25,Comas Norte,Robo,-11.927301,-77.029715,94,64,Media,Descartado,0.0,Atendido
+#1328,2026-07-14 18:23:25,Comas Norte,Robo,-11.892606,-77.031985,74,43,Media,Validado,17.6,Atendido
+#1329,2026-07-13 23:23:25,La Balanza,Incendio,-11.939326,-77.024153,95,47,Media,Validado,3.1,Pendiente
+#1330,2026-07-14 15:34:25,La Balanza,Emergencia Médica,-11.932366,-77.023617,11,42,Media,Validado,21.9,Pendiente
+#1331,2026-07-14 14:26:25,Comas Norte,Incendio,-11.901573,-77.02741,60,97,Alta,Validado,9.1,En Proceso
+#1332,2026-07-14 11:42:25,La Balanza,Accidente de Tránsito,-11.928588,-77.046839,59,15,Baja,Validado,14.1,Pendiente
+#1333,2026-07-14 02:46:25,San Agustín,Accidente de Tránsito,-11.890341,-77.041879,97,40,Media,Validado,18.8,Atendido
+#1334,2026-07-14 15:16:25,Collique,Incendio,-11.902295,-77.020911,42,22,Baja,Validado,12.0,Atendido
+#1335,2026-07-14 14:29:25,Collique,Accidente de Tránsito,-11.910448,-77.028958,88,100,Alta,Descartado,0.0,Atendido
+#1336,2026-07-14 19:03:25,La Balanza,Robo,-11.947127,-77.010164,91,13,Baja,Validado,24.2,Atendido
+#1337,2026-07-14 14:43:25,Comas Sur,Accidente de Tránsito,-11.941789,-77.039985,83,98,Alta,Validado,7.8,Atendido
+#1338,2026-07-13 23:40:25,San Agustín,Sospecha,-11.885833,-77.034192,76,14,Baja,Descartado,0.0,Atendido
+#1339,2026-07-14 09:17:25,Comas Sur,Accidente de Tránsito,-11.88334,-77.045284,71,73,Media,Validado,12.6,En Proceso
+#1340,2026-07-14 19:02:25,San Agustín,Sospecha,-11.931349,-77.012211,62,71,Media,Validado,8.9,Pendiente
+#1341,2026-07-14 05:48:25,Comas Norte,Accidente de Tránsito,-11.887973,-77.052426,45,68,Media,Validado,2.6,En Proceso
+#1342,2026-07-13 21:28:25,La Balanza,Emergencia Médica,-11.931205,-77.040278,27,76,Media,Validado,5.2,Atendido
+#1343,2026-07-13 20:41:25,Collique,Accidente de Tránsito,-11.903024,-77.03385,48,12,Baja,Validado,5.6,En Proceso
+#1344,2026-07-14 11:25:25,San Agustín,Accidente de Tránsito,-11.929177,-77.040749,96,60,Media,Descartado,0.0,Atendido
+#1345,2026-07-14 05:51:25,Collique,Robo,-11.945367,-77.044422,44,94,Alta,Validado,17.1,Pendiente
+#1346,2026-07-14 00:49:25,San Agustín,Emergencia Médica,-11.887311,-77.045371,44,67,Media,Validado,3.2,Atendido
+#1347,2026-07-14 02:47:25,Collique,Emergencia Médica,-11.902169,-77.014929,21,79,Media,Descartado,0.0,Atendido
+#1348,2026-07-14 14:19:25,Comas Norte,Incendio,-11.90786,-77.020768,59,14,Baja,Validado,18.4,Pendiente
+#1349,2026-07-14 11:54:25,La Balanza,Accidente de Tránsito,-11.895148,-77.029271,54,92,Alta,Validado,17.9,Pendiente
+#1350,2026-07-13 22:44:25,Collique,Accidente de Tránsito,-11.941814,-77.040499,21,27,Baja,Validado,9.6,Pendiente
+#1351,2026-07-14 16:01:25,Comas Sur,Emergencia Médica,-11.94015,-77.015821,65,82,Alta,Validado,3.3,Pendiente
+#1352,2026-07-14 02:38:25,Collique,Incendio,-11.889287,-77.059407,24,29,Baja,Validado,12.4,Atendido
+#1353,2026-07-14 18:13:25,La Balanza,Emergencia Médica,-11.902212,-77.019401,15,10,Baja,Validado,24.2,Atendido
+#1354,2026-07-14 18:32:25,Collique,Robo,-11.911837,-77.038892,63,42,Media,Validado,6.6,En Proceso
+#1355,2026-07-14 08:41:25,Comas Sur,Robo,-11.946954,-77.05101,88,25,Baja,Validado,5.3,Atendido
+#1356,2026-07-14 18:51:25,Collique,Sospecha,-11.926729,-77.036809,46,77,Media,Validado,1.8,En Proceso
+#1357,2026-07-13 20:38:25,La Balanza,Robo,-11.931308,-77.024851,62,28,Baja,Validado,9.5,Atendido
+#1358,2026-07-14 16:29:25,Collique,Accidente de Tránsito,-11.926442,-77.043726,19,15,Baja,Validado,2.1,En Proceso
+#1359,2026-07-14 07:02:25,Comas Norte,Incendio,-11.946807,-77.058043,64,52,Media,Validado,3.8,Pendiente
+#1360,2026-07-13 22:32:25,Comas Sur,Accidente de Tránsito,-11.885489,-77.02277,53,79,Media,Validado,14.6,Atendido
+#1361,2026-07-14 05:32:25,San Agustín,Accidente de Tránsito,-11.948447,-77.018357,60,47,Media,Validado,6.0,Atendido
+#1362,2026-07-14 16:11:25,La Balanza,Accidente de Tránsito,-11.889172,-77.035159,96,67,Media,Validado,2.4,Pendiente
+#1363,2026-07-14 19:26:25,Comas Norte,Emergencia Médica,-11.915118,-77.030386,51,60,Media,Descartado,0.0,Atendido
+#1364,2026-07-14 08:59:25,Collique,Robo,-11.914003,-77.042564,87,27,Baja,Validado,17.9,Atendido
+#1365,2026-07-14 16:26:25,La Balanza,Sospecha,-11.947155,-77.033718,24,10,Baja,Validado,10.3,Atendido
+#1366,2026-07-13 22:08:25,Comas Sur,Sospecha,-11.913383,-77.038768,81,27,Baja,Validado,3.8,Atendido
+#1367,2026-07-14 05:04:25,Comas Sur,Accidente de Tránsito,-11.881708,-77.03435,51,34,Baja,Descartado,0.0,Atendido
+#1368,2026-07-14 08:22:25,San Agustín,Robo,-11.918041,-77.017189,62,81,Alta,Validado,21.1,Pendiente
+#1369,2026-07-14 02:33:25,San Agustín,Incendio,-11.902082,-77.038776,16,90,Alta,Validado,13.7,En Proceso
+#1370,2026-07-14 06:08:25,Comas Sur,Emergencia Médica,-11.891366,-77.039925,82,51,Media,Validado,19.6,En Proceso
+#1371,2026-07-14 16:59:25,La Balanza,Robo,-11.894079,-77.057882,90,22,Baja,Validado,10.9,Pendiente
+#1372,2026-07-14 04:13:25,Comas Norte,Sospecha,-11.886432,-77.0125,37,58,Media,Validado,13.7,Atendido
+#1373,2026-07-14 13:31:25,Comas Norte,Emergencia Médica,-11.917691,-77.059533,18,54,Media,Validado,15.7,Atendido
+#1374,2026-07-14 14:15:25,La Balanza,Emergencia Médica,-11.947022,-77.019519,43,96,Alta,Descartado,0.0,Atendido
+#1375,2026-07-14 17:38:25,Comas Sur,Robo,-11.908695,-77.048847,30,83,Alta,Validado,12.7,Atendido
+#1376,2026-07-14 04:46:25,San Agustín,Incendio,-11.900937,-77.032563,57,100,Alta,Validado,2.7,Pendiente
+#1377,2026-07-14 01:25:25,San Agustín,Sospecha,-11.942151,-77.035551,95,82,Alta,Validado,2.4,En Proceso
+#1378,2026-07-14 00:43:25,Comas Norte,Robo,-11.883047,-77.02846,45,23,Baja,Descartado,0.0,Atendido
+#1379,2026-07-14 17:15:25,La Balanza,Robo,-11.915953,-77.052555,41,99,Alta,Validado,22.7,Pendiente
+#1380,2026-07-14 11:54:25,San Agustín,Incendio,-11.931185,-77.010234,32,76,Media,Validado,9.7,Pendiente
+#1381,2026-07-14 01:29:25,Collique,Sospecha,-11.939774,-77.019916,52,62,Media,Descartado,0.0,Atendido
+#1382,2026-07-14 01:15:25,Comas Sur,Accidente de Tránsito,-11.943218,-77.022976,48,48,Media,Validado,23.6,Pendiente
+#1383,2026-07-13 23:10:25,San Agustín,Accidente de Tránsito,-11.903963,-77.046269,88,84,Alta,Validado,23.8,En Proceso
+#1384,2026-07-13 23:31:25,Collique,Accidente de Tránsito,-11.89241,-77.026013,33,98,Alta,Validado,7.3,Pendiente
+#1385,2026-07-14 14:52:25,Collique,Emergencia Médica,-11.921974,-77.015773,82,81,Alta,Validado,15.5,En Proceso
+#1386,2026-07-14 04:26:25,San Agustín,Robo,-11.881654,-77.023473,100,79,Media,Validado,22.9,En Proceso
+#1387,2026-07-14 17:04:25,La Balanza,Sospecha,-11.935825,-77.050592,26,79,Media,Validado,4.4,En Proceso
+#1388,2026-07-14 16:08:25,Comas Sur,Accidente de Tránsito,-11.939984,-77.048059,59,26,Baja,Validado,2.1,Atendido
+#1389,2026-07-14 16:57:25,La Balanza,Accidente de Tránsito,-11.895342,-77.023161,15,74,Media,Validado,13.4,Pendiente
+#1390,2026-07-13 20:51:25,Comas Norte,Incendio,-11.924563,-77.013208,86,76,Media,Validado,23.5,Pendiente
+#1391,2026-07-13 22:25:25,San Agustín,Robo,-11.922993,-77.05118,41,28,Baja,Descartado,0.0,Atendido
+#1392,2026-07-14 08:11:25,Collique,Robo,-11.880561,-77.032285,44,99,Alta,Validado,11.4,En Proceso
+#1393,2026-07-14 07:32:25,La Balanza,Accidente de Tránsito,-11.948879,-77.026127,63,40,Media,Validado,7.3,Pendiente
+#1394,2026-07-13 20:21:25,La Balanza,Accidente de Tránsito,-11.949564,-77.014943,56,94,Alta,Validado,2.0,Atendido
+#1395,2026-07-14 11:24:25,La Balanza,Emergencia Médica,-11.942469,-77.018965,18,21,Baja,Validado,11.4,Pendiente
+#1396,2026-07-14 09:26:25,Comas Norte,Accidente de Tránsito,-11.885332,-77.040655,48,13,Baja,Validado,22.4,En Proceso
+#1397,2026-07-14 02:07:25,La Balanza,Accidente de Tránsito,-11.927478,-77.028441,74,27,Baja,Validado,15.6,En Proceso
+#1398,2026-07-13 22:43:25,Comas Norte,Robo,-11.948575,-77.036769,98,27,Baja,Validado,10.1,Pendiente
+#1399,2026-07-13 20:23:25,La Balanza,Emergencia Médica,-11.915246,-77.028377,56,65,Media,Validado,17.6,Atendido
+#1400,2026-07-13 21:56:25,San Agustín,Sospecha,-11.884295,-77.054472,65,66,Media,Validado,24.1,Atendido
+#1401,2026-07-14 18:36:25,Collique,Accidente de Tránsito,-11.94672,-77.035673,97,60,Media,Validado,17.3,Atendido
+#1402,2026-07-14 12:49:25,San Agustín,Incendio,-11.949444,-77.037258,68,30,Baja,Validado,23.6,En Proceso
+#1403,2026-07-14 17:47:25,La Balanza,Sospecha,-11.942477,-77.035487,75,19,Baja,Validado,7.7,Atendido
+#1404,2026-07-14 00:43:25,Comas Norte,Sospecha,-11.935752,-77.026797,47,43,Media,Validado,20.9,Pendiente
+#1405,2026-07-14 16:14:25,San Agustín,Accidente de Tránsito,-11.930595,-77.046259,54,11,Baja,Validado,12.4,En Proceso
+#1406,2026-07-14 05:37:25,Comas Sur,Accidente de Tránsito,-11.933503,-77.037277,11,55,Media,Validado,6.6,Atendido
+#1407,2026-07-14 02:32:25,San Agustín,Robo,-11.908669,-77.019152,43,68,Media,Validado,21.0,Pendiente
+#1408,2026-07-14 03:54:25,Comas Norte,Accidente de Tránsito,-11.903468,-77.010311,68,94,Alta,Validado,21.3,Atendido
+#1409,2026-07-14 09:14:25,Comas Sur,Accidente de Tránsito,-11.89562,-77.049352,91,43,Media,Validado,9.9,En Proceso
+#1410,2026-07-14 09:50:25,Comas Sur,Incendio,-11.882447,-77.059404,32,51,Media,Validado,8.2,Pendiente
+#1411,2026-07-14 08:31:25,San Agustín,Emergencia Médica,-11.909597,-77.028578,70,52,Media,Validado,13.9,Pendiente
+#1412,2026-07-14 00:30:25,La Balanza,Incendio,-11.8886,-77.049258,23,86,Alta,Validado,14.2,Pendiente
+#1413,2026-07-13 19:56:25,La Balanza,Accidente de Tránsito,-11.943657,-77.014568,52,48,Media,Validado,15.3,Pendiente
+#1414,2026-07-13 20:28:25,Collique,Sospecha,-11.928386,-77.012607,73,81,Alta,Validado,22.7,Atendido
+#1415,2026-07-14 09:16:25,San Agustín,Robo,-11.880691,-77.022179,79,77,Media,Validado,20.5,Atendido
+#1416,2026-07-13 21:53:25,La Balanza,Incendio,-11.882548,-77.052483,26,55,Media,Validado,24.0,En Proceso
+#1417,2026-07-14 05:36:25,Comas Norte,Emergencia Médica,-11.880176,-77.018293,71,72,Media,Validado,9.7,Pendiente
+#1418,2026-07-14 07:04:25,Comas Norte,Emergencia Médica,-11.917929,-77.024745,96,57,Media,Validado,7.5,En Proceso
+#1419,2026-07-13 21:14:25,Collique,Robo,-11.940946,-77.059933,17,96,Alta,Validado,6.3,Pendiente
+#1420,2026-07-14 11:42:25,Comas Sur,Robo,-11.893679,-77.012555,86,69,Media,Validado,5.4,En Proceso
+#1421,2026-07-14 08:03:25,Comas Sur,Accidente de Tránsito,-11.912315,-77.037933,35,57,Media,Validado,7.7,En Proceso
+#1422,2026-07-14 17:47:25,Comas Norte,Incendio,-11.890466,-77.01659,89,28,Baja,Validado,20.2,Atendido
+#1423,2026-07-14 10:10:25,La Balanza,Accidente de Tránsito,-11.915613,-77.035616,23,81,Alta,Validado,24.2,Atendido
+#1424,2026-07-14 11:20:25,Comas Norte,Robo,-11.90904,-77.044723,21,84,Alta,Validado,6.6,Atendido
+#1425,2026-07-14 06:50:25,La Balanza,Incendio,-11.929366,-77.049285,40,45,Media,Validado,8.1,Atendido
+#1426,2026-07-14 06:06:25,Comas Norte,Sospecha,-11.938562,-77.011558,60,29,Baja,Validado,20.0,Pendiente
+#1427,2026-07-14 04:35:25,La Balanza,Accidente de Tránsito,-11.916532,-77.022211,30,81,Alta,Descartado,0.0,Atendido
+#1428,2026-07-14 01:23:25,Collique,Incendio,-11.90835,-77.056195,79,82,Alta,Validado,4.6,En Proceso
+#1429,2026-07-13 21:37:25,Collique,Sospecha,-11.939515,-77.023188,16,95,Alta,Validado,12.1,En Proceso
+#1430,2026-07-14 04:43:25,San Agustín,Sospecha,-11.916967,-77.050514,23,79,Media,Descartado,0.0,Atendido
+#1431,2026-07-14 14:35:25,La Balanza,Robo,-11.916034,-77.037175,92,50,Media,Validado,6.7,Atendido
+#1432,2026-07-13 20:33:25,Collique,Emergencia Médica,-11.939019,-77.023717,32,84,Alta,Validado,23.9,Pendiente
+#1433,2026-07-14 15:34:25,Collique,Sospecha,-11.91526,-77.046557,37,98,Alta,Validado,20.1,Atendido
+#1434,2026-07-14 07:42:25,Comas Norte,Emergencia Médica,-11.886041,-77.04799,94,15,Baja,Validado,24.9,Atendido
+#1435,2026-07-14 07:36:25,La Balanza,Emergencia Médica,-11.918634,-77.0368,66,27,Baja,Validado,17.1,En Proceso
+#1436,2026-07-14 14:57:25,San Agustín,Incendio,-11.88821,-77.023068,47,78,Media,Validado,3.7,Pendiente
+#1437,2026-07-14 12:30:25,La Balanza,Emergencia Médica,-11.937572,-77.036638,13,51,Media,Validado,5.6,Pendiente
+#1438,2026-07-14 01:15:25,Comas Norte,Incendio,-11.892718,-77.037148,70,48,Media,Descartado,0.0,Atendido
+#1439,2026-07-14 17:22:25,Comas Sur,Accidente de Tránsito,-11.885876,-77.057522,37,97,Alta,Validado,9.1,Pendiente
+#1440,2026-07-14 03:34:25,La Balanza,Emergencia Médica,-11.898905,-77.05341,55,100,Alta,Validado,1.3,Atendido
+#1441,2026-07-13 22:56:25,Comas Sur,Sospecha,-11.887292,-77.041045,90,49,Media,Descartado,0.0,Atendido
+#1442,2026-07-14 00:44:25,La Balanza,Emergencia Médica,-11.947731,-77.029671,63,71,Media,Validado,10.3,Pendiente
+#1443,2026-07-13 19:50:25,San Agustín,Sospecha,-11.894579,-77.052379,45,45,Media,Validado,20.5,Pendiente
+#1444,2026-07-14 04:26:25,San Agustín,Sospecha,-11.905981,-77.0331,75,64,Media,Validado,5.4,Pendiente
+#1445,2026-07-14 19:43:25,Collique,Incendio,-11.91781,-77.048299,97,37,Baja,Validado,2.7,Pendiente
+#1446,2026-07-14 02:12:25,San Agustín,Robo,-11.932353,-77.03735,93,49,Media,Validado,22.9,En Proceso
+#1447,2026-07-14 15:46:25,Comas Sur,Sospecha,-11.886023,-77.013085,42,50,Media,Validado,17.2,Atendido
+#1448,2026-07-14 19:14:25,La Balanza,Robo,-11.88663,-77.021851,35,22,Baja,Validado,14.3,Pendiente
+#1449,2026-07-13 20:54:25,La Balanza,Robo,-11.91694,-77.052951,51,66,Media,Validado,2.4,En Proceso
+#1450,2026-07-14 16:17:25,Comas Sur,Incendio,-11.906174,-77.055328,20,40,Media,Validado,18.2,En Proceso
+#1451,2026-07-14 01:58:25,Collique,Incendio,-11.900207,-77.055429,52,67,Media,Validado,8.7,Atendido
+#1452,2026-07-14 07:10:25,Comas Sur,Accidente de Tránsito,-11.885981,-77.019418,90,84,Alta,Validado,20.6,En Proceso
+#1453,2026-07-14 02:12:25,La Balanza,Sospecha,-11.929157,-77.040615,80,38,Baja,Validado,13.2,Atendido
+#1454,2026-07-14 03:58:25,Comas Sur,Incendio,-11.887374,-77.03959,64,97,Alta,Validado,2.6,En Proceso
+#1455,2026-07-14 18:46:25,Comas Norte,Incendio,-11.886141,-77.032068,22,25,Baja,Validado,20.1,Atendido
+#1456,2026-07-14 08:58:25,Collique,Accidente de Tránsito,-11.914835,-77.025873,69,90,Alta,Validado,6.0,Atendido
+#1457,2026-07-14 16:25:25,San Agustín,Accidente de Tránsito,-11.914116,-77.043461,61,53,Media,Validado,20.3,Atendido
+#1458,2026-07-14 15:04:25,San Agustín,Sospecha,-11.900423,-77.020676,29,43,Media,Validado,7.2,Pendiente
+#1459,2026-07-14 11:22:25,La Balanza,Sospecha,-11.936507,-77.043394,79,60,Media,Descartado,0.0,Atendido
+#1460,2026-07-14 08:23:25,Comas Sur,Sospecha,-11.912192,-77.032775,85,18,Baja,Validado,14.1,Pendiente
+#1461,2026-07-14 10:14:25,Comas Norte,Sospecha,-11.896504,-77.01307,38,12,Baja,Descartado,0.0,Atendido
+#1462,2026-07-14 14:39:25,Collique,Sospecha,-11.924539,-77.048286,97,25,Baja,Validado,24.3,Atendido
+#1463,2026-07-13 21:02:25,Comas Sur,Robo,-11.908019,-77.014281,24,75,Media,Descartado,0.0,Atendido
+#1464,2026-07-14 13:59:25,Comas Norte,Robo,-11.941511,-77.02044,69,77,Media,Descartado,0.0,Atendido
+#1465,2026-07-13 21:37:25,Collique,Accidente de Tránsito,-11.908497,-77.038155,16,48,Media,Validado,19.4,En Proceso
+#1466,2026-07-14 12:27:25,La Balanza,Emergencia Médica,-11.891729,-77.027255,90,28,Baja,Descartado,0.0,Atendido
+#1467,2026-07-14 04:22:25,Collique,Accidente de Tránsito,-11.912274,-77.015302,39,74,Media,Descartado,0.0,Atendido
+#1468,2026-07-13 19:55:25,Collique,Robo,-11.895376,-77.041831,63,64,Media,Validado,5.1,Pendiente
+#1469,2026-07-14 06:37:25,Collique,Emergencia Médica,-11.945343,-77.05493,58,40,Media,Validado,14.9,En Proceso
+#1470,2026-07-14 17:07:25,Comas Norte,Sospecha,-11.895366,-77.059907,44,96,Alta,Validado,17.7,En Proceso
+#1471,2026-07-13 22:21:25,Comas Sur,Sospecha,-11.930029,-77.010936,34,25,Baja,Validado,10.7,Pendiente
+#1472,2026-07-14 02:36:25,Comas Sur,Robo,-11.925022,-77.015831,55,17,Baja,Validado,19.8,Pendiente
+#1473,2026-07-14 18:06:25,La Balanza,Emergencia Médica,-11.936739,-77.027712,41,21,Baja,Validado,4.4,Atendido
+#1474,2026-07-14 19:45:25,Comas Sur,Sospecha,-11.88048,-77.048116,49,18,Baja,Validado,1.3,Pendiente
+#1475,2026-07-14 06:46:25,La Balanza,Sospecha,-11.899425,-77.054029,58,61,Media,Validado,15.5,En Proceso
+#1476,2026-07-14 09:44:25,Collique,Emergencia Médica,-11.941824,-77.02783,81,69,Media,Validado,20.3,Pendiente
+#1477,2026-07-14 12:33:25,Comas Norte,Accidente de Tránsito,-11.931911,-77.02249,70,33,Baja,Validado,18.4,Pendiente
+#1478,2026-07-14 12:10:25,La Balanza,Emergencia Médica,-11.917156,-77.049873,24,16,Baja,Validado,20.2,Atendido
+#1479,2026-07-14 01:07:25,La Balanza,Incendio,-11.932912,-77.057386,76,24,Baja,Validado,9.7,Pendiente
+#1480,2026-07-13 19:46:25,Comas Norte,Sospecha,-11.935998,-77.013751,19,49,Media,Validado,24.9,Pendiente
+#1481,2026-07-13 21:06:25,Comas Sur,Robo,-11.932647,-77.02614,13,91,Alta,Validado,15.6,Atendido
+#1482,2026-07-14 15:44:25,San Agustín,Robo,-11.920137,-77.034456,50,97,Alta,Validado,24.1,Atendido
+#1483,2026-07-14 02:55:25,San Agustín,Incendio,-11.915682,-77.05256,66,18,Baja,Validado,16.3,Pendiente
+#1484,2026-07-14 18:12:25,San Agustín,Incendio,-11.895092,-77.017572,64,58,Media,Validado,6.5,En Proceso
+#1485,2026-07-14 06:31:25,San Agustín,Accidente de Tránsito,-11.941944,-77.021378,53,73,Media,Validado,23.8,Pendiente
+#1486,2026-07-14 19:21:25,San Agustín,Robo,-11.889879,-77.015614,75,72,Media,Descartado,0.0,Atendido
+#1487,2026-07-13 23:41:25,Comas Norte,Accidente de Tránsito,-11.89051,-77.057788,90,32,Baja,Descartado,0.0,Atendido
+#1488,2026-07-13 22:16:25,Collique,Accidente de Tránsito,-11.928066,-77.040736,33,92,Alta,Validado,22.0,Atendido
+#1489,2026-07-14 13:11:25,Comas Sur,Emergencia Médica,-11.906831,-77.014105,77,17,Baja,Descartado,0.0,Atendido
+#1490,2026-07-14 06:33:25,La Balanza,Emergencia Médica,-11.901868,-77.016572,15,23,Baja,Validado,11.8,Pendiente
+#1491,2026-07-14 12:26:25,San Agustín,Robo,-11.899362,-77.039828,69,24,Baja,Validado,7.3,Pendiente
+#1492,2026-07-14 08:53:25,Collique,Incendio,-11.948913,-77.019719,12,36,Baja,Validado,5.8,Atendido
+#1493,2026-07-14 13:45:25,La Balanza,Emergencia Médica,-11.891039,-77.028249,67,50,Media,Descartado,0.0,Atendido
+#1494,2026-07-14 03:32:25,Comas Norte,Emergencia Médica,-11.912101,-77.045272,47,94,Alta,Validado,3.4,En Proceso
+#1495,2026-07-13 23:23:25,Comas Norte,Accidente de Tránsito,-11.900398,-77.057608,87,48,Media,Validado,4.9,Atendido
+#1496,2026-07-14 13:46:25,Comas Norte,Emergencia Médica,-11.91337,-77.049497,50,70,Media,Validado,20.3,En Proceso
+#1497,2026-07-14 16:02:25,San Agustín,Emergencia Médica,-11.884829,-77.016751,12,65,Media,Validado,11.5,Pendiente
+#1498,2026-07-14 02:33:25,Comas Sur,Sospecha,-11.897168,-77.035294,28,38,Baja,Validado,18.9,Pendiente
+#1499,2026-07-13 20:24:25,Comas Norte,Emergencia Médica,-11.94128,-77.053177,94,85,Alta,Validado,24.1,Pendiente
+#1500,2026-07-14 11:39:25,Collique,Sospecha,-11.947886,-77.037654,85,89,Alta,Validado,10.6,Atendido

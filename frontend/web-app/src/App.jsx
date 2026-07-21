@@ -4,7 +4,9 @@ import Dashboard from './components/Dashboard';
 import Chatbot from './components/Chatbot';
 import MobileApp from './components/MobileApp';
 import Reports from './components/Reports';
+import Settings from './components/Settings';
 import PillNav from './components/PillNav';
+import PowerBIDashboard from './components/PowerBIDashboard';
 import { incidentsData as initialIncidents } from './data/mockData';
 
 const API_BASE = 'http://localhost:8080/api';
@@ -54,15 +56,17 @@ function App() {
     setIncidents(prev => [incident, ...prev]);
   };
 
-  const getTitle = () => {
-    switch (currentView) {
-      case 'dashboard': return 'Panel de Comando';
-      case 'chat': return 'Simulador de Reportes Ciudadanos';
-      case 'reports': return 'Reportes del Ciudadano';
-      case 'mobile': return 'App Móvil SafeDistrict';
-      default: return 'SafeDistrict';
-    }
-  };
+    const getTitle = () => {
+      switch (currentView) {
+        case 'dashboard': return 'Panel de Comando';
+        case 'powerbi': return 'Dashboard Analítico';
+        case 'chat': return 'Simulador de Reportes Ciudadanos';
+        case 'reports': return 'Reportes del Ciudadano';
+        case 'settings': return 'Configuración del Sistema';
+        case 'mobile': return 'App Móvil SafeDistrict';
+        default: return 'SafeDistrict';
+      }
+    };
 
   return (
     <div className="bg-surface text-on-surface h-screen overflow-hidden flex">
@@ -97,6 +101,9 @@ function App() {
               onRetry={fetchIncidents}
             />
           )}
+          {currentView === 'powerbi' && (
+            <PowerBIDashboard incidents={incidents} />
+          )}
           {currentView === 'chat' && (
             <Chatbot
               addIncident={addIncident}
@@ -112,10 +119,10 @@ function App() {
             />
           )}
           {currentView === 'reports' && (
-            <Reports
-              addIncident={addIncident}
-              setLastClassification={setLastClassification}
-            />
+            <Reports incidents={incidents} />
+          )}
+          {currentView === 'settings' && (
+            <Settings />
           )}
         </div>
       </main>

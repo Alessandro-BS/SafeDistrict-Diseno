@@ -200,11 +200,17 @@ export function translateType(type) {
     crime_armed: 'Robo Armado',
     criminal_assault: 'Asalto',
     crime: 'Delito',
+    crime_violent: 'Crimen Violento',
+    violence_firearm: 'Violencia con Arma',
+    emergencia_general: 'Emergencia General',
     emergency_general: 'Emergencia General',
     security_incident: 'Incidente de Seguridad',
     suspicious_activity: 'Actividad Sospechosa',
     vandalism: 'Vandalismo',
-    domestic_violence: 'Violencia Doméstica'
+    domestic_violence: 'Violencia Doméstica',
+    public_services: 'Servicios Públicos',
+    security: 'Seguridad',
+    t01: 'Robo' // Alias mapping for mockup data
   };
   
   if (map[raw]) return map[raw];

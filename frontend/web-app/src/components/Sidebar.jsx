@@ -1,15 +1,19 @@
+import { useState } from 'react';
 import { LayoutDashboard, MessageSquare, Smartphone, Activity, Settings, Bell, HelpCircle, FileText } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import HelpModal from './HelpModal';
 
 export default function Sidebar({ currentView, setCurrentView, lastClassification }) {
   const { theme, toggle } = useTheme();
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const navItems = [
     { id: 'dashboard', label: 'Panel de Comando', icon: 'dashboard' },
+    { id: 'powerbi', label: 'Dashboard Analítico', icon: 'analytics' },
     { id: 'chat', label: 'Simulador Chatbot', icon: 'forum' },
     { id: 'mobile', label: 'App Móvil', icon: 'smartphone' },
-    { id: 'reports', label: 'Reportes del Ciudadano', icon: 'assignment_late', disabled: true },
-    { id: 'settings', label: 'Configuración', icon: 'settings', disabled: true },
+    { id: 'reports', label: 'Reportes del Ciudadano', icon: 'assignment_late' },
+    { id: 'settings', label: 'Configuración', icon: 'settings' },
   ];
 
   return (
@@ -60,14 +64,22 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
       </div>
 
       <div className="px-6 space-y-4">
-        <div className="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors px-2 py-1 rounded-lg">
+        <div 
+          onClick={() => setIsHelpOpen(true)}
+          className="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors px-2 py-1 rounded-lg"
+        >
           <span className="material-symbols-outlined text-[20px]">help</span>
           <span className="font-label-bold text-label-sm">Ayuda</span>
         </div>
-        <div className="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors px-2 py-1 rounded-lg">
+        <a 
+          href="https://github.com/tu-repositorio/safedistrict/wiki" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors px-2 py-1 rounded-lg"
+        >
           <span className="material-symbols-outlined text-[20px]">description</span>
           <span className="font-label-bold text-label-sm">Documentación</span>
-        </div>
+        </a>
 
         {/* Toggle Theme if still needed, but hiding for fidelity to the new design which is forced light mode */}
         {/*
@@ -81,6 +93,8 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
           <p className="font-label-bold text-[10px] text-outline">v2.1 - Comas, Lima</p>
         </div>
       </div>
+      
+      <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </aside>
   );
 }
