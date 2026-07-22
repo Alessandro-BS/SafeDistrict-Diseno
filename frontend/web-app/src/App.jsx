@@ -56,6 +56,10 @@ function App() {
     setIncidents(prev => [incident, ...prev]);
   };
 
+  const updateIncidentStatus = (id, newStatus) => {
+    setIncidents(prev => prev.map(inc => inc.id === id ? { ...inc, status: newStatus } : inc));
+  };
+
     const getTitle = () => {
       switch (currentView) {
         case 'dashboard': return 'Panel de Comando';
@@ -85,7 +89,6 @@ function App() {
             <div className="flex items-center gap-6">
               <div className="text-right">
                 <Clock />
-                <span className="text-[11px] text-outline">Operador 01 - Turno Mañana</span>
               </div>
             </div>
           </div>
@@ -119,7 +122,7 @@ function App() {
             />
           )}
           {currentView === 'reports' && (
-            <Reports incidents={incidents} />
+            <Reports incidents={incidents} updateIncidentStatus={updateIncidentStatus} />
           )}
           {currentView === 'settings' && (
             <Settings />

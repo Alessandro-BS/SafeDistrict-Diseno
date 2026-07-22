@@ -5,8 +5,8 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState('perfil');
 
   return (
-    <div className="flex h-full bg-surface-container-low p-6">
-      <div className="flex w-full max-w-5xl mx-auto bg-surface rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
+    <div className="flex flex-1 w-full h-full bg-surface-container-low p-6">
+      <div className="flex flex-1 w-full h-full bg-surface rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
         
         {/* Settings Sidebar */}
         <div className="w-64 border-r border-outline-variant bg-gray-50 flex flex-col p-4 gap-2">
@@ -67,26 +67,7 @@ export default function Settings() {
           <div className="p-8 max-w-2xl">
             {activeTab === 'perfil' && (
               <div className="space-y-6">
-                <div className="flex items-center gap-6 pb-6 border-b border-gray-100">
-                  <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                    <User size={32} className="text-gray-400" />
-                  </div>
-                  <div>
-                    <button className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                      Cambiar Avatar
-                    </button>
-                  </div>
-                </div>
-                
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">Nombres</label>
-                    <input type="text" defaultValue="Operador" className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">Apellidos</label>
-                    <input type="text" defaultValue="01" className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none" />
-                  </div>
                   <div className="space-y-2 col-span-2">
                     <label className="text-sm font-semibold text-gray-700">Correo Electrónico (Institucional)</label>
                     <input type="email" defaultValue="operador01@safedistrict.gob.pe" className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none" disabled />

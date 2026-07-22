@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
-import { Download, Search, Filter, ShieldCheck, Eye, FileWarning, CheckCircle } from 'lucide-react';
+import { Download, Search, Filter, ShieldCheck, Eye, FileWarning, CheckCircle, X } from 'lucide-react';
 import { normalizePriority } from '../data/classificationEngine';
 
-export default function Reports({ incidents = [] }) {
+export default function Reports({ incidents = [], updateIncidentStatus }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterPriority, setFilterPriority] = useState('Todos');
   const [filterStatus, setFilterStatus] = useState('Todos');
+  const [selectedIncident, setSelectedIncident] = useState(null);
 
   const filteredIncidents = useMemo(() => {
     return incidents.filter(inc => {
@@ -60,7 +61,7 @@ export default function Reports({ incidents = [] }) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-surface-container-low p-6">
+    <div className="flex flex-col flex-1 w-full h-full bg-surface-container-low p-6">
       <div className="bg-surface rounded-2xl shadow-sm border border-outline-variant flex flex-col h-full overflow-hidden">
         
         {/* Header Toolbar */}
@@ -87,24 +88,24 @@ export default function Reports({ incidents = [] }) {
         </div>
 
         {/* Filters */}
-        <div className="p-4 border-b border-outline-variant bg-gray-50/50 flex flex-wrap gap-4 items-center">
-          <div className="relative flex-1 min-w-[250px]">
+        <div className="p-4 border-b border-outline-variant bg-gray-50/50 flex flex-wrap gap-4 items-center justify-between">
+          <div className="relative w-full max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input 
               type="text" 
               placeholder="Buscar por ID o descripción..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none shadow-sm"
             />
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Filter size={16} className="text-gray-400" />
             <select 
               value={filterPriority}
               onChange={(e) => setFilterPriority(e.target.value)}
-              className="border border-gray-300 rounded-lg py-2 px-3 text-sm bg-white outline-none"
+              className="border border-gray-300 rounded-lg py-2 pl-3 pr-10 text-sm bg-white outline-none cursor-pointer hover:border-gray-400 transition-colors"
             >
               <option value="Todos">Todas las Prioridades</option>
               <option value="Crítico">Crítico</option>
@@ -116,7 +117,7 @@ export default function Reports({ incidents = [] }) {
             <select 
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="border border-gray-300 rounded-lg py-2 px-3 text-sm bg-white outline-none"
+              className="border border-gray-300 rounded-lg py-2 pl-3 pr-10 text-sm bg-white outline-none cursor-pointer hover:border-gray-400 transition-colors"
             >
               <option value="Todos">Todos los Estados</option>
               <option value="Pendiente">Pendiente</option>
@@ -179,13 +180,13 @@ export default function Reports({ incidents = [] }) {
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex justify-center gap-2">
-                        <button className="p-1.5 text-gray-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Detalles">
+                        <button onClick={() => setSelectedIncident(inc)} className="p-1.5 text-gray-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Detalles">
                           <Eye size={18} />
                         </button>
-                        <button className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded transition-colors" title="Marcar Resuelto">
+                        <button onClick={() => updateIncidentStatus && updateIncidentStatus(inc.id, 'Atendido')} className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded transition-colors" title="Marcar Resuelto">
                           <CheckCircle size={18} />
                         </button>
-                        <button className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Marcar Falso">
+                        <button onClick={() => updateIncidentStatus && updateIncidentStatus(inc.id, 'Rechazado')} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Marcar Falso">
                           <FileWarning size={18} />
                         </button>
                       </div>
@@ -201,6 +202,61 @@ export default function Reports({ incidents = [] }) {
         <div className="p-4 border-t border-outline-variant bg-gray-50 flex items-center justify-between text-xs text-gray-500">
           <span>Mostrando {filteredIncidents.length} de {incidents.length} reportes</span>
         </div>
+
+        {/* Modal Detalles */}
+        {selectedIncident && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden border border-gray-100">
+              <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                  <ShieldCheck size={18} className="text-primary"/> 
+                  Detalles del Reporte: {selectedIncident.id}
+                </h3>
+                <button onClick={() => setSelectedIncident(null)} className="text-gray-400 hover:text-gray-600">
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="p-6 space-y-5">
+                <div>
+                  <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Mensaje del Ciudadano</p>
+                  <div className="p-4 bg-primary/5 border border-primary/10 rounded-lg text-sm text-gray-800 italic relative">
+                    <span className="absolute -top-2 -left-2 text-primary/20 text-4xl leading-none">"</span>
+                    {selectedIncident.description || selectedIncident.text || 'Sin descripción disponible'}
+                    <span className="absolute -bottom-4 -right-2 text-primary/20 text-4xl leading-none">"</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Clasificación IA</p>
+                    <p className="text-sm font-medium text-gray-900">{selectedIncident.classification?.typeLabel || selectedIncident.type || 'Desconocido'}</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Nivel de Confianza</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {selectedIncident.classification?.confidence ? `${Math.round(selectedIncident.classification.confidence * 100)}%` : '90% (Estimado)'}
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Prioridad Asignada</p>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${getPriorityColor(selectedIncident.priority)}`}>
+                      {normalizePriority(selectedIncident.priority)}
+                    </span>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Ubicación Extraída</p>
+                    <p className="text-sm font-medium text-gray-900 break-words">{selectedIncident.location || 'No especificada'}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+                <button onClick={() => setSelectedIncident(null)} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm">
+                  Cerrar Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

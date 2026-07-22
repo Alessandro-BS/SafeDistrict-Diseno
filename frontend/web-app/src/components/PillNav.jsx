@@ -3,7 +3,6 @@ import { Smartphone, MessageSquare, LayoutDashboard, Activity } from 'lucide-rea
 const tabs = [
   { id: 'mobile', label: 'App Móvil', icon: Smartphone },
   { id: 'chat', label: 'Chatbot', icon: MessageSquare },
-  { id: 'reports', label: 'Reportes', icon: Activity },
   { id: 'dashboard', label: 'Panel Admin', icon: LayoutDashboard },
 ];
 

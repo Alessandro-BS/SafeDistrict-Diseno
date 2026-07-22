@@ -249,6 +249,23 @@ export default function Chatbot({ addIncident, setLastClassification, setCurrent
     setInput('');
     setIsTyping(true);
 
+    const extractLocation = (text) => {
+      const lower = text.toLowerCase();
+      if (lower.includes('retablo')) return 'Av. El Retablo';
+      if (lower.includes('trapiche')) return 'Av. Trapiche';
+      if (lower.includes('universitaria')) return 'Av. Universitaria';
+      if (lower.includes('belaunde')) return 'Av. Belaunde';
+      if (lower.includes('san felipe')) return 'Av. San Felipe';
+      if (lower.includes('revolucion')) return 'Av. Revolución';
+      if (lower.includes('collique')) return 'Collique';
+      if (lower.includes('sur')) return 'Zona Sur (Comas)';
+      if (lower.includes('norte')) return 'Zona Norte (Comas)';
+      if (lower.includes('este')) return 'Zona Este (Comas)';
+      if (lower.includes('oeste')) return 'Zona Oeste (Comas)';
+      if (lower.includes('centro')) return 'Zona Centro (Comas)';
+      return getRandomLocation(); // Fallback si no menciona un lugar claro
+    };
+
     try {
       const response = await fetch(`${API_BASE}/incidents/report`, {
         method: 'POST',
@@ -257,7 +274,7 @@ export default function Chatbot({ addIncident, setLastClassification, setCurrent
         },
         body: JSON.stringify({
           text: userText,
-          location: getRandomLocation()
+          location: extractLocation(userText)
         })
       });
 
@@ -401,8 +418,8 @@ export default function Chatbot({ addIncident, setLastClassification, setCurrent
           Chatbot
         </button>
         <button 
-          disabled
-          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant font-label-bold transition-colors opacity-50 cursor-not-allowed"
+          onClick={() => setCurrentView('powerbi')}
+          className="flex items-center gap-2 px-6 py-2.5 text-on-surface-variant hover:text-on-surface font-label-bold transition-colors"
         >
           <span className="material-symbols-outlined text-[18px]">analytics</span>
           Reportes
