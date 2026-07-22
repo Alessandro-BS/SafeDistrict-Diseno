@@ -3,8 +3,9 @@ import { normalizePriority } from '../data/classificationEngine';
 import IncidentMap from './IncidentMap';
 import RightIncidentPanel from './RightIncidentPanel';
 import ReclassifyModal from './ReclassifyModal';
+import Reports from './Reports';
 
-export default function Dashboard({ incidents, lastClassification, loading, error, onRetry }) {
+export default function Dashboard({ incidents, lastClassification, loading, error, onRetry, updateIncidentStatus }) {
   const [activeTab, setActiveTab] = useState('mapa');
   const [focusedIncident, setFocusedIncident] = useState(null);
   const [incidentToClassify, setIncidentToClassify] = useState(null);
@@ -205,18 +206,78 @@ export default function Dashboard({ incidents, lastClassification, loading, erro
           )}
 
           {activeTab === 'incidentes' && (
-            <div className="flex-1 flex flex-col items-center justify-center bg-surface text-center p-8">
-              <span className="material-symbols-outlined text-[64px] text-primary/30 mb-4" style={{ fontVariationSettings: '"FILL" 1' }}>table_chart</span>
-              <h3 className="text-xl font-bold mb-2">Vista de Tabla</h3>
-              <p className="text-outline text-sm max-w-md">Vista detallada de todos los incidentes con opciones de filtro avanzado y exportación.</p>
+            <div className="flex-1 overflow-hidden flex flex-col bg-surface rounded-b-2xl">
+              <Reports incidents={incidents} updateIncidentStatus={updateIncidentStatus} />
             </div>
           )}
 
           {activeTab === 'alertas' && (
-            <div className="flex-1 flex flex-col items-center justify-center bg-surface text-center p-8">
-              <span className="material-symbols-outlined text-[64px] text-error/30 mb-4" style={{ fontVariationSettings: '"FILL" 1' }}>notifications</span>
-              <h3 className="text-xl font-bold mb-2">Centro de Alertas</h3>
-              <p className="text-outline text-sm max-w-md">Historial de notificaciones y alertas críticas emitidas por el sistema o por supervisores.</p>
+            <div className="flex-1 overflow-y-auto p-6 bg-surface space-y-4 rounded-b-2xl">
+              <div className="flex items-center justify-between mb-4 border-b border-outline-variant pb-3">
+                <h3 className="text-lg font-bold text-on-surface flex items-center gap-2">
+                  <span className="material-symbols-outlined text-error">notifications_active</span>
+                  Centro de Alertas Críticas
+                </h3>
+                <span className="bg-error/10 text-error px-3 py-1 rounded-full text-xs font-bold">
+                  {criticos + altos} Alertas Prioritarias
+                </span>
+              </div>
+
+              {incidents.filter(i => ['Crítico', 'Alto'].includes(normalizePriority(i.priority))).length === 0 ? (
+                <div className="text-center py-12 text-outline">
+                  <span className="material-symbols-outlined text-[48px] mb-2 text-green-500">check_circle</span>
+                  <p className="font-semibold text-sm">No hay alertas críticas registradas en este momento</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-3">
+                  {incidents
+                    .filter(i => ['Crítico', 'Alto'].includes(normalizePriority(i.priority)))
+                    .map((inc) => {
+                      const prio = normalizePriority(inc.priority);
+                      const isCritico = prio === 'Crítico';
+                      return (
+                        <div 
+                          key={inc.id}
+                          className={`p-4 rounded-xl border flex items-start justify-between gap-4 transition-all ${
+                            isCritico 
+                              ? 'bg-red-50/60 border-red-200' 
+                              : 'bg-amber-50/60 border-amber-200'
+                          }`}
+                        >
+                          <div className="flex gap-3">
+                            <div className={`p-2.5 rounded-lg shrink-0 ${isCritico ? 'bg-red-500 text-white' : 'bg-amber-500 text-white'}`}>
+                              <span className="material-symbols-outlined text-[20px]">
+                                {isCritico ? 'warning' : 'priority_high'}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
+                                  isCritico ? 'bg-red-200 text-red-800' : 'bg-amber-200 text-amber-900'
+                                }`}>
+                                  {prio}
+                                </span>
+                                <span className="text-xs text-outline">{inc.time || 'Hace un momento'}</span>
+                              </div>
+                              <h4 className="font-bold text-sm text-on-surface">{inc.title || inc.category}</h4>
+                              <p className="text-xs text-on-surface-variant mt-1">{inc.description || inc.location}</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setFocusedIncident(inc);
+                              setActiveTab('mapa');
+                            }}
+                            className="px-3 py-1.5 bg-white border border-gray-200 hover:bg-gray-50 text-xs font-bold rounded-lg shrink-0 shadow-sm flex items-center gap-1 cursor-pointer"
+                          >
+                            <span className="material-symbols-outlined text-[14px]">map</span>
+                            Ver en Mapa
+                          </button>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
             </div>
           )}
 

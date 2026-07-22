@@ -26,13 +26,7 @@ export default function Settings() {
             <Sliders size={18} /> Preferencias
           </button>
           
-          <button 
-            onClick={() => setActiveTab('alertas')}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'alertas' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-200/50'}`}
-          >
-            <Bell size={18} /> Alertas y Sonidos
-          </button>
-          
+
           <button 
             onClick={() => setActiveTab('ia')}
             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'ia' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-200/50'}`}
@@ -40,12 +34,7 @@ export default function Settings() {
             <Cpu size={18} /> Motor de IA
           </button>
           
-          <button 
-            onClick={() => setActiveTab('seguridad')}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'seguridad' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-200/50'}`}
-          >
-            <Shield size={18} /> Seguridad
-          </button>
+
         </div>
 
         {/* Settings Content */}
@@ -86,31 +75,6 @@ export default function Settings() {
 
             {activeTab === 'sistema' && (
               <div className="space-y-6">
-                <div className="space-y-4">
-                  <h4 className="font-bold text-gray-900 border-b border-gray-100 pb-2">Interfaz de Usuario</h4>
-                  
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
-                    <div>
-                      <h5 className="font-semibold text-gray-800 text-sm">Tema Oscuro</h5>
-                      <p className="text-xs text-gray-500 mt-1">Activar modo oscuro para turnos nocturnos</p>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                    </label>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
-                    <div>
-                      <h5 className="font-semibold text-gray-800 text-sm">Vista Compacta</h5>
-                      <p className="text-xs text-gray-500 mt-1">Reducir el tamaño de las tarjetas de incidentes</p>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" defaultChecked />
-                      <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                    </label>
-                  </div>
-                </div>
 
                 <div className="space-y-4 pt-4">
                   <h4 className="font-bold text-gray-900 border-b border-gray-100 pb-2">Comportamiento del Sistema</h4>
@@ -154,14 +118,6 @@ export default function Settings() {
                     </select>
                   </div>
                 </div>
-              </div>
-            )}
-            
-            {['alertas', 'seguridad'].includes(activeTab) && (
-              <div className="py-12 text-center text-gray-400">
-                <Shield size={48} className="mx-auto mb-4 opacity-20" />
-                <h4 className="text-lg font-bold text-gray-700">Sección en Construcción</h4>
-                <p className="text-sm mt-2">Esta funcionalidad estará disponible en la próxima actualización.</p>
               </div>
             )}
             

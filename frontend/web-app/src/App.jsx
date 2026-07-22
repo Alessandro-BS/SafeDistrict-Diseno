@@ -34,15 +34,24 @@ function App() {
   const fetchIncidents = useCallback(async () => {
     setLoading(true);
     setError(null);
+    const getSavedStatuses = () => {
+      try {
+        return JSON.parse(localStorage.getItem('safedistrict_statuses') || '{}');
+      } catch {
+        return {};
+      }
+    };
     try {
       const res = await fetch(`${API_BASE}/incidents`);
       if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
       const data = await res.json();
-      setIncidents(data);
+      const saved = getSavedStatuses();
+      setIncidents(data.map(inc => ({ ...inc, status: saved[inc.id] || inc.status || 'Pendiente' })));
     } catch (err) {
       console.error('Error al conectar con el servidor, usando datos de prueba:', err);
       setError(err.message);
-      setIncidents(initialIncidents);
+      const saved = getSavedStatuses();
+      setIncidents(initialIncidents.map(inc => ({ ...inc, status: saved[inc.id] || inc.status || 'Pendiente' })));
     } finally {
       setLoading(false);
     }
@@ -57,7 +66,24 @@ function App() {
   };
 
   const updateIncidentStatus = (id, newStatus) => {
-    setIncidents(prev => prev.map(inc => inc.id === id ? { ...inc, status: newStatus } : inc));
+    setIncidents(prev => {
+      const updated = prev.map(inc => inc.id === id ? { ...inc, status: newStatus } : inc);
+      try {
+        const saved = JSON.parse(localStorage.getItem('safedistrict_statuses') || '{}');
+        saved[id] = newStatus;
+        localStorage.setItem('safedistrict_statuses', JSON.stringify(saved));
+      } catch (e) {
+        console.error('Error al guardar estado en localStorage:', e);
+      }
+      return updated;
+    });
+
+    // Intentar persistir también en backend si estuviese disponible
+    fetch(`${API_BASE}/incidents/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    }).catch(() => {});
   };
 
     const getTitle = () => {
@@ -102,6 +128,7 @@ function App() {
               loading={loading}
               error={error}
               onRetry={fetchIncidents}
+              updateIncidentStatus={updateIncidentStatus}
             />
           )}
           {currentView === 'powerbi' && (

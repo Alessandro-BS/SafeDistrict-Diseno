@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { LayoutDashboard, MessageSquare, Smartphone, Activity, Settings, Bell, HelpCircle, FileText } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import HelpModal from './HelpModal';
+import DocsModal from './DocsModal';
 
 export default function Sidebar({ currentView, setCurrentView, lastClassification }) {
   const { theme, toggle } = useTheme();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isDocsOpen, setIsDocsOpen] = useState(false);
 
   const navItems = [
     { id: 'dashboard', label: 'Panel de Comando', icon: 'dashboard' },
@@ -71,15 +73,13 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
           <span className="material-symbols-outlined text-[20px]">help</span>
           <span className="font-label-bold text-label-sm">Ayuda</span>
         </div>
-        <a 
-          href="https://github.com/tu-repositorio/safedistrict/wiki" 
-          target="_blank" 
-          rel="noopener noreferrer"
+        <div 
+          onClick={() => setIsDocsOpen(true)}
           className="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors px-2 py-1 rounded-lg"
         >
           <span className="material-symbols-outlined text-[20px]">description</span>
           <span className="font-label-bold text-label-sm">Documentación</span>
-        </a>
+        </div>
 
         {/* Toggle Theme if still needed, but hiding for fidelity to the new design which is forced light mode */}
         {/*
@@ -95,6 +95,7 @@ export default function Sidebar({ currentView, setCurrentView, lastClassificatio
       </div>
       
       <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
+      <DocsModal isOpen={isDocsOpen} onClose={() => setIsDocsOpen(false)} />
     </aside>
   );
 }
